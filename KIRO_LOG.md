@@ -1,0 +1,83 @@
+# KIRO_LOG — DREAME
+
+> Provisional format: the §6 template of `Kiro_Setup_and_Operating_Playbook.md` is not in the
+> workspace. This format is provisional until that playbook is supplied.
+
+## 2026-11-18 — Day 1
+
+- **Goal:** Set up the empty pnpm/TypeScript workspace, the Kiro steering files and the Context7 MCP configuration for DREAME.
+- **Kiro features used:**
+  - Spec workflow: the requirements, design and task list for the Day 1 setup were written and executed task by task. `.kiro/specs/dreame-day1-workspace-setup/`
+  - Steering: seven steering files were written with rules taken from the Brief, the Architecture Spec and the Submission Checklist. `.kiro/steering/product.md`
+  - MCP: configured; connection not yet confirmed by the user. `.kiro/settings/mcp.json`
+- **Failed actions:**
+  - Writing `.kiro/settings/mcp.json` with the editor tool failed: the write was denied by a Kiro permission rule (kiro-scope) covering `.kiro/settings/`. The user created the file by hand.
+  - `Remove-Item .git.ignore` was blocked by Kiro's safety policy as a destructive delete. A manual deletion did not take effect, and the user chose to keep the file.
+- **Files created:**
+  - `.kiro/steering/product.md`
+  - `.kiro/steering/tech.md`
+  - `.kiro/steering/structure.md`
+  - `.kiro/steering/security.md`
+  - `.kiro/steering/activity-authoring.md`
+  - `.kiro/steering/testing.md`
+  - `.kiro/steering/new-node-type.md`
+  - `.kiro/specs/dreame-day1-workspace-setup/requirements.md`
+  - `.kiro/specs/dreame-day1-workspace-setup/design.md`
+  - `.kiro/specs/dreame-day1-workspace-setup/tasks.md`
+  - `.kiro/specs/dreame-day1-workspace-setup/.config.kiro`
+  - `.kiro/specs/dreame-day1-workspace-setup/tasks.meta.json` (Kiro's task-tracking file)
+  - `.kiro/settings/mcp.json` (written by hand by the user, see Failed actions)
+  - `pnpm-workspace.yaml`
+  - `package.json`
+  - `tsconfig.base.json`
+  - `apps/shop-challenge/README.md`
+  - `apps/practice-path/README.md`
+  - `packages/schema/README.md`
+  - `packages/runtime/README.md`
+  - `packages/node-types/README.md`
+  - `packages/link/README.md`
+  - `packages/storage/README.md`
+  - `packages/ui/README.md`
+  - `tools/create-app/README.md`
+  - `tools/validate/README.md`
+  - `activities/README.md`
+  - `docs/kiro-evidence/README.md`
+  - `.github/workflows/ci.yml`
+  - `.gitignore`
+  - `.gitattributes`
+  - `KIRO_LOG.md`
+  - `pnpm-lock.yaml`
+- **Commands and results** (PowerShell 5.1.22000.2538, run from the workspace root):
+  - `node --version` → `v22.23.5`, exit 0
+  - `pnpm --version` → `12.21.0`, exit 0
+  - `Test-Path .kiro/hooks` → `False`
+  - `.kiro/settings/mcp.json` check → no BOM; `context7` = `{"command":"npx","args":["-y","@upstash/context7-mcp"]}`. `npx -y @upstash/context7-mcp` was not run.
+  - `pnpm install` → exit 0; `pnpm-lock.yaml` created with typescript 7.0.2 and simple-git-hooks 2.14.0; the postinstall script wrote `.git/hooks/pre-commit` running `pnpm check`; no ignored-build warning
+  - `pnpm exec tsc --version` → `Version 7.0.2`, exit 0, matches the lockfile version
+  - `Select-String -Path .git/hooks/pre-commit -Pattern 'pnpm check'` → 1 match (line 9)
+  - `pnpm check extra` → `not implemented yet`, exit 0, no `git status` change
+  - `pnpm validate extra` → `not implemented yet`, exit 0, no `git status` change
+  - `pnpm test:shared extra` → `not implemented yet`, exit 0, no `git status` change
+  - `powershell -NoProfile -Command "pnpm check"` → `not implemented yet`, exit 0
+  - `git check-ignore -v .kiro/steering/product.md` → no output, exit 1
+  - `git check-ignore -v .kiro/settings/mcp.json` → no output, exit 1
+  - `git check-ignore -v pnpm-lock.yaml` → no output, exit 1
+  - `git check-ignore -v KIRO_LOG.md` → no output, exit 1
+  - `git ls-files design-refs` → no output
+  - `git check-ignore -v design-refs/linktree.webp` → `.gitignore:4:design-refs/`, exit 0
+  - `git ls-files --eol LICENSE README.md` → no line-ending-only changes
+  - `git restore -- README.md` → exit 0; `git status --porcelain -- README.md` and `git diff HEAD -- README.md` print nothing
+  - Planning_Docs scan (`Select-String` with the seven secret and personal-data patterns from the design) → 0 matches in all three docs
+  - `Remove-Item .git.ignore` → blocked by Kiro's safety policy (see Failed actions)
+- **Decisions:**
+  - typescript 7.0.2 printed a `Version` line, so the Decision 3 fallback to an older TypeScript line was not needed.
+  - `pnpm install` showed no ignored-build warning, so the `allowBuilds` key in `pnpm-workspace.yaml` was kept unchanged (no Decision 4 change).
+  - `.git.ignore` contained exactly `design-refs` and `.gitignore` has `design-refs/`, so its deletion was authorized; after the blocked delete, the user chose to keep it untracked and unstaged.
+- **Problems and fixes:**
+  - The editor-tool write of `.kiro/settings/mcp.json` was denied; the user created the file by hand. The file has CRLF line endings on disk, which `.gitattributes` (`* text=auto eol=lf`) normalizes to LF in the repository.
+  - `pwsh` is not installed, so the PowerShell 7 repeat of `pnpm check` was skipped.
+- **Open items:**
+  - `Kiro_Setup_and_Operating_Playbook.md` is missing from the workspace.
+  - Context7 connection in the Kiro MCP panel is not yet confirmed by the user.
+  - `.git.ignore` is still present, untracked and unstaged.
+  - The PowerShell 7 check of the stub scripts has not been run.

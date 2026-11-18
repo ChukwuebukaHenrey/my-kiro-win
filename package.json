@@ -1,0 +1,18 @@
+{
+  "name": "dreame",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.21.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "node -e \"console.log('not implemented yet')\"",
+    "validate": "node -e \"console.log('not implemented yet')\"",
+    "test:shared": "node -e \"console.log('not implemented yet')\"",
+    "postinstall": "simple-git-hooks"
+  },
+  "simple-git-hooks": { "pre-commit": "pnpm check" },
+  "devDependencies": {
+    "simple-git-hooks": "^2.14.0",
+    "typescript": "^7.0.2"
+  }
+}
