@@ -156,42 +156,42 @@ Conventions for every task:
     - Confirm one `2026-11-18` heading and the exact MCP status phrase
     - _Requirements: 9.2, 9.5, 9.8, 9.9_
 
-- [ ] 9. Stage, commit and verify the commit
+- [x] 9. Stage, commit and verify the commit
   - [x] 9.1 Stage files by explicit paths
     - Run one `git add` listing the seven steering paths, `.kiro/specs/dreame-day1-workspace-setup`, `.kiro/settings/mcp.json`, `pnpm-workspace.yaml`, `package.json`, `tsconfig.base.json`, the 12 Folder_Stub paths, `.github/workflows/ci.yml`, `.gitignore`, `.gitattributes`, `KIRO_LOG.md`, `pnpm-lock.yaml`, and each clean Planning_Doc from task 6.3
     - Never use `git add .`, `-A`, `--all` or `git add docs`; do not stage line-ending-only changes the user excluded in task 5.4
     - Run `git status --porcelain` and confirm `docs/README.md` and the two `.txt` notes are still untracked and unstaged
     - _Requirements: 10.2, 10.3, 8.8_
 
-  - [-] 9.2 Create the Init_Commit
+  - [x] 9.2 Create the Init_Commit
     - Run `git commit -m "chore: init workspace + .kiro"`; confirm the output contains `not implemented yet` from the hook; run `git log -1 --format=%s` and confirm the exact subject
     - **Stop condition:** hook or commit exits non-zero → report the output, leave files staged, never retry with `--no-verify` (Req 10.11)
     - _Requirements: 10.5, 10.11_
 
-  - [ ] 9.3 Verify commit contents
+  - [x] 9.3 Verify commit contents
     - Run `git ls-files design-refs node_modules .git.ignore` (pass when empty) and `git show --name-only --format= HEAD` (pass when every path is in the 9.1 staged set)
     - Record the abbreviated hash with `git rev-parse --short HEAD`
     - **Stop condition:** either check fails → do not push, report the output to the user
     - _Requirements: 10.6, 11.6_
 
-- [ ] 10. Push to origin
-  - [ ] 10.1 Check branch and remote
+- [x] 10. Push to origin
+  - [x] 10.1 Check branch and remote
     - Run `git branch --show-current` and `git remote get-url origin`; pass when `main` and `https://github.com/ChukwuebukaHenrey/my-kiro-win.git`
     - **Stop condition:** either differs → do not push, ask the user how to proceed (Req 10.12)
     - _Requirements: 10.12_
 
-  - [ ] 10.2 Push the Init_Commit
+  - [x] 10.2 Push the Init_Commit
     - Precondition: tasks 6.1, 9.2 and 9.3 passed (Req 10.7)
     - Run `git push origin main` with no force option
     - **Stop condition:** non-zero exit → report the git error text, keep the commit local, do not run `git pull`, `git rebase`, `git reset` or a forced push without user confirmation (Req 10.8)
     - _Requirements: 10.7, 10.8_
 
-  - [ ] 10.3 Confirm the remote matches
+  - [x] 10.3 Confirm the remote matches
     - Run `git rev-parse HEAD` and `git rev-parse origin/main`; pass when the hashes are equal
     - _Requirements: 10.9_
 
-- [ ] 11. Final report and user confirmations
-  - [ ] 11.1 Present the final (or partial) report
+- [x] 11. Final report and user confirmations
+  - [x] 11.1 Present the final (or partial) report
     - Show the tree from `Get-ChildItem -Recurse -Force -Name | Where-Object { $_ -notmatch '^(\.git|node_modules|design-refs)(\\|$)' }` (Req 11.3)
     - List every command run, in order, with exact text and exit code (Req 11.5)
     - Give pass/fail for Req 6.7, 7.8, 8.3, 8.4, 10.1, 10.5, 10.6, the abbreviated Init_Commit hash, and push success or failure (Req 11.6)
@@ -200,7 +200,7 @@ Conventions for every task:
     - If setup stopped early, name the failed step, its error text and the steps not run (Req 11.7)
     - _Requirements: 1.10, 2.10, 8.11, 11.3, 11.4, 11.5, 11.6, 11.7_
 
-  - [ ] 11.2 Ask the user to confirm Context7 and the GitHub page
+  - [-] 11.2 Ask the user to confirm Context7 and the GitHub page
     - Ask the user to confirm in the Kiro MCP panel that `context7` is connected with at least one tool listed (Req 5.6)
     - If the push succeeded and hashes matched, ask the user to confirm the GitHub About section shows the MIT license and `.kiro` appears in the root file list (Req 10.9)
     - If the user reports a Context7 error: keep `mcp.json` unchanged, ask before any change to `command` or `args`, and, with the user's agreement, record the error text and "unresolved" status in `KIRO_LOG.md` in a new follow-up commit (never `--amend`) (Req 5.4, 5.7, 9.7)

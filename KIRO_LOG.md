@@ -9,10 +9,11 @@
 - **Kiro features used:**
   - Spec workflow: the requirements, design and task list for the Day 1 setup were written and executed task by task. `.kiro/specs/dreame-day1-workspace-setup/`
   - Steering: seven steering files were written with rules taken from the Brief, the Architecture Spec and the Submission Checklist. `.kiro/steering/product.md`
-  - MCP: configured; connection not yet confirmed by the user. `.kiro/settings/mcp.json`
+  - MCP: connected; confirmed by the user in the Kiro MCP panel. `.kiro/settings/mcp.json`
 - **Failed actions:**
   - Writing `.kiro/settings/mcp.json` with the editor tool failed: the write was denied by a Kiro permission rule (kiro-scope) covering `.kiro/settings/`. The user created the file by hand.
   - `Remove-Item .git.ignore` was blocked by Kiro's safety policy as a destructive delete. A manual deletion did not take effect, and the user chose to keep the file.
+  - The first Context7 connection attempt in Kiro, with `npx` as the command, failed. The error text was not captured.
 - **Files created:**
   - `.kiro/steering/product.md`
   - `.kiro/steering/tech.md`
@@ -69,6 +70,7 @@
   - `git restore -- README.md` → exit 0; `git status --porcelain -- README.md` and `git diff HEAD -- README.md` print nothing
   - Planning_Docs scan (`Select-String` with the seven secret and personal-data patterns from the design) → 0 matches in all three docs
   - `Remove-Item .git.ignore` → blocked by Kiro's safety policy (see Failed actions)
+  - `git diff --stat -- .kiro/settings/mcp.json` → no output, exit 0; the file is unchanged, with no BOM and no `env` or `headers` fields
 - **Decisions:**
   - typescript 7.0.2 printed a `Version` line, so the Decision 3 fallback to an older TypeScript line was not needed.
   - `pnpm install` showed no ignored-build warning, so the `allowBuilds` key in `pnpm-workspace.yaml` was kept unchanged (no Decision 4 change).
@@ -76,8 +78,8 @@
 - **Problems and fixes:**
   - The editor-tool write of `.kiro/settings/mcp.json` was denied; the user created the file by hand. The file has CRLF line endings on disk, which `.gitattributes` (`* text=auto eol=lf`) normalizes to LF in the repository.
   - `pwsh` is not installed, so the PowerShell 7 repeat of `pnpm check` was skipped.
+  - The first Context7 connection attempt with `npx` as the command failed (error text not captured). Changing the command to `cmd` with args `/c npx -y @upstash/context7-mcp` was suggested, but `git diff --stat -- .kiro/settings/mcp.json` printed nothing and the file still has `"command": "npx"`, so that change was not made. The user later confirmed Context7 as connected in the Kiro MCP panel with the unchanged file.
 - **Open items:**
   - `Kiro_Setup_and_Operating_Playbook.md` is missing from the workspace.
-  - Context7 connection in the Kiro MCP panel is not yet confirmed by the user.
   - `.git.ignore` is still present, untracked and unstaged.
   - The PowerShell 7 check of the stub scripts has not been run.
