@@ -329,7 +329,7 @@ Conventions for every task:
     - **Stop condition:** a command fails after one fix attempt → report the command, its output and exit code to the user
     - _Requirements: 1.11, 4.6, 17.10, 17.11, 17.12, 17.14, 18.6, 18.9, 18.10, 19.2, 19.8, 19.10_
 
-- [-] 10. Final checkpoint - Ensure all tests pass
+- [x] 10. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
   - Ask the user whether to commit the work; if yes, stage files by explicit path and include `pnpm-lock.yaml` in the same commit as the dependency changes (Req 1.10); never stage `packages/node-types/generated/` or `design-refs/`.
 

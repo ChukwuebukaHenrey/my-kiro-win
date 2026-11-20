@@ -1,7 +1,7 @@
 # KIRO_LOG — DREAME
 
-> Provisional format: the §6 template of `Kiro_Setup_and_Operating_Playbook.md` is not in the
-> workspace. This format is provisional until that playbook is supplied.
+> Entries from Days 2–4 on use the entry template in §6 of `docs/Kiro_Setup_and_Operating_Playbook.md`.
+> The Day 1 entry was written before that playbook was in the workspace and keeps its original format.
 
 ## 2026-11-18 — Day 1
 
@@ -83,3 +83,35 @@
   - `Kiro_Setup_and_Operating_Playbook.md` is missing from the workspace.
   - `.git.ignore` is still present, untracked and unstaged.
   - The PowerShell 7 check of the stub scripts has not been run.
+
+## 2026-11-20 — runtime-core spec done
+
+Spec: `runtime-core / tasks 1–10`
+Kiro did: Built the schema composer, the Ajv standalone build, the reducer and registry, the graph validator, the property tests and the validate CLI; 62 of 62 runtime-core tasks are done; decisions D1–D12 were approved by the user on 2026-11-19 and are listed in "Decisions for the user" of `.kiro/specs/runtime-core/design.md`.
+Caught by: Task 9.2 checks: `pnpm codegen` exit 0, `pnpm typecheck` exit 0, `pnpm test:shared` exit 0 with 21 test files and 378 tests, `pnpm validate activities/*.json` exit 0 with one PASS line, `pnpm validate activities/fixtures/broken-dangling-edge.json` exit 1 with one `refs/dangling-ref` diagnostic, `pnpm validate` with no arguments exit 2, and `pnpm check` exit 0; the three most recent GitHub Actions CI runs on `main` passed.
+Fix: None needed.
+Kiro features: Spec workflow and tasks, steering, Context7 MCP, sub-agent task runs, fast-check property tests.
+
+## 2026-11-20 — Sub-agent runs timed out
+
+Spec: `runtime-core / tasks 3.6, 5.2, 9.1`
+Kiro did: Ran each of these tasks in one sub-agent run.
+Caught by: The sub-agent runs for tasks 3.6, 5.2 and 9.1 timed out or aborted.
+Fix: Split each of these tasks into smaller tasks.
+Kiro features: Spec tasks, sub-agents.
+
+## 2026-11-20 — Generated validators too large
+
+Spec: `runtime-core / Ajv standalone build`
+Kiro did: Generated `packages/node-types/generated/core.validators.js`.
+Caught by: `pnpm codegen` printed 428,768 bytes JS for that file.
+Fix: Requirement 3 of spec `ui-renderer` sets a byte budget for the generated validators.
+Kiro features: Spec tasks.
+
+## 2026-11-20 — Day 4 hooks not created
+
+Spec: `runtime-core`
+Kiro did: Finished Days 2–4 without creating the Kiro hooks of Brief §8 Day 4.
+Caught by: The HANDOFF review of deferred items in `docs/HANDOFF.md` §3.
+Fix: Requirement 17 of spec `ui-renderer` adds the Kiro hooks.
+Kiro features: Spec workflow.
