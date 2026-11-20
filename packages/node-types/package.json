@@ -1,0 +1,13 @@
+{
+  "name": "@dreame/node-types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "codegen": "node --experimental-strip-types scripts/codegen.ts" },
+  "dependencies": {
+    "@dreame/runtime": "workspace:*",
+    "@dreame/schema": "workspace:*",
+    "typebox": "^1.4.7"
+  }
+}

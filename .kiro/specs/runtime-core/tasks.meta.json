@@ -1,0 +1,644 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Add root devDependencies, base compiler options and the generated-files ignore rule": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066027088
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066060257
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066157120
+      }
+    ],
+    "1.2 Create the four workspace package manifests and tsconfigs": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066027536
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066061341
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066158002
+      }
+    ],
+    "1.3 Create the root `tsconfig.json` and `vitest.config.ts`": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066027825
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066061946
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066158801
+      }
+    ],
+    "1.4 Install and verify the scaffolding": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066028053
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066164028
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066328382
+      }
+    ],
+    "2.1 Write the limits, contracts, diagnostics and node-type descriptor modules": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066028264
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066336813
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066770689
+      }
+    ],
+    "2.2 Write unit tests for IDs, limits and diagnostics helpers": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066028455
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066777008
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067078813
+      }
+    ],
+    "2.3 Implement the schema composer": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066029110
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066778271
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067080311
+      }
+    ],
+    "2.4 Implement the byte cap and parser": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066029565
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066779189
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067081328
+      }
+    ],
+    "2.5 Implement the HTTPS URL check": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066029986
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066780540
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067082503
+      }
+    ],
+    "2.6 Implement the build-time codegen module": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066030267
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067100274
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067390222
+      }
+    ],
+    "2.7 Wire the browser-safe barrel and add the source scan test": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066030546
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067396715
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067588429
+      }
+    ],
+    "3.1 Implement the seeded RNG": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066030770
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067601374
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067719422
+      }
+    ],
+    "3.2 Define the runtime state and node-type types": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066030967
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067724716
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067802346
+      }
+    ],
+    "3.3 Implement the condition evaluator": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066031176
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067808608
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795068017341
+      }
+    ],
+    "3.4 Implement effects with clamping": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066031365
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067810008
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795068019600
+      }
+    ],
+    "3.5 Implement the registry and profile builder": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066031562
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067810986
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795068020900
+      }
+    ],
+    "3.6 Implement the reducer": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066031871
+      },
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795068027670
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114169438
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114617362
+      }
+    ],
+    "3.7 Wire the runtime barrel and add the boundary test": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066032074
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114626136
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114754710
+      }
+    ],
+    "4.1 Implement `content`, `choice` and `outcome`": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066032280
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114762132
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115604002
+      }
+    ],
+    "4.2 Write the codegen script and generate the `core` validators": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066032516
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115610031
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115733807
+      }
+    ],
+    "4.3 Bind the `core` profile and the package barrel": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066032713
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115740117
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115849785
+      }
+    ],
+    "4.4 Write node-type unit tests": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066032920
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115858828
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795116053709
+      }
+    ],
+    "5.1 Map Ajv errors to diagnostics": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066033121
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795115860701
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795116055261
+      }
+    ],
+    "5.2 Implement stages 1–4 and the result contract": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066033316
+      },
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795116062072
+      }
+    ],
+    "5.3 Implement stages 5 and 6": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066033516
+      }
+    ],
+    "5.4 Implement stage 7 and `GraphCtx`": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066033722
+      }
+    ],
+    "5.5 Export the validator from the schema barrel": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066033936
+      }
+    ],
+    "5.6 Write validator example tests": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066034147
+      }
+    ],
+    "6.1 Write the shared arbitraries": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066034351
+      }
+    ],
+    "6.2 Write the property test for termination": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066034555
+      }
+    ],
+    "6.3 Write the property test for validator robustness": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066034810
+      }
+    ],
+    "6.4 Write the property test for replay determinism": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066035313
+      }
+    ],
+    "6.5 Write the property test for generated manifests passing validation": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066035628
+      }
+    ],
+    "6.6 Write the property test for injected defects": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066035863
+      }
+    ],
+    "6.7 Write the property test for rejected actions": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066036062
+      }
+    ],
+    "6.8 Write the property test for `AttemptState` invariants": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066036262
+      }
+    ],
+    "6.9 Write the property test for the byte cap": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066036478
+      }
+    ],
+    "6.10 Write the property test for condition evaluation": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066036674
+      }
+    ],
+    "6.11 Write the property test for the seeded RNG": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066036916
+      }
+    ],
+    "6.12 Write the property test for the URL check": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066037133
+      }
+    ],
+    "6.13 Write the property test for diagnostic sorting": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066037353
+      }
+    ],
+    "6.14 Write the property test for clamped effects": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066037587
+      }
+    ],
+    "7.1 Implement wildcard expansion": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066037848
+      }
+    ],
+    "7.2 Implement output formatting and `run`": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066038094
+      }
+    ],
+    "7.3 Wire the CLI entry point": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066038298
+      }
+    ],
+    "7.4 Write CLI tests with a fake `CliIo`": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066038497
+      }
+    ],
+    "8.1 Write the demo manifest": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066038708
+      }
+    ],
+    "8.2 Write the broken fixture and its README": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066038919
+      }
+    ],
+    "8.3 Write the demo manifest validator test": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066039137
+      }
+    ],
+    "8.4 Add real-file CLI cases": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066039339
+      }
+    ],
+    "9.1 Replace the root scripts": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066039548
+      }
+    ],
+    "9.2 Run the full pipeline and repository checks": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066039758
+      }
+    ],
+    "10. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066039983
+      }
+    ],
+    "1. Workspace dependencies and package scaffolding": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795066329038
+      }
+    ],
+    "2. `@dreame/schema`: contracts, composer, parser, URL check and codegen": [
+      {
+        "executionId": "9409c990-3cab-4ec7-b159-f22d7bdaad06",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795067590131
+      }
+    ],
+    "3. `@dreame/runtime`: RNG, conditions, effects, registry and reducer": [
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795114755243
+      }
+    ],
+    "4. `@dreame/node-types`: shared node types and the `core` profile": [
+      {
+        "executionId": "1de2868c-37d2-4e5a-906c-d651761e9e2e",
+        "chatSessionId": "sess_10eec192-57b8-4bd7-a5cf-ca0bceaca22a",
+        "timestamp": 1795116054057
+      }
+    ]
+  }
+}

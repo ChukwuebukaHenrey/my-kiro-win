@@ -1,0 +1,22 @@
+// Build-time codegen for the `core` profile validators (Requirement 4.5, Decision D2). Runs under
+// `node --experimental-strip-types`. No try/catch: any thrown error exits non-zero (Req 4.7).
+
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { buildProfileModule } from '@dreame/schema/codegen';
+import { coreNodeTypes } from '../src/core-types.ts';
+
+const generatedDir = fileURLToPath(new URL('../generated/', import.meta.url));
+const jsPath = fileURLToPath(new URL('../generated/core.validators.js', import.meta.url));
+const dtsPath = fileURLToPath(new URL('../generated/core.validators.d.ts', import.meta.url));
+
+const { js, dts } = buildProfileModule('core', coreNodeTypes);
+
+const toLf = (text: string): string => text.replace(/\r\n/g, '\n');
+const jsText = toLf(js);
+
+mkdirSync(generatedDir, { recursive: true });
+writeFileSync(jsPath, jsText, 'utf8');
+writeFileSync(dtsPath, toLf(dts), 'utf8');
+
+console.log(`codegen: wrote ${jsPath} and ${dtsPath} (${Buffer.byteLength(jsText, 'utf8')} bytes JS)`);

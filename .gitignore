@@ -5,3 +5,4 @@ design-refs/
 coverage/
 *.log
 .DS_Store
+packages/*/generated/

@@ -200,7 +200,7 @@ Conventions for every task:
     - If setup stopped early, name the failed step, its error text and the steps not run (Req 11.7)
     - _Requirements: 1.10, 2.10, 8.11, 11.3, 11.4, 11.5, 11.6, 11.7_
 
-  - [-] 11.2 Ask the user to confirm Context7 and the GitHub page
+  - [x] 11.2 Ask the user to confirm Context7 and the GitHub page
     - Ask the user to confirm in the Kiro MCP panel that `context7` is connected with at least one tool listed (Req 5.6)
     - If the push succeeded and hashes matched, ask the user to confirm the GitHub About section shows the MIT license and `.kiro` appears in the root file list (Req 10.9)
     - If the user reports a Context7 error: keep `mcp.json` unchanged, ask before any change to `command` or `args`, and, with the user's agreement, record the error text and "unresolved" status in `KIRO_LOG.md` in a new follow-up commit (never `--amend`) (Req 5.4, 5.7, 9.7)

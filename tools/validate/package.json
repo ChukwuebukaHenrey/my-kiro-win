@@ -1,0 +1,10 @@
+{
+  "name": "@dreame/validate",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@dreame/node-types": "workspace:*",
+    "@dreame/schema": "workspace:*"
+  }
+}
