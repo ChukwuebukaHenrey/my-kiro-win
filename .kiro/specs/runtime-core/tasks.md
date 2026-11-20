@@ -317,19 +317,19 @@ Conventions for every task:
     - Verify: `pnpm exec vitest run tools/validate/test/run.test.ts; $LASTEXITCODE`
     - _Requirements: 19.2, 19.8, 19.10_
 
-- [ ] 9. Root scripts and `pnpm check`
+- [x] 9. Root scripts and `pnpm check`
   - [x] 9.1 Replace the root scripts
     - Edit `package.json` `scripts` to the exact values in design Component 5: `codegen`, `typecheck`, `test:shared`, `validate`, `check`, and `postinstall` unchanged; keep the `simple-git-hooks` field unchanged; no single-quoted arguments, environment variables or shell utilities in any script value
     - _Requirements: 18.1, 18.2, 18.4, 18.5, 18.6, 18.7, 18.8_
 
-  - [ ] 9.2 Run the full pipeline and repository checks
+  - [x] 9.2 Run the full pipeline and repository checks
     - Run each command and record its exit code: `pnpm codegen; $LASTEXITCODE`; `pnpm typecheck; $LASTEXITCODE`; `pnpm test:shared; $LASTEXITCODE`; `pnpm validate activities/*.json; $LASTEXITCODE` (exit 0, one `PASS` line for the demo only); `pnpm validate activities/fixtures/broken-dangling-edge.json; $LASTEXITCODE` (exit 1); `pnpm validate; $LASTEXITCODE` (exit 2); `pnpm check; $LASTEXITCODE` (exit 0)
     - Run `git diff --exit-code -- .github/workflows/ci.yml; $LASTEXITCODE` (exit 0) and `git status --porcelain -- .kiro/hooks packages/node-types/generated` (pass on no output)
     - Run `Test-Path package-lock.json; Test-Path yarn.lock` (both `False`)
     - **Stop condition:** a command fails after one fix attempt → report the command, its output and exit code to the user
     - _Requirements: 1.11, 4.6, 17.10, 17.11, 17.12, 17.14, 18.6, 18.9, 18.10, 19.2, 19.8, 19.10_
 
-- [ ] 10. Final checkpoint - Ensure all tests pass
+- [-] 10. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
   - Ask the user whether to commit the work; if yes, stage files by explicit path and include `pnpm-lock.yaml` in the same commit as the dependency changes (Req 1.10); never stage `packages/node-types/generated/` or `design-refs/`.
 
