@@ -157,168 +157,168 @@ Conventions for every task:
     - Verify: `pnpm exec vitest run packages/node-types/test/node-types.test.ts; $LASTEXITCODE`
     - _Requirements: 16.2, 16.3, 16.4, 16.5, 16.6, 16.7, 16.8, 16.9_
 
-- [ ] 5. Graph validator in `packages/schema/src/graph.ts`
+- [x] 5. Graph validator in `packages/schema/src/graph.ts`
   - [x] 5.1 Map Ajv errors to diagnostics
     - Create `packages/schema/src/ajv-errors.ts` with `mapSchemaErrors(errors, input, profile)`: one `schema/schema` per Ajv error at its `instancePath`; a discriminator failure on a node's `type` becomes `schema/unknown-node-type` for that node; for each edge `when` deeper than 8 levels (iterative depth walk that stops at 9) one `schema/cond-too-deep` at the `when` path replaces the Ajv errors inside it
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 8.1, 8.2, 11.1_
 
-  - [ ] 5.2 Implement stages 1–4 and the result contract
+  - [x] 5.2 Implement stages 1–4 and the result contract
     - Create `packages/schema/src/graph.ts` with `validateManifest` and `validateManifestText`: stage 1 (`profile.validateSchema`, `mapSchemaErrors`, `profile-mismatch`), stage 2 (`node-cap`, `transition-cap`), stage 3 (`duplicate-node-id`, `duplicate-var-id`), stage 4 (`dangling-ref`, `undeclared-var`, `requires-missing`, `requires-version`, `requires-unknown`, and `requires-unused` as a warning); stop after the first stage with an error while keeping earlier warnings; `severityOf` for every diagnostic; `sortDiagnostics`; at most 50 diagnostics; no mutation of `input` and no `try`/`catch` around the stages; `validateManifestText` returns `parse` diagnostics without running stages 1–7
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.10, 8.1, 8.3, 8.4, 8.5, 8.6, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8_
 
-  - [ ] 5.3 Implement stages 5 and 6
+  - [x] 5.3 Implement stages 5 and 6
     - Extend `packages/schema/src/graph.ts`: stage 5 `cycle` with an iterative three-color DFS; stage 6 `dead-end`, `terminal-has-edges`, `last-edge-conditional`, `fallback-not-terminal`, `unreachable-node` (forward reachability from `entryNodeId`), `no-terminal-reachable` (reverse reachability from terminals) and `limit-below-longest-path` (longest entry-to-terminal path by edge count over a topological order)
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8_
 
-  - [ ] 5.4 Implement stage 7 and `GraphCtx`
+  - [x] 5.4 Implement stage 7 and `GraphCtx`
     - Extend `packages/schema/src/graph.ts`: `type-mismatch`, `ref-not-answerable`, `answer-not-upstream` (dominator check on the DAG, with the holding node counted as on every path), `var-decl-invalid`, `invalid-date` (real calendar date), and a `GraphCtx` whose `checkEffect` follows design Component 1 (undeclared variable, `add` on a non-number, `set` value outside the declared type, range or `values`), `checkHttpsUrl` and `checkText` (`blank-text`); call each node type's `validate(cfg, ctx)` and include its diagnostics
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9_
 
-  - [ ] 5.5 Export the validator from the schema barrel
+  - [x] 5.5 Export the validator from the schema barrel
     - Edit `packages/schema/src/index.ts`: add re-exports of `graph.ts` (`validateManifest`, `validateManifestText`, `ValidationResult`); keep `ajv-errors.ts` internal and keep `codegen` out
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`, then `pnpm exec vitest run packages/schema/test/source-scan.test.ts; $LASTEXITCODE`
     - _Requirements: 4.1, 14.6_
 
-  - [ ] 5.6 Write validator example tests
+  - [x] 5.6 Write validator example tests
     - Create `packages/node-types/test/validator.test.ts` against `coreProfile`: one manifest per diagnostic code of design "Stage and severity of each code" (except the CLI-only `parse` codes), asserting `stage`, `code`, `severity` and `path`; depth 8 passes and depth 9 gives `schema/cond-too-deep`; 200 nodes pass the schema and 201 fail; `requires-unused` alone gives `ok: true` with one warning; a later-stage error keeps an earlier `requires-unused` warning; a stage-3 error skips stages 4–7; an own-answer edge condition passes; an `answer` ref to a node off some path gives `answer-not-upstream`
     - Verify: `pnpm --filter @dreame/node-types run codegen; $LASTEXITCODE`, then `pnpm exec vitest run packages/node-types/test/validator.test.ts; $LASTEXITCODE`
     - _Requirements: 7.1, 7.2, 7.3, 7.10, 8.2, 8.3, 8.4, 8.5, 8.6, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9_
 
-- [ ] 6. Property tests
-  - [ ] 6.1 Write the shared arbitraries
+- [x] 6. Property tests
+  - [x] 6.1 Write the shared arbitraries
     - Create `packages/node-types/test/arbitraries.ts` (not a test file): a valid-manifest arbitrary that orders node IDs, adds edges only from lower to higher positions, ends every path in an `outcome`, makes the last edge of each node unconditional, uses only upstream or own answers in conditions, includes bounded and unbounded `number` variables with `add` effects large enough to cross the bounds, sets `requires` to exactly the used types, and sets `limits.maxTransitions` to at least the longest path; defect injectors for the six defects of Property 5; an accepted-response arbitrary for the current node; a driver that plays a manifest from `createAttempt` and returns every state
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 18.11_
 
-  - [ ] 6.2 Write the property test for termination
+  - [x] 6.2 Write the property test for termination
     - Create `packages/node-types/test/termination.property.test.ts`
     - **Property 1: Valid manifests reach an outcome within `maxTransitions`**
     - **Validates: Requirements 15.12, 15.15**
     - Verify: `pnpm exec vitest run packages/node-types/test/termination.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.3 Write the property test for validator robustness
+  - [x] 6.3 Write the property test for validator robustness
     - Create `packages/node-types/test/validator.property.test.ts`; inputs from `fc.jsonValue()`, manifest-shaped values with random field types, and `fc.string()`; inputs deep-frozen
     - **Property 2: The validator does not throw on random input**
     - **Validates: Requirements 7.2, 7.4, 7.5, 7.6, 7.7, 7.10**
     - Verify: `pnpm exec vitest run packages/node-types/test/validator.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.4 Write the property test for replay determinism
+  - [x] 6.4 Write the property test for replay determinism
     - Create `packages/node-types/test/replay.property.test.ts`; include the JSON round trip of an intermediate state
     - **Property 3: Same seed and actions give the same result**
     - **Validates: Requirements 12.7, 15.13, 15.14, 16.5**
     - Verify: `pnpm exec vitest run packages/node-types/test/replay.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.5 Write the property test for generated manifests passing validation
+  - [x] 6.5 Write the property test for generated manifests passing validation
     - Add to `packages/node-types/test/validator.property.test.ts`
     - **Property 4: Generated valid manifests pass validation**
     - **Validates: Requirements 7.3, 16.9**
     - Verify: `pnpm exec vitest run packages/node-types/test/validator.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.6 Write the property test for injected defects
+  - [x] 6.6 Write the property test for injected defects
     - Add to `packages/node-types/test/validator.property.test.ts`; one injected defect per case, expected `stage/code` per design Property 5
     - **Property 5: Injected defects are reported at the expected stage**
     - **Validates: Requirements 7.1, 9.1, 9.3, 10.1, 10.2, 11.2, 11.8, 16.8**
     - Verify: `pnpm exec vitest run packages/node-types/test/validator.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.7 Write the property test for rejected actions
+  - [x] 6.7 Write the property test for rejected actions
     - Add to `packages/node-types/test/replay.property.test.ts`; states deep-frozen; random actions including wrong node IDs, unknown types, invalid responses and actions after the end
     - **Property 6: Rejected actions leave the state unchanged**
     - **Validates: Requirements 15.4, 15.11, 16.7**
     - Verify: `pnpm exec vitest run packages/node-types/test/replay.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.8 Write the property test for `AttemptState` invariants
+  - [x] 6.8 Write the property test for `AttemptState` invariants
     - Add to `packages/node-types/test/termination.property.test.ts`; check every invariant in design Data Models, including declared type and range of every variable
     - **Property 7: `AttemptState` invariants hold after every step**
     - **Validates: Requirements 15.2, 15.8, 15.12**
     - Verify: `pnpm exec vitest run packages/node-types/test/termination.property.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.9 Write the property test for the byte cap
+  - [x] 6.9 Write the property test for the byte cap
     - Add to `packages/schema/test/parse.test.ts`; spy on `JSON.parse` with `vi.spyOn` and restore it after each case
     - **Property 8: The 64 KB cap is checked before `JSON.parse`**
     - **Validates: Requirements 5.1, 5.2**
     - Verify: `pnpm exec vitest run packages/schema/test/parse.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.10 Write the property test for condition evaluation
+  - [x] 6.10 Write the property test for condition evaluation
     - Add to `packages/runtime/test/conditions.test.ts`; conditions up to depth 8 with a reference model written in the test
     - **Property 9: Condition evaluation matches a reference model**
     - **Validates: Requirements 13.1, 13.2, 13.3**
     - Verify: `pnpm exec vitest run packages/runtime/test/conditions.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.11 Write the property test for the seeded RNG
+  - [x] 6.11 Write the property test for the seeded RNG
     - Add to `packages/runtime/test/rng.test.ts`
     - **Property 10: Seeded RNG is reproducible and in range**
     - **Validates: Requirements 12.3, 12.4, 12.6**
     - Verify: `pnpm exec vitest run packages/runtime/test/rng.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.12 Write the property test for the URL check
+  - [x] 6.12 Write the property test for the URL check
     - Add to `packages/schema/test/url.test.ts`
     - **Property 11: Only `https:` URLs pass the URL check**
     - **Validates: Requirements 6.1, 6.2**
     - Verify: `pnpm exec vitest run packages/schema/test/url.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.13 Write the property test for diagnostic sorting
+  - [x] 6.13 Write the property test for diagnostic sorting
     - Create `packages/schema/test/diagnostics.test.ts`
     - **Property 12: Diagnostic sorting is stable and order-independent**
     - **Validates: Requirements 7.9**
     - Verify: `pnpm exec vitest run packages/schema/test/diagnostics.test.ts; $LASTEXITCODE`
 
-  - [ ] 6.14 Write the property test for clamped effects
+  - [x] 6.14 Write the property test for clamped effects
     - Add to `packages/runtime/test/effects.test.ts`; reference fold written in the test
     - **Property 13: `add` effects are clamped to the declared range**
     - **Validates: Requirements 13.4, 13.6, 15.12**
     - Verify: `pnpm exec vitest run packages/runtime/test/effects.test.ts; $LASTEXITCODE`
 
-- [ ] 7. `tools/validate` CLI
-  - [ ] 7.1 Implement wildcard expansion
+- [x] 7. `tools/validate` CLI
+  - [x] 7.1 Implement wildcard expansion
     - Create `tools/validate/src/expand.ts` with `DirReader`, `ExpandResult` and `expandArgs`: `*` and `?` in the last segment only, files only, sorted by code-unit order, de-duplicated; an argument without a wildcard is passed through as one file path; `**`, a wildcard in a directory segment, or a pattern with no match goes to `errors`
     - Create `tools/validate/test/expand.test.ts` with a fake `DirReader`: `activities/*.json` matches, `?` matches one character, sorting and de-duplication, an already-expanded list gives the same result as the pattern, `**` and `a*/b.json` rejected, a plain path kept even when the file does not exist
     - Verify: `pnpm exec vitest run tools/validate/test/expand.test.ts; $LASTEXITCODE`
     - _Requirements: 17.1, 17.2, 17.3, 17.12_
 
-  - [ ] 7.2 Implement output formatting and `run`
+  - [x] 7.2 Implement output formatting and `run`
     - Create `tools/validate/src/format.ts` (`formatDiagnostic` as `  <severity> <stage>/<code> at <path>: <message>`) and `tools/validate/src/run.ts` (`CliIo`, `PROFILES = { core: coreProfile }`, `run`): byte cap on raw bytes before decoding; `TextDecoder('utf-8', { fatal: true })` for `parse/invalid-utf8`; `parseManifestText`; `parse/unknown-profile` when `profile` names no entry; `validateManifest`; `PASS` with indented warnings or `FAIL` with up to 50 diagnostics; a missing or unreadable file gives `FAIL`; a per-file `try`/`catch` prints `FAIL … internal error: <message>` without a stack trace; exit `0`, `1` or `2` as in design Component 4
     - Verify: `pnpm exec tsc -p tsconfig.json; $LASTEXITCODE`
     - _Requirements: 5.5, 5.6, 17.4, 17.5, 17.6, 17.7, 17.8, 17.9, 17.10, 17.11, 17.12_
 
-  - [ ] 7.3 Wire the CLI entry point
+  - [x] 7.3 Wire the CLI entry point
     - Create `tools/validate/src/cli.ts`: implement `CliIo` with `node:fs` (`readFileSync` returning `null` on error, `readdirSync` with `withFileTypes` for files only) and `process.stdout`/`process.stderr`; pass `process.argv.slice(2)` to `run`; set `process.exitCode` and never call `process.exit`
     - Replace `tools/validate/src/index.ts` with re-exports of `expand.ts`, `format.ts` and `run.ts`
     - Verify: `pnpm --filter @dreame/node-types run codegen; $LASTEXITCODE`, then `node --experimental-strip-types tools/validate/src/cli.ts; $LASTEXITCODE` (pass when the usage message prints and the exit code is 2)
     - _Requirements: 17.12, 17.13_
 
-  - [ ] 7.4 Write CLI tests with a fake `CliIo`
+  - [x] 7.4 Write CLI tests with a fake `CliIo`
     - Create `tools/validate/test/run.test.ts` using in-memory files: exit 0 with `PASS` for a valid manifest, `PASS` plus an indented `requires-unused` warning and exit 0, exit 1 for a dangling edge, oversize bytes give `parse/too-large` without decoding, invalid UTF-8 bytes give `parse/invalid-utf8`, invalid JSON, `unknown-profile`, a missing plain path gives `FAIL` and exit 1, an `internal error` from a throwing reader gives `FAIL` without a stack trace and later files still run, exit 2 for no arguments and for a pattern with no match
     - Verify: `pnpm exec vitest run tools/validate/test/run.test.ts; $LASTEXITCODE`
     - _Requirements: 5.5, 5.6, 17.2, 17.4, 17.5, 17.6, 17.7, 17.8, 17.9, 17.10, 17.11, 17.12_
 
-- [ ] 8. Demo manifest and broken fixture
-  - [ ] 8.1 Write the demo manifest
+- [x] 8. Demo manifest and broken fixture
+  - [x] 8.1 Write the demo manifest
     - Create `activities/core-demo-study-break.json`: `schemaVersion` 1, `profile` `core`, `requires` exactly `{ "content": 1, "choice": 1, "outcome": 1 }`, at least one node of each type, made-up content about planning a study break, no real names, brands or phone numbers; any CTA uses an `https:` website URL such as `https://example.com/...`; `validUntil` omitted or 2027-12-31 or later
     - Verify: `node --experimental-strip-types tools/validate/src/cli.ts activities/core-demo-study-break.json; $LASTEXITCODE` (pass on `PASS` and exit 0); `Select-String -Path activities/core-demo-study-break.json -Pattern <pattern>` where `<pattern>` joins the Banned_Phrase_List phrases from `.kiro/steering/product.md` with `|` (pass on no output)
     - _Requirements: 19.1, 19.2, 19.3, 19.4, 19.5, 19.6_
 
-  - [ ] 8.2 Write the broken fixture and its README
+  - [x] 8.2 Write the broken fixture and its README
     - Create `activities/fixtures/broken-dangling-edge.json`: synthetic data, passes stages 1–3, exactly one defect (an edge `to` an ID that names no node)
     - Create `activities/fixtures/README.md` stating that the fixture is invalid on purpose and is used by tests
     - Verify: `node --experimental-strip-types tools/validate/src/cli.ts activities/fixtures/broken-dangling-edge.json; $LASTEXITCODE` (pass on `FAIL`, a `refs/dangling-ref` line and exit 1)
     - _Requirements: 19.7, 19.8, 19.9_
 
-  - [ ] 8.3 Write the demo manifest validator test
+  - [x] 8.3 Write the demo manifest validator test
     - Create `packages/node-types/test/demo-manifest.test.ts`: read both files with `node:fs`; `validateManifestText(demo, coreProfile)` gives `ok: true` with no diagnostics; the fixture gives `ok: false` with exactly one error, `refs/dangling-ref`; the demo text contains no Banned_Phrase_List phrase (read the list from `.kiro/steering/product.md` in the test)
     - Verify: `pnpm exec vitest run packages/node-types/test/demo-manifest.test.ts; $LASTEXITCODE`
     - _Requirements: 19.1, 19.6, 19.7_
 
-  - [ ] 8.4 Add real-file CLI cases
+  - [x] 8.4 Add real-file CLI cases
     - Add to `tools/validate/test/run.test.ts` a `CliIo` backed by `node:fs`: `activities/*.json` expands to `activities/core-demo-study-break.json` only (the fixture under `activities/fixtures/` is not matched) and exits 0; the broken fixture exits 1 with `refs/dangling-ref` in the output
     - Verify: `pnpm exec vitest run tools/validate/test/run.test.ts; $LASTEXITCODE`
     - _Requirements: 19.2, 19.8, 19.10_
 
 - [ ] 9. Root scripts and `pnpm check`
-  - [ ] 9.1 Replace the root scripts
+  - [x] 9.1 Replace the root scripts
     - Edit `package.json` `scripts` to the exact values in design Component 5: `codegen`, `typecheck`, `test:shared`, `validate`, `check`, and `postinstall` unchanged; keep the `simple-git-hooks` field unchanged; no single-quoted arguments, environment variables or shell utilities in any script value
     - _Requirements: 18.1, 18.2, 18.4, 18.5, 18.6, 18.7, 18.8_
 

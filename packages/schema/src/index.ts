@@ -7,3 +7,5 @@ export * from './node-type.ts';
 export * from './compose.ts';
 export * from './parse.ts';
 export * from './url.ts';
+// Explicit names keep graph.ts internals (GraphIndex, dominators, successorLists, ...) private.
+export { validateManifest, validateManifestText, type ValidationResult } from './graph.ts';

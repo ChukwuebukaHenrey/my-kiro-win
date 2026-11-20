@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { VarDecl } from '@dreame/schema';
+import fc from 'fast-check';
+import type { Effect, VarDecl } from '@dreame/schema';
 import { applyEffects, clampToDecl } from '../src/effects.ts';
 import type { AttemptState } from '../src/state.ts';
 
@@ -132,5 +133,83 @@ describe('clampToDecl', () => {
     expect(clampToDecl(4, { id: 'x', type: 'number', initial: 0, min: 0, max: 10 })).toBe(4);
     expect(clampToDecl(Number.POSITIVE_INFINITY, { id: 'x', type: 'number', initial: 0 })).toBe(Number.MAX_VALUE);
     expect(clampToDecl(Number.NEGATIVE_INFINITY, { id: 'x', type: 'number', initial: 0 })).toBe(-Number.MAX_VALUE);
+  });
+});
+
+type NumberDecl = Extract<VarDecl, { type: 'number' }>;
+
+/** Reference fold for Property 13: `set` stores the value; `add` sums, then clamps with ±Number.MAX_VALUE for a missing bound. */
+function referenceFold(decl: NumberDecl, start: number, effects: readonly Effect[]): number {
+  const lo = decl.min ?? -Number.MAX_VALUE;
+  const hi = decl.max ?? Number.MAX_VALUE;
+  let v = start;
+  for (const e of effects) {
+    if (e.op === 'set') {
+      v = e.value as number;
+    } else {
+      const sum = v + e.value;
+      v = sum > hi ? hi : sum < lo ? lo : sum;
+    }
+  }
+  return v;
+}
+
+const finite = fc.double({ noNaN: true, noDefaultInfinity: true });
+const sorted = (xs: number[]): number[] => [...xs].sort((a, b) => a - b);
+const triple = fc.oneof(fc.tuple(finite, finite, finite), fc.tuple(fc.integer(), fc.integer(), fc.integer())).map(sorted);
+const pair = fc.oneof(fc.tuple(finite, finite), fc.tuple(fc.integer(), fc.integer())).map(sorted);
+
+// Bounded, min-only, max-only and unbounded declarations, with min ≤ initial ≤ max.
+const numberDeclArb: fc.Arbitrary<NumberDecl> = fc.oneof(
+  triple.map(([min, initial, max]): NumberDecl => ({ id: 'x', type: 'number', initial: initial!, min: min!, max: max! })),
+  pair.map(([min, initial]): NumberDecl => ({ id: 'x', type: 'number', initial: initial!, min: min! })),
+  pair.map(([initial, max]): NumberDecl => ({ id: 'x', type: 'number', initial: initial!, max: max! })),
+  finite.map((initial): NumberDecl => ({ id: 'x', type: 'number', initial })),
+);
+
+const addValueArb = fc.oneof(
+  finite,
+  fc.integer({ min: -1000, max: 1000 }),
+  fc.constantFrom(Number.MAX_VALUE, -Number.MAX_VALUE, Number.MAX_VALUE / 2, -Number.MAX_VALUE / 2),
+);
+
+const caseArb = numberDeclArb.chain((decl) => {
+  const inRange = fc.double({
+    noNaN: true,
+    min: decl.min ?? -Number.MAX_VALUE,
+    max: decl.max ?? Number.MAX_VALUE,
+  });
+  const effectArb: fc.Arbitrary<Effect> = fc.oneof(
+    { arbitrary: addValueArb.map((value): Effect => ({ op: 'add', var: 'x', value })), weight: 3 },
+    { arbitrary: inRange.map((value): Effect => ({ op: 'set', var: 'x', value })), weight: 1 },
+  );
+  return fc.record({
+    decl: fc.constant(decl),
+    start: inRange,
+    effects: fc.array(effectArb, { minLength: 1, maxLength: 12 }),
+  });
+});
+
+// Feature: runtime-core, Property 13: `add` effects are clamped to the declared range
+// **Validates: Requirements 13.4, 13.6, 15.12**
+// A passing run is evidence for this property over the generated cases, not a proof.
+describe('Feature: runtime-core, Property 13: `add` effects are clamped to the declared range', () => {
+  it('Feature: runtime-core, Property 13: `add` effects are clamped to the declared range', () => {
+    fc.assert(
+      fc.property(caseArb, ({ decl, start, effects }) => {
+        const vars = new Map<string, VarDecl>([['x', decl]]);
+        const s = deepFreeze(makeState({ x: start }));
+        const snapshot = structuredClone(s);
+        const next = applyEffects(effects, s, vars);
+        const actual = next.vars.x;
+        expect(actual).toBe(referenceFold(decl, start, effects));
+        expect(typeof actual === 'number' && Number.isFinite(actual)).toBe(true);
+        const n = actual as number;
+        expect(n >= (decl.min ?? -Number.MAX_VALUE) && n <= (decl.max ?? Number.MAX_VALUE)).toBe(true);
+        expect(Object.keys(next.vars)).toEqual(['x']);
+        expect(s).toEqual(snapshot);
+      }),
+      { numRuns: 300 },
+    );
   });
 });

@@ -875,7 +875,7 @@ For any manifest from the valid-manifest arbitrary, `validateManifest(m, corePro
 
 ### Property 5: Injected defects are reported at the expected stage
 
-For any valid manifest and any one injected defect from {edge to an unknown node, duplicate node ID, back edge that creates a cycle, non-terminal node with no edges, condition comparing a number ref with a string, CTA URL with a scheme other than `https:`}, `validateManifest` returns `ok === false` with an error whose `stage` and `code` match the defect (`refs/dangling-ref`, `ids/duplicate-node-id`, `dag/cycle`, `terminal/dead-end`, `conditions/type-mismatch`, `conditions/unsafe-url`).
+For any valid manifest and any one injected defect from {edge to an unknown node, duplicate node ID, back edge that creates a cycle, non-terminal node with no edges, condition comparing a number ref with a string, a CTA URL that starts with `https://` but fails the URL check (shortener host, credentials or empty host)}, `validateManifest` returns `ok === false` with an error whose `stage` and `code` match the defect (`refs/dangling-ref`, `ids/duplicate-node-id`, `dag/cycle`, `terminal/dead-end`, `conditions/type-mismatch`, `conditions/unsafe-url`). A CTA URL with a scheme other than `https:` is rejected earlier, at stage `schema`, because the outcome config schema requires the `https://` prefix.
 
 **Validates: Requirements 7.1, 9.1, 9.3, 10.1, 10.2, 11.2, 11.8, 16.8**
 

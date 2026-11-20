@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "profile": "core",
+  "activityId": "core-demo-study-break",
+  "version": 1,
+  "requires": { "content": 1, "choice": 1, "outcome": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "stretchBreak",
+  "limits": { "maxNodes": 10, "maxTransitions": 10 },
+  "variables": [{ "id": "restNeed", "type": "number", "initial": 0 }],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": {
+        "title": "Plan your study break",
+        "body": "You have been studying for a while. Answer two quick questions and get a break plan that fits how you feel and how much time you have.",
+        "continueLabel": "Start"
+      },
+      "edges": [{ "to": "feeling" }]
+    },
+    {
+      "id": "feeling",
+      "type": "choice",
+      "config": {
+        "prompt": "How do you feel after your last study session?",
+        "options": [
+          { "id": "tired", "label": "Tired and a bit foggy", "effects": [{ "op": "add", "var": "restNeed", "value": 2 }] },
+          { "id": "restless", "label": "Restless, I need to move", "effects": [{ "op": "add", "var": "restNeed", "value": 1 }] },
+          { "id": "fine", "label": "Fine, just want a short pause" }
+        ],
+        "shuffle": true
+      },
+      "edges": [{ "to": "breakLength" }]
+    },
+    {
+      "id": "breakLength",
+      "type": "choice",
+      "config": {
+        "prompt": "How long can your break be?",
+        "options": [
+          { "id": "five", "label": "About 5 minutes" },
+          { "id": "fifteen", "label": "About 15 minutes", "effects": [{ "op": "add", "var": "restNeed", "value": 1 }] },
+          { "id": "thirty", "label": "About 30 minutes", "effects": [{ "op": "add", "var": "restNeed", "value": 2 }] }
+        ]
+      },
+      "edges": [
+        { "to": "longBreak", "when": { "op": "gte", "ref": { "var": "restNeed" }, "value": 3 } },
+        { "to": "quickReset", "when": { "op": "eq", "ref": { "answer": "breakLength" }, "value": "five" } },
+        { "to": "stretchBreak" }
+      ]
+    },
+    {
+      "id": "longBreak",
+      "type": "outcome",
+      "config": {
+        "title": "Take a proper rest",
+        "body": "Step away from your desk. Have a glass of water, take a slow walk, and leave your phone in another room. Come back when the timer ends.",
+        "cta": { "label": "Read more break ideas", "url": "https://example.com/study-break-ideas" }
+      },
+      "edges": []
+    },
+    {
+      "id": "quickReset",
+      "type": "outcome",
+      "config": {
+        "title": "Quick reset",
+        "body": "Close your eyes for one minute, breathe slowly, then look out of a window for a few minutes before you start again."
+      },
+      "edges": []
+    },
+    {
+      "id": "stretchBreak",
+      "type": "outcome",
+      "config": {
+        "title": "Stretch and refill",
+        "body": "Stand up, stretch your arms and back, and refill your water bottle. Write down the next small task so you can start straight away."
+      },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}

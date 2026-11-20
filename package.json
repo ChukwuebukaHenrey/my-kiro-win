@@ -5,9 +5,11 @@
   "packageManager": "pnpm@12.21.0",
   "engines": { "node": ">=22" },
   "scripts": {
-    "check": "node -e \"console.log('not implemented yet')\"",
-    "validate": "node -e \"console.log('not implemented yet')\"",
-    "test:shared": "node -e \"console.log('not implemented yet')\"",
+    "codegen": "pnpm --filter @dreame/node-types run codegen",
+    "typecheck": "pnpm codegen && tsc -p tsconfig.json",
+    "test:shared": "pnpm codegen && vitest run",
+    "validate": "pnpm codegen && node --experimental-strip-types tools/validate/src/cli.ts",
+    "check": "pnpm codegen && tsc -p tsconfig.json && vitest run && node --experimental-strip-types tools/validate/src/cli.ts activities/*.json",
     "postinstall": "simple-git-hooks"
   },
   "simple-git-hooks": { "pre-commit": "pnpm check" },

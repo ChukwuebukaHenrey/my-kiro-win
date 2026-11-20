@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import fc from 'fast-check';
 import { createRng } from '../src/rng.ts';
 
 // Reference mulberry32 written out step by step with BigInt arithmetic modulo 2^32,
@@ -82,5 +83,72 @@ describe('createRng', () => {
     expect([...shuffled].sort()).toEqual([...items]);
     expect(items).toEqual(['a', 'b', 'c', 'd', 'e']);
     expect(createRng(3).shuffle(items)).toEqual(shuffled);
+  });
+});
+
+describe('Property 10', () => {
+  // **Validates: Requirements 12.3, 12.4, 12.6**
+  const uint32 = fc.integer({ min: 0, max: 2 ** 32 - 1 });
+  const bound = fc.oneof(
+    fc.integer({ min: 1, max: 2 ** 32 }),
+    fc.constantFrom(1, 2, 2 ** 31, 2 ** 32 - 1, 2 ** 32),
+  );
+  const runs = { numRuns: 200 };
+
+  it('Feature: runtime-core, Property 10: Seeded RNG is reproducible and in range (same seed, same sequence)', () => {
+    fc.assert(
+      fc.property(uint32, fc.integer({ min: 1, max: 64 }), (seed, count) => {
+        expect(draw(seed, count)).toEqual(draw(seed, count));
+      }),
+      runs,
+    );
+  });
+
+  it('Feature: runtime-core, Property 10: Seeded RNG is reproducible and in range (nextUint32, nextFloat and nextInt ranges)', () => {
+    fc.assert(
+      fc.property(uint32, fc.array(bound, { minLength: 1, maxLength: 32 }), (seed, bounds) => {
+        const rng = createRng(seed);
+        for (const n of bounds) {
+          const u = rng.nextUint32();
+          expect(Number.isInteger(u) && u >= 0 && u <= 2 ** 32 - 1).toBe(true);
+          const f = rng.nextFloat();
+          expect(f >= 0 && f < 1).toBe(true);
+          const k = rng.nextInt(n);
+          expect(Number.isInteger(k) && k >= 0 && k < n).toBe(true);
+        }
+      }),
+      runs,
+    );
+  });
+
+  it('Feature: runtime-core, Property 10: Seeded RNG is reproducible and in range (shuffle is a permutation and leaves input unchanged)', () => {
+    fc.assert(
+      fc.property(uint32, fc.array(fc.integer(), { maxLength: 40 }), (seed, items) => {
+        const before = items.slice();
+        const input = Object.freeze(items.slice());
+        const shuffled = createRng(seed).shuffle(input);
+        expect(shuffled).not.toBe(input);
+        expect(input).toEqual(before);
+        const byValue = (a: number, b: number): number => a - b;
+        expect(shuffled.slice().sort(byValue)).toEqual(before.slice().sort(byValue));
+        expect(createRng(seed).shuffle(input)).toEqual(shuffled);
+      }),
+      runs,
+    );
+  });
+
+  it('Feature: runtime-core, Property 10: Seeded RNG is reproducible and in range (resuming from state continues the sequence)', () => {
+    fc.assert(
+      fc.property(uint32, fc.integer({ min: 0, max: 64 }), fc.integer({ min: 1, max: 32 }), (seed, skip, count) => {
+        const rng = createRng(seed);
+        for (let i = 0; i < skip; i++) rng.nextUint32();
+        const resumed = createRng(rng.state);
+        const fromOriginal = Array.from({ length: count }, () => rng.nextUint32());
+        const fromResumed = Array.from({ length: count }, () => resumed.nextUint32());
+        expect(fromResumed).toEqual(fromOriginal);
+        expect(fromOriginal).toEqual(draw(seed, skip + count).slice(skip));
+      }),
+      runs,
+    );
   });
 });

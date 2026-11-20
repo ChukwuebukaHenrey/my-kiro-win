@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "profile": "core",
+  "activityId": "broken-dangling-edge",
+  "version": 1,
+  "requires": { "content": 1, "choice": 1, "outcome": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "tryAgain",
+  "limits": { "maxNodes": 10, "maxTransitions": 10 },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": { "title": "Quick check", "body": "Answer one short question." },
+      "edges": [{ "to": "q" }]
+    },
+    {
+      "id": "q",
+      "type": "choice",
+      "config": {
+        "prompt": "Did you finish the practice sheet?",
+        "options": [
+          { "id": "yes", "label": "Yes" },
+          { "id": "no", "label": "Not yet" }
+        ]
+      },
+      "edges": [
+        { "to": "finish", "when": { "op": "eq", "ref": { "answer": "q" }, "value": "yes" } },
+        { "to": "tryAgain" }
+      ]
+    },
+    {
+      "id": "tryAgain",
+      "type": "outcome",
+      "config": { "title": "Try again", "body": "Come back when the sheet is done." },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}
