@@ -39,6 +39,24 @@ describe('ContentNodeView', () => {
     expect(onRespond).toHaveBeenCalledTimes(1);
   });
 
+  it('accepts a new click after the rejections prop changes', async () => {
+    const user = userEvent.setup();
+    const onRespond = vi.fn<(r: ContentResponse) => void>();
+    const { rerender } = render(
+      <ContentNodeView cfg={{ body: 'Hello' }} onRespond={onRespond} nodeState={undefined} rejections={0} />,
+    );
+    const button = screen.getByRole('button', { name: 'Continue' });
+
+    await user.click(button);
+    await user.click(button);
+    expect(onRespond).toHaveBeenCalledTimes(1);
+
+    rerender(<ContentNodeView cfg={{ body: 'Hello' }} onRespond={onRespond} nodeState={undefined} rejections={1} />);
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(onRespond).toHaveBeenCalledTimes(2);
+    expect(onRespond).toHaveBeenLastCalledWith({});
+  });
+
   it('works from the keyboard', async () => {
     const user = userEvent.setup();
     const onRespond = vi.fn<(r: ContentResponse) => void>();

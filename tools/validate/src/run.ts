@@ -16,6 +16,7 @@ import {
   type ProfileDescriptor,
 } from '@dreame/schema';
 import { coreProfile } from '@dreame/node-types';
+import { shopProfile } from '@dreame/shop-challenge/profile';
 import { expandArgs } from './expand.ts';
 import { escapeControl, formatDiagnostic } from './format.ts';
 
@@ -28,7 +29,10 @@ export interface CliIo {
   err(line: string): void;
 }
 
-export const PROFILES: Readonly<Record<string, ProfileDescriptor>> = Object.freeze({ core: coreProfile });
+export const PROFILES: Readonly<Record<string, ProfileDescriptor>> = Object.freeze({
+  core: coreProfile,
+  'shop-challenge': shopProfile,
+});
 
 const USAGE = 'usage: pnpm validate <file-or-pattern>...  (wildcards * and ? are allowed in the last path segment only)';
 

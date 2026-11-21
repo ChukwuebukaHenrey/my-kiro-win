@@ -7,7 +7,7 @@ import type { Action, ActionRejection, AttemptState, Runtime } from '@dreame/run
 
 export interface PlayerState {
   readonly attempt: AttemptState;
-  /** Number of responses `checkAction` rejected; part of the view key, so a rejection remounts the view. */
+  /** Number of responses `checkAction` rejected; passed to views as `rejections`, so a view can re-enable submit after a rejection. */
   readonly rejections: number;
   readonly lastRejection: ActionRejection | null;
 }

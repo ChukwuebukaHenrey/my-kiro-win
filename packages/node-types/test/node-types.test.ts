@@ -56,6 +56,7 @@ function ctx(nodePath: string): GraphCtx {
     checkEffect: (effect: Effect, path: string) => (varMap.has(effect.var) ? [] : [diag('effect-invalid', path)]),
     checkHttpsUrl: (url: string, path: string) => (url.startsWith('https://') ? [] : [diag('unsafe-url', path)]),
     checkText: (text: string, path: string) => (text.trim() === '' ? [diag('blank-text', path)] : []),
+    isUpstream: () => true,
   };
 }
 

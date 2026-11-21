@@ -26,6 +26,11 @@ export interface GraphCtx {
   checkHttpsUrl(url: string, path: string): Diagnostic[];
   /** Reports `conditions/blank-text` (Req 11.9). */
   checkText(text: string, path: string): Diagnostic[];
+  /**
+   * `true` when `nodeId` names a node other than the one being checked that lies on every path
+   * from `entryNodeId` to the node being checked; `false` for an unknown ID and for the node itself.
+   */
+  isUpstream(nodeId: string): boolean;
 }
 
 export interface NodeTypeDescriptor<C = unknown> {

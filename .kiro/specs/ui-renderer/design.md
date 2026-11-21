@@ -480,7 +480,7 @@ The four Hook_Files use the v1 hook format and the file names of Playbook §3b (
 | H1 `validate-activities.json` | `validate-activities`: `PostFileSave`; `validate-activities-on-create`: `PostFileCreate` | command `pnpm -s validate:hook "{{filePath}}"` | 30 |
 | H2 `runtime-regression.json` | `runtime-regression`: `PostFileSave` | command `pnpm -s test:shared` | 180 |
 | H3 `node-type-wiring.json` | `node-type-wiring`: `PostFileSave`; `node-type-wiring-on-create`: `PostFileCreate` | agent prompt | — |
-| H4 `post-task-check.json` | `post-task-check`: `PostTaskExec` | command `pnpm -s check` | 300 |
+| H4 `post-task-check.json` | `post-task-check`: `PostTaskExec` | command `pnpm -s check` | 600 (raised 2026-11-21, shop-challenge D53) |
 
 Every hook sets `"enabled": true`. Hook names are unique across the four files, because the docs describe `name` as the hook's identifier. All commands use `pnpm -s`, so pnpm adds no script banner or `ELIFECYCLE` line to the output the agent reads.
 
@@ -663,7 +663,7 @@ The shared node types already have unit tests in `packages/node-types/test/node-
       "description": "Playbook §3b: runs the full check after a spec task finishes.",
       "trigger": "PostTaskExec",
       "action": { "type": "command", "command": "pnpm -s check" },
-      "timeout": 300,
+      "timeout": 600,
       "enabled": true
     }
   ]
@@ -731,7 +731,7 @@ export const CONTRAST_PAIRS: readonly { readonly text: TokenName; readonly backg
 | `hooks[].trigger` | `PostFileCreate`, `PostFileSave`, `PostFileDelete`, `PreToolUse`, `PostToolUse`, `SessionStart`, `Stop`, `UserPromptSubmit`, `PreTaskExec`, `PostTaskExec`, `PreCompact`, `PostCompact`, `PermissionRequest` | yes |
 | `hooks[].matcher` | regex string | no |
 | `hooks[].action` | `{ type: "command"; command: string }` or `{ type: "agent"; prompt: string }` | yes |
-| `hooks[].timeout` | integer seconds; this repo requires 1–300 for command hooks and sets 30, 180 and 300 (C13) | no |
+| `hooks[].timeout` | integer seconds; this repo requires 1–600 for command hooks and sets 30, 180 and 600 (C13) | no |
 | `hooks[].enabled` | boolean; this repo sets `true` on every hook (Playbook §3b) | no |
 
 

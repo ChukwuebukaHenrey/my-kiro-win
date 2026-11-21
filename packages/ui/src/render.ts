@@ -8,6 +8,8 @@ export interface RenderProps<C = unknown, R = unknown> {
   readonly onRespond: (response: R) => void;
   /** `AttemptState.nodeState[currentNodeId]`, or `undefined`. */
   readonly nodeState: JsonValue | undefined;
+  /** Number of Rejections so far in this attempt; a change means the last submit was rejected. Absent counts as 0. */
+  readonly rejections?: number;
 }
 
 /**

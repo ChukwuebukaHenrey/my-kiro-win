@@ -95,6 +95,23 @@ describe('ChoiceNodeView', () => {
     expect(onRespond).toHaveBeenCalledWith({ optionId: 'apple' });
   });
 
+  it('accepts a new submit after the rejections prop changes and keeps the selected option', async () => {
+    const user = userEvent.setup();
+    const onRespond = vi.fn<(r: ChoiceResponse) => void>();
+    const { rerender } = render(<ChoiceNodeView cfg={cfg} onRespond={onRespond} nodeState={undefined} rejections={0} />);
+
+    await user.click(screen.getByRole('radio', { name: 'Bread' }));
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+    expect(onRespond).toHaveBeenCalledTimes(1);
+
+    rerender(<ChoiceNodeView cfg={cfg} onRespond={onRespond} nodeState={undefined} rejections={1} />);
+    expect((screen.getByRole('radio', { name: 'Bread' }) as HTMLInputElement).checked).toBe(true);
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+    expect(onRespond).toHaveBeenCalledTimes(2);
+    expect(onRespond).toHaveBeenLastCalledWith({ optionId: 'bread' });
+  });
+
   it('gives two choice views separate radio groups', () => {
     render(
       <>

@@ -240,12 +240,15 @@ describe('run (validate CLI core)', () => {
       };
     }
 
-    it('expands activities/*.json to the demo manifest only and passes it', () => {
+    it('expands activities/*.json to the demo manifests only and passes them', () => {
       const io = fsIo();
       expect(run([`${ROOT}activities/*.json`], io)).toBe(0);
       expect(io.stderr).toEqual([]);
       const statusLines = io.stdout.filter((l) => /^(PASS|FAIL) /.test(l));
-      expect(statusLines).toEqual([`PASS ${ROOT}activities/core-demo-study-break.json`]);
+      expect(statusLines).toEqual([
+        `PASS ${ROOT}activities/core-demo-study-break.json`,
+        `PASS ${ROOT}activities/shop-gift-bundle.json`,
+      ]);
       expect(io.stdout.join('\n')).not.toContain('fixtures');
     });
 
@@ -255,6 +258,21 @@ describe('run (validate CLI core)', () => {
       expect(run([file], io)).toBe(1);
       expect(io.stdout[0]).toBe(`FAIL ${file}`);
       expect(io.stdout.join('\n')).toContain('refs/dangling-ref');
+    });
+
+    it('passes the shop-challenge demo and fails the Shop_Fixture with one select-unsatisfiable (Requirements 17.7, 17.8)', () => {
+      const demo = `${ROOT}activities/shop-gift-bundle.json`;
+      const demoIo = fsIo();
+      expect(run([demo], demoIo)).toBe(0);
+      expect(demoIo.stdout).toEqual([`PASS ${demo}`]);
+
+      const fixture = `${ROOT}activities/fixtures/broken-shop-over-budget.json`;
+      const io = fsIo();
+      expect(run([fixture], io)).toBe(1);
+      expect(io.stdout[0]).toBe(`FAIL ${fixture}`);
+      const diagnostics = io.stdout.slice(1);
+      expect(diagnostics).toHaveLength(1);
+      expect(diagnostics[0]).toMatch(/^ {2}error conditions\/select-unsatisfiable at /);
     });
   });
 });

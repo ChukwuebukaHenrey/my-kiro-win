@@ -1,0 +1,34 @@
+{
+  "name": "@dreame/shop-challenge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "22.x" },
+  "exports": {
+    "./profile": "./src/profile.ts",
+    "./node-types": "./src/node-types/index.ts"
+  },
+  "scripts": {
+    "codegen": "node --experimental-strip-types scripts/codegen.ts",
+    "build": "pnpm -w run codegen && vite build && node --experimental-strip-types scripts/check-dist.ts"
+  },
+  "dependencies": {
+    "@dreame/node-types": "workspace:*",
+    "@dreame/runtime": "workspace:*",
+    "@dreame/schema": "workspace:*",
+    "@dreame/ui": "workspace:*",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.2",
+    "typebox": "^1.4.7"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.12",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "axe-core": "^4.14.1",
+    "vite": "^8.3.8"
+  }
+}

@@ -125,8 +125,51 @@ describe('ActivityPlayer', () => {
 
     await user.click(before);
     expect(player().getAttribute('data-node-id')).toBe('feeling');
-    expect(screen.getByRole('alert').textContent).toBe('That answer was not accepted. Please try again.');
-    // A rejection changes the view key, so the view remounts with a new element.
-    expect(screen.getByRole('button', { name: 'Send bad answer' })).not.toBe(before);
+    const firstAlert = screen.getByRole('alert');
+    expect(firstAlert.textContent).toBe('That answer was not accepted. Please try again.');
+    // The view key is the node ID only, so the view stays mounted and focus moves to the alert.
+    expect(screen.getByRole('button', { name: 'Send bad answer' })).toBe(before);
+    expect(document.activeElement).toBe(firstAlert);
+
+    // A second click is sent again and produces a new alert element that takes focus (Requirement 12.7).
+    await user.click(before);
+    expect(player().getAttribute('data-node-id')).toBe('feeling');
+    const secondAlert = screen.getByRole('alert');
+    expect(secondAlert.textContent).toBe('That answer was not accepted. Please try again.');
+    expect(secondAlert).not.toBe(firstAlert);
+    expect(firstAlert.isConnected).toBe(false);
+    expect(document.activeElement).toBe(secondAlert);
+  });
+
+  it('removes the alert and moves focus to the next node after an accepted response (Requirement 12.4)', async () => {
+    function BadThenGoodChoiceView({ onRespond }: RenderProps<unknown, unknown>): ReactNode {
+      return (
+        <>
+          <button type="button" onClick={() => onRespond({ optionId: 'not-an-option' })}>
+            Send bad answer
+          </button>
+          <button type="button" onClick={() => onRespond({ optionId: 'tired' })}>
+            Send good answer
+          </button>
+        </>
+      );
+    }
+    const views = createRenderRegistry([
+      { type: 'content', Render: ContentNodeView },
+      { type: 'choice', Render: BadThenGoodChoiceView },
+      { type: 'outcome', Render: OutcomeNodeView },
+    ]);
+
+    const user = userEvent.setup();
+    render(<ActivityPlayer profile={coreProfile} manifest={demoManifest()} seed={42} views={views} now={counterClock()} />);
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await user.click(screen.getByRole('button', { name: 'Send bad answer' }));
+    expect(document.activeElement).toBe(screen.getByRole('alert'));
+
+    await user.click(screen.getByRole('button', { name: 'Send good answer' }));
+    expect(player().getAttribute('data-node-id')).toBe('breakLength');
+    expect(screen.queryByRole('alert')).toBeNull();
+    // The stub view has no h2, so focus goes to the container.
+    expect(document.activeElement).toBe(player());
   });
 });

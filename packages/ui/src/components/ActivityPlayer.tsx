@@ -47,6 +47,7 @@ export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now 
   const { attempt, rejections } = view.ps;
   const currentNodeId = attempt.currentNodeId;
   const containerRef = useRef<HTMLElement>(null);
+  const alertRef = useRef<HTMLParagraphElement>(null);
   // The node shown when focus was last handled; equal on the first render (and on a StrictMode
   // effect re-run), so focus stays where it is until the node changes.
   const focusedNodeId = useRef(currentNodeId);
@@ -60,6 +61,11 @@ export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now 
     if (heading !== null) heading.focus();
     else container.focus();
   }, [currentNodeId]);
+
+  // Runs after a Rejection; the alert element is new because its key is the rejection count.
+  useEffect(() => {
+    if (view.rejected) alertRef.current?.focus();
+  }, [rejections, view.rejected]);
 
   const node = rt.nodes.get(currentNodeId);
   if (node === undefined) {
@@ -81,7 +87,7 @@ export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now 
         </p>
       )}
       {view.rejected && (
-        <p className="dr-error" role="alert">
+        <p key={rejections} ref={alertRef} className="dr-error" role="alert" tabIndex={-1}>
           That answer was not accepted. Please try again.
         </p>
       )}
@@ -90,7 +96,8 @@ export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now 
         nodeState={nodeState}
         views={views}
         onRespond={onRespond}
-        viewKey={`${currentNodeId}#${rejections}`}
+        viewKey={currentNodeId}
+        rejections={rejections}
       />
     </section>
   );

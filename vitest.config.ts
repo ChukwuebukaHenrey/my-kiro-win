@@ -7,14 +7,18 @@ export default defineConfig({
       {
         test: {
           name: 'node',
-          include: ['packages/*/test/**/*.test.ts', 'tools/*/test/**/*.test.ts'],
+          include: [
+            'packages/*/test/**/*.test.ts',
+            'tools/*/test/**/*.test.ts',
+            'apps/*/test/**/*.test.ts',
+          ],
           environment: 'node',
         },
       },
       {
         test: {
           name: 'dom',
-          include: ['packages/*/test/**/*.test.tsx'],
+          include: ['packages/*/test/**/*.test.tsx', 'apps/*/test/**/*.test.tsx'],
           environment: 'jsdom',
           setupFiles: ['packages/ui/test/setup.ts'],
         },

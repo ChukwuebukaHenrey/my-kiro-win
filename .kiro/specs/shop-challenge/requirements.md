@@ -449,7 +449,7 @@ Source: Playbook §3a ("Every steering rule that matters is also enforced in CI"
 9. THE Workspace SHALL have a test showing that the Lint_Check reports `react/no-danger` for a code sample that uses `dangerouslySetInnerHTML`, and that the Boundary_Rules report a violation for a sample import of `react` from `packages/runtime`, with no violating file committed under `apps/`, `packages/` or `tools/`.
 10. THE Implementing_Agent SHALL change `.github/workflows/ci.yml` only by adding one step `pnpm --filter @dreame/shop-challenge build` after the `pnpm check` step, and SHALL keep `node-version: 22` (Open question 16).
 11. WHEN the Boundary_Rules and the Lint_Check are in the Check_Pipeline, THE Implementing_Agent SHALL measure the wall time of `pnpm -s check` and record it in its task report.
-12. IF the time measured under criterion 11 exceeds 240 s (80% of the Post_Task_Hook timeout of 300 s), THEN THE Implementing_Agent SHALL report the time to the user and SHALL ask whether to narrow the Check_Pipeline or raise the timeout before changing either.
+12. IF the time measured under criterion 11 exceeds 240 s (80% of the Post_Task_Hook timeout of 300 s; the Post_Task_Hook timeout was raised to 600 s by the user on 2026-11-21 (D53)), THEN THE Implementing_Agent SHALL report the time to the user and SHALL ask whether to narrow the Check_Pipeline or raise the timeout before changing either.
 
 ### Requirement 19: Node type wiring, EXTENDING.md and the wiring hook
 
@@ -466,7 +466,7 @@ Source: Playbook §3b `node-type-wiring.json`; `new-node-type.md`; ui-renderer R
 5. THE `tools/validate/test/extending-doc.test.ts` test SHALL expect the `core` node type sections followed by the Shop_Profile app node type sections, and SHALL check that every listed path exists.
 6. THE Own_Files test files SHALL hold Vitest tests for `validate` and `reduce` and a fast-check property at `numRuns` of at least 100 for each app node type, so that Wiring_Hook prompt steps 5 and 6 create no extra test files.
 7. WHEN the agent saves an Own_File after the wiring of criteria 2–6 is complete and the Wiring_Hook replies, THE Implementing_Agent SHALL record the reply in its task report, for use as Kiro_Log evidence.
-8. THE Implementing_Agent SHALL leave the four files in `.kiro/hooks/` unchanged.
+8. THE Implementing_Agent SHALL leave the four files in `.kiro/hooks/` unchanged, except the Post_Task_Hook timeout, raised to 600 s by the user on 2026-11-21 (D53).
 
 ### Requirement 20: Task and verification conventions
 

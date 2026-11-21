@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "profile": "shop-challenge",
+  "activityId": "broken-shop-over-budget",
+  "version": 1,
+  "requires": { "content": 1, "collectionSelect": 1, "recommendOutcome": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "result",
+  "limits": { "maxNodes": 10, "maxTransitions": 10 },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": {
+        "title": "Build a gift bundle",
+        "body": "Choose 2 gifts. Keep the total at or under $10.",
+        "continueLabel": "Start"
+      },
+      "edges": [{ "to": "pick" }]
+    },
+    {
+      "id": "pick",
+      "type": "collectionSelect",
+      "config": {
+        "prompt": "Choose 2 gifts for your bundle. Stay within the budget.",
+        "items": [
+          { "id": "candle", "name": "Scented candle", "price": 15, "tags": ["home"], "emoji": "🕯️" },
+          { "id": "plant", "name": "Small succulent", "price": 20, "tags": ["home"], "emoji": "🪴" }
+        ],
+        "min": 2,
+        "max": 2,
+        "budget": 10,
+        "currency": "USD",
+        "continueLabel": "See my bundle"
+      },
+      "edges": [{ "to": "result" }]
+    },
+    {
+      "id": "result",
+      "type": "recommendOutcome",
+      "config": {
+        "title": "Your gift bundle",
+        "body": "Here is the bundle you built.",
+        "from": "pick",
+        "whyText": "Two small gifts within your budget.",
+        "recommend": { "sortBy": "priceAsc", "limit": 2 },
+        "contacts": [{ "label": "Order on WhatsApp", "url": "https://wa.me/12125550142" }]
+      },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "profile": "shop-challenge",
+  "activityId": "shop-gift-bundle",
+  "version": 1,
+  "requires": { "content": 1, "choice": 1, "collectionSelect": 1, "recommendOutcome": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "result",
+  "limits": { "maxNodes": 10, "maxTransitions": 10 },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": {
+        "title": "Build a gift bundle",
+        "body": "Pick an occasion, then choose 2 or 3 gifts from our shop. Keep the total at or under $50. At the end you get your bundle and a link to order it.",
+        "continueLabel": "Start"
+      },
+      "edges": [{ "to": "pick-occasion" }]
+    },
+    {
+      "id": "pick-occasion",
+      "type": "choice",
+      "config": {
+        "prompt": "What is the gift for?",
+        "options": [
+          { "id": "birthday", "label": "A birthday" },
+          { "id": "anniversary", "label": "An anniversary" },
+          { "id": "thankYou", "label": "A thank-you" }
+        ]
+      },
+      "edges": [{ "to": "pick" }]
+    },
+    {
+      "id": "pick",
+      "type": "collectionSelect",
+      "config": {
+        "prompt": "Choose 2 or 3 gifts for your bundle. Stay within the budget.",
+        "items": [
+          { "id": "candle", "name": "Scented candle", "price": 18, "tags": ["home", "calm"], "emoji": "🕯️" },
+          { "id": "chocolate", "name": "Chocolate box", "price": 12, "tags": ["sweet"], "emoji": "🍫" },
+          { "id": "perfume", "name": "Mini perfume", "price": 32, "tags": ["beauty"], "occasions": ["birthday", "anniversary"], "emoji": "🌸" },
+          { "id": "mug", "name": "Coffee mug", "price": 9, "tags": ["home"], "emoji": "☕" },
+          { "id": "card", "name": "Greeting card", "price": 4, "tags": ["card"], "emoji": "💌" },
+          { "id": "bracelet", "name": "Bead bracelet", "price": 22, "tags": ["jewellery"], "occasions": ["birthday", "anniversary"], "emoji": "📿" },
+          { "id": "cookies", "name": "Cookie tin", "price": 7, "tags": ["sweet"], "occasions": ["thankYou"], "emoji": "🍪" },
+          { "id": "plant", "name": "Small succulent", "price": 14, "tags": ["home", "calm"], "emoji": "🪴" }
+        ],
+        "min": 2,
+        "max": 3,
+        "budget": 50,
+        "currency": "USD",
+        "occasionFrom": "pick-occasion",
+        "pricesAsOf": "2026-11-21",
+        "continueLabel": "See my bundle"
+      },
+      "edges": [{ "to": "result" }]
+    },
+    {
+      "id": "result",
+      "type": "recommendOutcome",
+      "config": {
+        "title": "Your gift bundle",
+        "body": "Here is the bundle you built. Send it to us and we will help you place the order.",
+        "from": "pick",
+        "whyText": "A few small gifts chosen for the occasion, all within your budget.",
+        "recommend": { "sortBy": "priceAsc", "limit": 2 },
+        "contacts": [
+          { "label": "Order on WhatsApp", "url": "https://wa.me/12125550142" },
+          { "label": "Order on Telegram", "url": "https://t.me/dreame_demo_shop" }
+        ]
+      },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}

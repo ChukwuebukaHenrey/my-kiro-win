@@ -3,12 +3,17 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { coreNodeTypes } from '@dreame/node-types';
+import { shopNodeTypes } from '@dreame/shop-challenge/node-types';
 
-// Structure check of `EXTENDING.md` (Requirements 15.8, 16.1-16.4).
+// Structure check of `EXTENDING.md` (Requirements 15.8, 16.1-16.4; shop-challenge 19.4, 19.5).
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const lines = readFileSync(join(ROOT, 'EXTENDING.md'), 'utf8').split(/\r?\n/);
 const ENTRY_LABELS = ['Node type', 'View', 'Tests'] as const;
+
+const coreTypes = coreNodeTypes.map((t) => t.type);
+/** The shop-challenge node types that are not core types, in `shopNodeTypes` order. */
+const appTypes = shopNodeTypes.map((t) => t.type).filter((type) => !coreTypes.includes(type));
 
 /** The lines from `### <type>` up to the next heading. */
 function sectionLines(type: string): string[] {
@@ -24,7 +29,26 @@ function pathsIn(line: string): string[] {
   return [...line.matchAll(/`([^`]+)`/g)].map((m) => m[1] ?? '').filter((v) => v.includes('/'));
 }
 
-describe('EXTENDING.md (Requirements 15.8, 16.1-16.4)', () => {
+/** The single `- <label>: ` line of a section. */
+function entryLine(type: string, label: (typeof ENTRY_LABELS)[number]): string {
+  const entries = sectionLines(type).filter((line) => line.startsWith(`- ${label}: `));
+  expect(entries, `${type}: ${label}`).toHaveLength(1);
+  return entries[0] ?? '';
+}
+
+/** Checks that a line lists at least one path and that every listed path exists. */
+function expectPathsExist(type: string, label: string, line: string): void {
+  const paths = pathsIn(line);
+  expect(paths.length, `${type}: ${label} paths`).toBeGreaterThan(0);
+  for (const path of paths) expect(existsSync(join(ROOT, path)), path).toBe(true);
+}
+
+/** `collectionSelect` -> `apps/shop-challenge/src/views/CollectionSelectNodeView.tsx`. */
+function appViewPath(type: string): string {
+  return `apps/shop-challenge/src/views/${type.charAt(0).toUpperCase()}${type.slice(1)}NodeView.tsx`;
+}
+
+describe('EXTENDING.md (Requirements 15.8, 16.1-16.4, 19.4, 19.5)', () => {
   it('starts with the title', () => {
     expect(lines[0]).toBe('# Extending DREAME');
   });
@@ -33,20 +57,27 @@ describe('EXTENDING.md (Requirements 15.8, 16.1-16.4)', () => {
     expect(lines.filter((line) => line.startsWith('## '))).toEqual(['## Node types']);
   });
 
-  it('has one ### section per core node type, in coreNodeTypes order', () => {
+  it('has one ### section per core node type, then per shop-challenge app node type', () => {
     const headings = lines.filter((line) => line.startsWith('### '));
-    expect(headings).toEqual(coreNodeTypes.map((t) => `### ${t.type}`));
+    expect(headings).toEqual([...coreTypes, ...appTypes].map((type) => `### ${type}`));
   });
 
-  for (const { type } of coreNodeTypes) {
+  for (const type of coreTypes) {
     it(`### ${type} has Node type, View and Tests lines whose paths exist`, () => {
-      const section = sectionLines(type);
-      for (const label of ENTRY_LABELS) {
-        const entries = section.filter((line) => line.startsWith(`- ${label}: `));
-        expect(entries, `${type}: ${label}`).toHaveLength(1);
-        const paths = pathsIn(entries[0] ?? '');
-        expect(paths.length, `${type}: ${label} paths`).toBeGreaterThan(0);
-        for (const path of paths) expect(existsSync(join(ROOT, path)), path).toBe(true);
+      for (const label of ENTRY_LABELS) expectPathsExist(type, label, entryLine(type, label));
+    });
+  }
+
+  for (const type of appTypes) {
+    it(`### ${type} has Node type and Tests lines whose paths exist, and a View line matching the view file`, () => {
+      expectPathsExist(type, 'Node type', entryLine(type, 'Node type'));
+      expectPathsExist(type, 'Tests', entryLine(type, 'Tests'));
+      const view = entryLine(type, 'View');
+      const viewPath = appViewPath(type);
+      if (existsSync(join(ROOT, viewPath))) {
+        expect(pathsIn(view), `${type}: View`).toEqual([viewPath]);
+      } else {
+        expect(view, `${type}: View`).toBe('- View: not written yet');
       }
     });
   }

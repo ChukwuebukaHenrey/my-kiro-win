@@ -830,6 +830,10 @@ function stageConditions(manifest: Manifest, index: GraphIndex): Diagnostic[] {
       checkEffect: (effect, path) => checkEffect(effect, path, index.variables, node.id),
       checkHttpsUrl: (url, path) => withNodeId(checkHttpsUrl(url, path), node.id),
       checkText: (text, path) => checkText(text, path, node.id),
+      isUpstream: (id) => {
+        const a = index.nodeIndex.get(id);
+        return a !== undefined && a !== n && dom[n]![a] === 1;
+      },
     };
     out.push(...withNodeId(nt.validate(node.config, ctx), node.id));
   });

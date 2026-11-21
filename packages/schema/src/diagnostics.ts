@@ -12,7 +12,8 @@ export type DiagnosticCode =
   | 'dead-end' | 'terminal-has-edges' | 'last-edge-conditional' | 'fallback-not-terminal'
   | 'no-terminal-reachable' | 'unreachable-node' | 'limit-below-longest-path'
   | 'cond-too-deep' | 'type-mismatch' | 'ref-not-answerable' | 'answer-not-upstream'
-  | 'var-decl-invalid' | 'effect-invalid' | 'invalid-date' | 'unsafe-url' | 'blank-text';
+  | 'var-decl-invalid' | 'effect-invalid' | 'invalid-date' | 'unsafe-url' | 'blank-text'
+  | 'duplicate-item-id' | 'select-unsatisfiable';
 
 export interface Diagnostic {
   readonly severity: Severity;

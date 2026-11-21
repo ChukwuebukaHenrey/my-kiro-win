@@ -45,7 +45,7 @@ Checked in the Workspace and the registry on 2026-11-21.
 | Vercel headers and rewrites | `vercel.json` takes `headers` (`source` plus `key`/`value` list) and `rewrites` (`source`, `destination`). Vercel serves an existing file before it applies a rewrite, which is the SPA fallback pattern. | [Vercel project configuration](https://vercel.com/docs/project-configuration/vercel-json) |
 | CSP and headers | The exact CSP and three headers are in Architecture Spec §A3 ("`vercel.json` headers"); "SPA rewrite" sends every route to `index.html`. | Architecture Spec §A3 |
 | Shop screens | §B3 lists `ProductCard` (checkbox semantics, name, price, tag chips), `BundleBar` (items x/max, total, budget meter, Continue), `ConstraintHint` ("Add 1 more item", "₦2,000 over budget" (user override 2026-11-20: demos in USD, for example "$2 over budget")), `BundleResult` (bundle, total, "Why these" line, CTA) and `OfferEndedView`. This design shows the §B3 CTA as 0–3 Contact_Links (C10, D54). | Architecture Spec §B3 |
-| Check duration | `pnpm check` took 265.2 s on 2026-11-20 against the 300 s Post_Task_Hook timeout. | `docs/HANDOFF.md` §3 |
+| Check duration | `pnpm check` took 265.2 s on 2026-11-20 against the 300 s Post_Task_Hook timeout (600 s from task 12.0, D53). | `docs/HANDOFF.md` §3 |
 
 Content from the Vercel and React Router pages was rephrased for compliance with licensing restrictions.
 
@@ -201,6 +201,7 @@ The helper file names `bundle-rules.ts` and `format.ts` contain a hyphen or sit 
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "engines": { "node": "22.x" },
   "exports": {
     "./profile": "./src/profile.ts",
     "./node-types": "./src/node-types/index.ts"
@@ -230,6 +231,8 @@ The helper file names `bundle-rules.ts` and `format.ts` contain a hyphen or sit 
   }
 }
 ```
+
+`engines.node` is pinned to `22.x` in this package only, so Vercel, which reads the Root Directory's `package.json`, stays on the CI major; the root keeps `>=22` (user decision 2026-11-20).
 
 The two `exports` entries are React-free, so `tools/validate` can import `@dreame/shop-challenge/profile` under `node --experimental-strip-types` (D45). The test tooling is listed again in the app because pnpm resolves each package's imports from its own `node_modules`; the versions are the ones ui-renderer installed. `vite` is listed so `vite build` and `vite.config.ts` resolve it from the app folder. `pnpm -w run codegen` runs the root `codegen` script from the workspace root, also when Vercel starts the build in `apps/shop-challenge`.
 
@@ -275,7 +278,7 @@ codegen: wrote <js path> and <d.ts path> (<raw> bytes JS, <gzip> bytes gzip)
 
 | Module | Measured raw | Measured gzip | Raw limit | Gzip limit |
 |---|---|---|---|---|
-| `apps/shop-challenge/generated/shop-challenge.validators.js` | to be measured | to be measured | rule above | rule above |
+| `apps/shop-challenge/generated/shop-challenge.validators.js` | 231,675 | 17,231 | 255,000 | 19,000 |
 | `packages/node-types/generated/core.validators.js` (reference) | 167,384 | 11,465 | 180,000 | 14,000 |
 
 The Source_Scan ajv check extends to `apps/*/src` (C13), so `ajv` stays inside `packages/schema/src/codegen/` (Requirement 4.6).
@@ -1548,7 +1551,7 @@ Each command other than a full `pnpm check` must finish within 180,000 ms (Requi
 21. Commit with user approval (Requirement 2 rules).
 22. Deploy steps, deploy checks, README entry and the Android check (C14).
 
-**Post_Task_Hook time.** The Post_Task_Hook runs `pnpm -s check` after every task (Requirement 20.12). It took 265.2 s on 2026-11-20, against a 300 s timeout. This spec adds the shop codegen, about 20 new test files with seven property tests at 100 runs, and the lint and boundary runs, so the check may pass 300 s before the end of the plan. Each task therefore counts about 5 minutes of check time after it ends, and the plan keeps tasks small so that a failed check points at one change. When a task changes no source file, the hook still runs. The timing step of item 20 is planned for the point where the lint tools join the check; if the hook times out earlier, the agent stops and asks the user (D53). Before any timing run, the agent asks the user to close other heavy processes (HANDOFF §4).
+**Post_Task_Hook time.** The Post_Task_Hook runs `pnpm -s check` after every task (Requirement 20.12). It took 265.2 s on 2026-11-20, against a 300 s timeout (600 s from task 12.0, D53). This spec adds the shop codegen, about 20 new test files with seven property tests at 100 runs, and the lint and boundary runs, so the check may pass 300 s before the end of the plan. Each task therefore counts about 5 minutes of check time after it ends, and the plan keeps tasks small so that a failed check points at one change. When a task changes no source file, the hook still runs. The timing step of item 20 is planned for the point where the lint tools join the check; if the hook times out earlier, the agent stops and asks the user (D53). Before any timing run, the agent asks the user to close other heavy processes (HANDOFF §4).
 
 **Hook interactions.**
 
@@ -1636,7 +1639,7 @@ Compatibility notes:
 | D50 | ESLint major version | ESLint 9.39.5 | ESLint 10.15.0 with the plugins outside their declared peer ranges. | `eslint-plugin-react` 7.37.5 and `eslint-plugin-jsx-a11y` 6.10.2 declare peers up to ESLint 9 only. | accepted 2026-11-20 (recommended option) |
 | D51 | TypeScript for the lint and boundary tools | A new package `tools/lint` with `typescript` 6.0.3 next to the tools, plus a `packageExtensions` peer for `dependency-cruiser` (C15); root `tsc` stays 7.0.2. The user approved the second `typescript` copy on 2026-11-20. | (B) Downgrade the root to TypeScript 6.0.3. (C) Use only dependency-cruiser with TypeScript 7.1 when it ships and keep the Source_Scan for raw HTML. | `typescript-eslint` 8.73.0 supports `typescript <6.1.0` and dependency-cruiser excludes 7.0.x; TypeScript 7.0.2 exposes no classic compiler API. A separate package keeps the repository's typecheck unchanged. | accepted 2026-11-20 (recommended option): `tools/lint` with `typescript` 6.0.3, used by the linters only, is approved as a dependency |
 | D52 | pnpm version on Vercel | Keep `pnpm install --frozen-lockfile` and no environment variable. Vercel starts pnpm 9 or 10 from `lockfileVersion: '9.0'`; pnpm then follows the `packageManager` field. The user checks the pnpm version line in the first build log. | If that build fails on the pnpm version, the user sets the project variable `ENABLE_EXPERIMENTAL_COREPACK=1` (not a secret). That is an exception to Requirement 15.5 and needs the user's approval. | Requirement 15.5 asks for no environment variable; the Vercel docs name Corepack as the way to honour `packageManager`. | accepted 2026-11-20 (recommended option): Vercel with no environment variable. Stop condition: the `ENABLE_EXPERIMENTAL_COREPACK=1` fallback still needs the user's approval at deploy time |
-| D53 | `pnpm -s check` longer than 240 s or than the 300 s Post_Task_Hook timeout | When the measurement exceeds 240 s, ask the user to raise the H4 timeout to 600 s, a one-field change to `.kiro/hooks/post-task-check.json` and an exception to Requirement 19.8 | Narrow `check` (for example, move property tests to a separate script), which weakens the post-task, pre-commit and CI gate. | Requirement 18.12 asks the user before either change; a longer timeout keeps every check in the gate. | accepted 2026-11-20 (recommended option). Stop condition: raise the Post_Task_Hook timeout only after a measurement over 240 s and after asking the user |
+| D53 | `pnpm -s check` longer than 240 s or than the 300 s Post_Task_Hook timeout | When the measurement exceeds 240 s, ask the user to raise the H4 timeout to 600 s, a one-field change to `.kiro/hooks/post-task-check.json` and an exception to Requirement 19.8 | Narrow `check` (for example, move property tests to a separate script), which weakens the post-task, pre-commit and CI gate. | Requirement 18.12 asks the user before either change; a longer timeout keeps every check in the gate. | accepted 2026-11-20 (recommended option). Stop condition: raise the Post_Task_Hook timeout only after a measurement over 240 s and after asking the user. Applied early on 2026-11-21: the user approved 600 s after checkpoint 11 measured 224.6 s (task 12.0). |
 | D54 | Contact links on the result step (Requirements 7.2, 7.5, 7.6, 7.12, 11.6, 11.9–11.14) | A `contacts` list of 0–3 Contact_Links, with WhatsApp and Telegram as Channel_Modules in `apps/shop-challenge/src/contact/` that only the view reads (C8, C8b, C10) | A single `cta` field, or channel-specific node fields such as a WhatsApp number. | The user asked for WhatsApp and Telegram as modules that do not depend on each other or on the node type. | accepted 2026-11-20 |
 
 The user accepted the recommended option of each of D46–D53 and the `contacts` list of D54, and the components above describe those options. D52 (Corepack fallback) and D53 (post-task timeout) keep their stop conditions: the agent asks the user at the time the condition occurs.

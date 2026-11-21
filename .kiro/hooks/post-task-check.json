@@ -6,7 +6,7 @@
       "description": "Playbook §3b: runs the full check after a spec task finishes.",
       "trigger": "PostTaskExec",
       "action": { "type": "command", "command": "pnpm -s check" },
-      "timeout": 300,
+      "timeout": 600,
       "enabled": true
     }
   ]

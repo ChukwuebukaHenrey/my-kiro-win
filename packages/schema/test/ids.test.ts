@@ -132,6 +132,7 @@ const ALL_CODES: readonly DiagnosticCode[] = [
   'no-terminal-reachable', 'unreachable-node', 'limit-below-longest-path',
   'cond-too-deep', 'type-mismatch', 'ref-not-answerable', 'answer-not-upstream',
   'var-decl-invalid', 'effect-invalid', 'invalid-date', 'unsafe-url', 'blank-text',
+  'duplicate-item-id', 'select-unsatisfiable',
 ];
 
 describe('severityOf (Req 7.10)', () => {

@@ -1,0 +1,22 @@
+// App routes and the footer shown on every route (design C12, Requirements 13.3, 13.9).
+import type { ReactNode } from 'react';
+import { Route, Routes } from 'react-router';
+import { Footer } from './Footer.tsx';
+import { LandingView } from './LandingView.tsx';
+import { NotFoundView } from './NotFoundView.tsx';
+import { PlayDemoRoute } from './PlayDemoRoute.tsx';
+
+export function App(): ReactNode {
+  return (
+    <div className="shop-app">
+      <main className="shop-main">
+        <Routes>
+          <Route path="/" element={<LandingView />} />
+          <Route path="/play/demo/:id" element={<PlayDemoRoute />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+}

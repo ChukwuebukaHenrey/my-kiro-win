@@ -4,12 +4,14 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { describe, expect, it } from 'vitest';
+import type { ReactNode } from 'react';
 import { coreProfile } from '@dreame/node-types';
 import { validateManifest, type Diagnostic, type ValidManifest } from '@dreame/schema';
 import { ActivityPlayer } from '../src/components/ActivityPlayer.tsx';
 import { ExternalLinkButton } from '../src/components/ExternalLinkButton.tsx';
 import { InvalidActivityView } from '../src/components/InvalidActivityView.tsx';
 import { coreViews } from '../src/core-views.ts';
+import { createRenderRegistry, type RenderProps } from '../src/render.ts';
 import { ChoiceNodeView } from '../src/views/ChoiceNodeView.tsx';
 import { ContentNodeView } from '../src/views/ContentNodeView.tsx';
 import { OutcomeNodeView } from '../src/views/OutcomeNodeView.tsx';
@@ -97,6 +99,32 @@ describe('axe check (WCAG 2.x A and AA, color-contrast disabled)', () => {
     await user.click(screen.getByRole('radio', { name: 'About 30 minutes' }));
     await user.click(screen.getByRole('button', { name: 'Submit' }));
     expect(screen.getByRole('heading', { level: 2, name: 'Take a proper rest' })).toBeDefined();
+    expect(await violations(container)).toEqual([]);
+  });
+
+  it('ActivityPlayer has no violations after one Rejection (Requirement 12.8)', async () => {
+    function BadChoiceView({ onRespond }: RenderProps<unknown, unknown>): ReactNode {
+      return (
+        <button type="button" onClick={() => onRespond({ optionId: 'nope' })}>
+          Send bad answer
+        </button>
+      );
+    }
+    const views = createRenderRegistry([
+      { type: 'content', Render: ContentNodeView },
+      { type: 'choice', Render: BadChoiceView },
+      { type: 'outcome', Render: OutcomeNodeView },
+    ]);
+
+    const user = userEvent.setup();
+    const { container } = render(
+      <ActivityPlayer profile={coreProfile} manifest={demoManifest()} seed={42} views={views} now={counterClock()} />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await user.click(screen.getByRole('button', { name: 'Send bad answer' }));
+    const alert = screen.getByRole('alert');
+    expect(alert.textContent).toBe('That answer was not accepted. Please try again.');
+    expect(document.activeElement).toBe(alert);
     expect(await violations(container)).toEqual([]);
   });
 

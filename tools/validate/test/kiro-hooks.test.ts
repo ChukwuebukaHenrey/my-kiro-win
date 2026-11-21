@@ -73,7 +73,7 @@ const EXPECTED: Readonly<Record<HookFileName, readonly ExpectedHook[]>> = {
     { name: 'node-type-wiring-on-create', trigger: 'PostFileCreate', matcher: WIRING_MATCHER, type: 'agent', command: undefined, timeout: undefined },
   ],
   'post-task-check.json': [
-    { name: 'post-task-check', trigger: 'PostTaskExec', matcher: undefined, type: 'command', command: 'pnpm -s check', timeout: 300 },
+    { name: 'post-task-check', trigger: 'PostTaskExec', matcher: undefined, type: 'command', command: 'pnpm -s check', timeout: 600 },
   ],
 };
 
@@ -176,13 +176,13 @@ describe('hook fields (hook file model)', () => {
     }
   });
 
-  it('every command hook has an integer timeout from 1 to 300', () => {
+  it('every command hook has an integer timeout from 1 to 600', () => {
     for (const { file, hook } of allHooks()) {
       if (action(hook).type !== 'command') continue;
       const where = `${file} ${String(hook.name)}`;
       expect(Number.isInteger(hook.timeout), where).toBe(true);
       expect(hook.timeout as number, where).toBeGreaterThanOrEqual(1);
-      expect(hook.timeout as number, where).toBeLessThanOrEqual(300);
+      expect(hook.timeout as number, where).toBeLessThanOrEqual(600);
     }
   });
 });

@@ -9,15 +9,17 @@ export interface NodeRendererProps {
   readonly nodeState: JsonValue | undefined;
   readonly views: RenderRegistry;
   readonly onRespond: (response: unknown) => void;
-  /** Changes force a remount of the view; the player passes `${nodeId}#${rejections}`. */
+  /** Changes force a remount of the view; the player passes the node ID. */
   readonly viewKey: string;
+  /** Passed through to the view as `RenderProps.rejections` (design C11, D48). */
+  readonly rejections?: number;
 }
 
 /**
  * Renders the registered view for `node.type` with the node's `config` and `nodeState`.
  * An unregistered type shows an alert naming the type, rendered as text, and no view.
  */
-export function NodeRenderer({ node, nodeState, views, onRespond, viewKey }: NodeRendererProps): ReactNode {
+export function NodeRenderer({ node, nodeState, views, onRespond, viewKey, rejections }: NodeRendererProps): ReactNode {
   const Render = views.get(node.type);
   if (Render === undefined) {
     return (
@@ -26,5 +28,5 @@ export function NodeRenderer({ node, nodeState, views, onRespond, viewKey }: Nod
       </p>
     );
   }
-  return <Render key={viewKey} cfg={node.config} nodeState={nodeState} onRespond={onRespond} />;
+  return <Render key={viewKey} cfg={node.config} nodeState={nodeState} onRespond={onRespond} rejections={rejections} />;
 }

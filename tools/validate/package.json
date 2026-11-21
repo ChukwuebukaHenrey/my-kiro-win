@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@dreame/node-types": "workspace:*",
-    "@dreame/schema": "workspace:*"
+    "@dreame/schema": "workspace:*",
+    "@dreame/shop-challenge": "workspace:*"
   }
 }

@@ -12,6 +12,13 @@
     "packages/*/generated/*.d.ts",
     "tools/*/src/**/*.ts",
     "tools/*/test/**/*.ts",
+    "apps/*/src/**/*.ts",
+    "apps/*/src/**/*.tsx",
+    "apps/*/scripts/**/*.ts",
+    "apps/*/test/**/*.ts",
+    "apps/*/test/**/*.tsx",
+    "apps/*/generated/*.d.ts",
+    "apps/*/vite.config.ts",
     "vitest.config.ts"
   ]
 }
