@@ -115,3 +115,43 @@ Kiro did: Finished Days 2–4 without creating the Kiro hooks of Brief §8 Day 4
 Caught by: The HANDOFF review of deferred items in `docs/HANDOFF.md` §3.
 Fix: Requirement 17 of spec `ui-renderer` adds the Kiro hooks.
 Kiro features: Spec workflow.
+
+## 2026-11-21 — ui-renderer spec done
+
+Spec: `ui-renderer`
+Kiro did: Built `@dreame/ui`, the smaller validator module, the scans, `EXTENDING.md`, `validate:hook` and the four Kiro hook files; 59 of 59 ui-renderer tasks are marked done in `.kiro/specs/ui-renderer/tasks.md`; decisions D13–D23 and the Playbook reconciliation P1–P12 are in `.kiro/specs/ui-renderer/design.md`.
+Caught by: Task 9 checkpoint: `pnpm check` exit 0 on the re-run, with 513 tests; task 12.2: `pnpm check` exit 0, with 52 test files and 550 tests in 84 s, Properties 1–10 passing and axe reporting 0 violations (`color-contrast` disabled under jsdom; the tokens test checks contrast).
+Fix: None needed.
+Kiro features: Spec workflow and tasks, steering, agent hooks, sub-agent task runs, fast-check property tests.
+
+## 2026-11-21 — Validator module over budget
+
+Spec: `ui-renderer / Requirement 3`
+Kiro did: Generated the `core` validator module.
+Caught by: `pnpm codegen` printed 428,768 bytes JS before the change.
+Fix: Set Ajv `inlineRefs: false` and `code.lines: false` (D14); the module is now 167,384 bytes raw and 11,465 bytes gzip, against limits of 180,000 and 14,000.
+Kiro features: Spec tasks.
+
+## 2026-11-21 — Check failed under machine load
+
+Spec: `ui-renderer / task 9`
+Kiro did: Ran `pnpm check` at the task 9 checkpoint.
+Caught by: `pnpm check` exited 1 after 428.8 s; Vitest reported 6 `[vitest-pool]: Failed to start forks worker ... Timeout waiting for worker to respond` errors, and all 486 tests that ran passed; the cause was machine load, with CPU at 100% and another project's `vite build` running.
+Fix: A re-run with no code change passed with exit 0, 513 tests and Vitest 265.2 s.
+Kiro features: Spec tasks.
+
+## 2026-11-21 — Regression hook timeout raised
+
+Spec: `ui-renderer / task 12.1`
+Kiro did: Measured `pnpm -s test:shared` at 98.82 s, over the 96 s threshold of the 120 s Regression_Hook (H2) timeout.
+Caught by: The Requirement 17.10 timing step, checked against the Requirement 17.11 threshold.
+Fix: The user raised the H2 timeout from 120 s to 180 s and kept `pnpm -s test:shared`; the new threshold is 144 s.
+Kiro features: Agent hooks.
+
+## 2026-11-21 — Rejection focus and CI enforcement deferred
+
+Spec: `ui-renderer`
+Kiro did: Left focus after a rejected response, and dependency-cruiser and ESLint `react/no-danger` CI enforcement, out of the ui-renderer scope.
+Caught by: Design questions answered by the user on 2026-11-20, recorded in "User answers (2026-11-20)" of `.kiro/specs/ui-renderer/design.md`.
+Fix: Both moved to the shop-challenge spec: Requirement 12 covers rejection handling and Requirement 18 covers CI enforcement of the boundary and DOM rules.
+Kiro features: Spec workflow.

@@ -328,7 +328,7 @@ Conventions for every task (Requirement 18):
     - Verify: `git ls-files packages/node-types/generated design-refs .kiro/settings; $LASTEXITCODE`; pass when it lists no file under `packages/node-types/generated` or `design-refs`, and `git status --porcelain -- .kiro/settings` prints nothing
     - _Requirements: 3.1, 3.2, 4.5, 4.6, 5.5, 5.7, 14.5, 17.4_
 
-- [-] 13. Final checkpoint - Ensure all tests pass, then ask before committing
+- [x] 13. Final checkpoint - Ensure all tests pass, then ask before committing
   - Ensure all tests pass, ask the user if questions arise.
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask: whether to commit; whether the work goes in one commit or several; whether to include `.kiro/specs/ui-renderer/` and the untracked `docs/Kiro_Setup_and_Operating_Playbook.md`
   - On approval, stage each approved file by explicit path with `git add -- <path> ...`, including `package.json`, `packages/ui/package.json` and `pnpm-lock.yaml` in the same commit (Requirement 5.7); never stage `packages/*/generated/`, `design-refs/`, `.git.ignore`, `docs/HANDOFF.md`, `docs/README.md`, `docs/read as soon as you finish kiro agent.txt` or `docs/ui-illustration-builder.txt`
