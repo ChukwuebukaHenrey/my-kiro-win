@@ -9,6 +9,7 @@
     "typecheck": "pnpm codegen && tsc -p tsconfig.json",
     "test:shared": "pnpm codegen && vitest run",
     "validate": "pnpm codegen && node --experimental-strip-types tools/validate/src/cli.ts",
+    "validate:hook": "pnpm codegen && node --experimental-strip-types tools/validate/src/hook-cli.ts",
     "check": "pnpm codegen && tsc -p tsconfig.json && vitest run && node --experimental-strip-types tools/validate/src/cli.ts activities/*.json",
     "postinstall": "simple-git-hooks"
   },
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.20.5",
     "fast-check": "^4.10.3",
+    "jsdom": "^31.0.1",
     "simple-git-hooks": "^2.14.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",

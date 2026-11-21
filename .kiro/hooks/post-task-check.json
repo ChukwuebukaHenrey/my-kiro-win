@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "post-task-check",
+      "description": "Playbook §3b: runs the full check after a spec task finishes.",
+      "trigger": "PostTaskExec",
+      "action": { "type": "command", "command": "pnpm -s check" },
+      "timeout": 300,
+      "enabled": true
+    }
+  ]
+}

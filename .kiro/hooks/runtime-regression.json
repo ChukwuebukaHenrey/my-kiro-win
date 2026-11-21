@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "runtime-regression",
+      "description": "Brief §5 hook 2: runs the shared tests after the agent saves a .ts file in packages/runtime, packages/schema or packages/node-types.",
+      "trigger": "PostFileSave",
+      "matcher": "packages[\\\\/](runtime|schema|node-types)[\\\\/].*\\.ts$",
+      "action": { "type": "command", "command": "pnpm -s test:shared" },
+      "timeout": 180,
+      "enabled": true
+    }
+  ]
+}

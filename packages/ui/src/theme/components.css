@@ -1,0 +1,122 @@
+/*
+ * Component rules of @dreame/ui (design C5). Every value comes from tokens.css.
+ * Every transition duration is a --dr-motion-duration-* token, so reduced motion
+ * sets all of them to 0ms (Requirement 14.1). Components use these class names
+ * and no inline style.
+ */
+
+/* Focus ring for every focusable element (Requirement 7.3). */
+:focus-visible {
+  outline: var(--dr-focus-ring-width) solid var(--dr-focus-ring-color);
+  outline-offset: var(--dr-focus-ring-offset);
+}
+
+.dr-player {
+  font-family: var(--dr-font-family);
+  font-size: var(--dr-font-size-base);
+  color: var(--dr-color-text);
+  background-color: var(--dr-color-bg);
+  padding: var(--dr-space-4);
+}
+
+.dr-node {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-4);
+}
+
+.dr-heading {
+  margin: 0;
+  font-size: var(--dr-font-size-xl);
+  color: var(--dr-color-text);
+}
+
+/* Line breaks in a manifest body show as line breaks (Requirements 9.1, 11.1). */
+.dr-body {
+  margin: 0;
+  white-space: pre-line;
+  color: var(--dr-color-text);
+}
+
+/* Buttons and links styled as buttons (Requirement 6.5). */
+.dr-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--dr-touch-target-min);
+  min-width: var(--dr-touch-target-min);
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border: 1px solid var(--dr-color-border);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-surface);
+  color: var(--dr-color-text);
+  font-family: inherit;
+  font-size: var(--dr-font-size-base);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dr-motion-duration-fast) ease-in-out,
+    border-color var(--dr-motion-duration-fast) ease-in-out;
+}
+
+.dr-button-primary {
+  border-color: var(--dr-color-accent);
+  background-color: var(--dr-color-accent);
+  color: var(--dr-color-on-accent);
+}
+
+.dr-choice fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.dr-choice legend {
+  margin-bottom: var(--dr-space-3);
+  padding: 0;
+  font-size: var(--dr-font-size-lg);
+  color: var(--dr-color-text);
+}
+
+/* Option rows: the whole label is the touch target (Requirement 6.5). */
+.dr-option {
+  display: flex;
+  align-items: center;
+  gap: var(--dr-space-3);
+  box-sizing: border-box;
+  min-height: var(--dr-touch-target-min);
+  min-width: var(--dr-touch-target-min);
+  padding: var(--dr-space-2) var(--dr-space-3);
+  border: 1px solid var(--dr-color-border);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-surface);
+  color: var(--dr-color-text);
+  cursor: pointer;
+  transition: border-color var(--dr-motion-duration-base) ease-in-out;
+}
+
+.dr-option:has(input:checked) {
+  border-color: var(--dr-color-accent);
+}
+
+.dr-error {
+  margin: 0;
+  color: var(--dr-color-danger);
+}
+
+.dr-note {
+  margin: 0;
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}
+
+.dr-notice {
+  margin: 0;
+  padding: var(--dr-space-3) var(--dr-space-4);
+  border-radius: var(--dr-radius-sm);
+  background-color: var(--dr-color-notice-bg);
+  color: var(--dr-color-notice-text);
+}

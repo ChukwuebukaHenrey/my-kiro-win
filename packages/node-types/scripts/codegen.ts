@@ -3,6 +3,7 @@
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
 import { buildProfileModule } from '@dreame/schema/codegen';
 import { coreNodeTypes } from '../src/core-types.ts';
 
@@ -19,4 +20,7 @@ mkdirSync(generatedDir, { recursive: true });
 writeFileSync(jsPath, jsText, 'utf8');
 writeFileSync(dtsPath, toLf(dts), 'utf8');
 
-console.log(`codegen: wrote ${jsPath} and ${dtsPath} (${Buffer.byteLength(jsText, 'utf8')} bytes JS)`);
+const jsBytes = Buffer.from(jsText, 'utf8');
+const gzipBytes = gzipSync(jsBytes).length;
+
+console.log(`codegen: wrote ${jsPath} and ${dtsPath} (${jsBytes.length} bytes JS, ${gzipBytes} bytes gzip)`);

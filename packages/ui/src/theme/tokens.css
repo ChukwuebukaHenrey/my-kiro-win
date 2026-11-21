@@ -1,0 +1,44 @@
+/*
+ * Theme tokens of @dreame/ui (design C5, Requirement 6).
+ * packages/ui/src/theme/tokens.ts exports the same names and values;
+ * packages/ui/test/tokens.test.ts fails when the two differ.
+ */
+
+:root {
+  --dr-color-bg: #ffffff;
+  --dr-color-surface: #f4f4f5;
+  --dr-color-notice-bg: #fef3c7;
+  --dr-color-text: #18181b;
+  --dr-color-text-muted: #52525b;
+  --dr-color-accent: #1d4ed8;
+  --dr-color-on-accent: #ffffff;
+  --dr-color-danger: #b91c1c;
+  --dr-color-notice-text: #78350f;
+  --dr-color-border: #71717a;
+  --dr-focus-ring-color: #1d4ed8;
+  --dr-focus-ring-width: 3px;
+  --dr-focus-ring-offset: 2px;
+  --dr-touch-target-min: 44px;
+  --dr-space-1: 4px;
+  --dr-space-2: 8px;
+  --dr-space-3: 12px;
+  --dr-space-4: 16px;
+  --dr-space-6: 24px;
+  --dr-space-8: 32px;
+  --dr-radius-sm: 4px;
+  --dr-radius-md: 8px;
+  --dr-font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --dr-font-size-sm: 0.875rem;
+  --dr-font-size-base: 1rem;
+  --dr-font-size-lg: 1.25rem;
+  --dr-font-size-xl: 1.5rem;
+  --dr-motion-duration-fast: 120ms;
+  --dr-motion-duration-base: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dr-motion-duration-fast: 0ms;
+    --dr-motion-duration-base: 0ms;
+  }
+}

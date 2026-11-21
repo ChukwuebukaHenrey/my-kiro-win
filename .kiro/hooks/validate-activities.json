@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "validate-activities",
+      "description": "Brief §5 hook 1: runs the validate CLI on an agent-saved activities/**/*.json file.",
+      "trigger": "PostFileSave",
+      "matcher": "^(?:[A-Za-z]:)?[\\\\/]?(?:[A-Za-z0-9._ -]+[\\\\/])*activities[\\\\/](?:[A-Za-z0-9._-]+[\\\\/])*[A-Za-z0-9._-]+\\.json$",
+      "action": { "type": "command", "command": "pnpm -s validate:hook \"{{filePath}}\"" },
+      "timeout": 30,
+      "enabled": true
+    },
+    {
+      "name": "validate-activities-on-create",
+      "description": "Brief §5 hook 1: runs the validate CLI on an agent-created activities/**/*.json file.",
+      "trigger": "PostFileCreate",
+      "matcher": "^(?:[A-Za-z]:)?[\\\\/]?(?:[A-Za-z0-9._ -]+[\\\\/])*activities[\\\\/](?:[A-Za-z0-9._-]+[\\\\/])*[A-Za-z0-9._-]+\\.json$",
+      "action": { "type": "command", "command": "pnpm -s validate:hook \"{{filePath}}\"" },
+      "timeout": 30,
+      "enabled": true
+    }
+  ]
+}

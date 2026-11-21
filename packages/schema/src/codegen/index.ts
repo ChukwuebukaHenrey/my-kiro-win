@@ -12,6 +12,20 @@ export interface ProfileModule {
   readonly dts: string;
 }
 
+/** Ajv code generation options that `buildProfileModule` lets callers change (ui-renderer design C2). */
+export interface CodegenOptions {
+  /** Ajv `inlineRefs`. `false` emits one function per `$ref` target instead of inlining it at every use site. */
+  readonly inlineRefs: boolean;
+  /** Ajv `code.lines`. */
+  readonly lines: boolean;
+}
+
+/** The size-reducing setting used by `pnpm codegen` (Decision D14). */
+export const DEFAULT_CODEGEN_OPTIONS: CodegenOptions = Object.freeze({ inlineRefs: false, lines: false });
+
+/** The Day 2–4 setting, used only as the baseline of the equivalence test. */
+export const BASELINE_CODEGEN_OPTIONS: CodegenOptions = Object.freeze({ inlineRefs: true, lines: true });
+
 /**
  * Ajv runtime helpers that may be inlined, keyed by helper name, with the source of a function
  * expression written in this repo. `unicode: false` (Decision D6) means Ajv measures string
@@ -81,14 +95,20 @@ function responseExportName(type: string): string {
  * Compiles the composed manifest schema of `profileId` and one response schema per node type
  * (`$id` `urn:dreame:response:<type>`) into one self-contained ES module. `js` exports
  * `validateManifest` and `response_<type>` per node type; `dts` declares each as
- * `StandaloneValidate`.
+ * `StandaloneValidate`. `options` sets Ajv `inlineRefs` and `code.lines`; every other Ajv option
+ * is fixed.
  */
-export function buildProfileModule(profileId: string, nodeTypes: readonly NodeTypeDescriptor[]): ProfileModule {
+export function buildProfileModule(
+  profileId: string,
+  nodeTypes: readonly NodeTypeDescriptor[],
+  options: CodegenOptions = DEFAULT_CODEGEN_OPTIONS,
+): ProfileModule {
   const manifestSchema = composeManifestSchema(profileId, nodeTypes);
   const responseSchemas = composeResponseSchemas(nodeTypes);
 
   const ajv = new Ajv({
-    code: { source: true, esm: true, lines: true },
+    code: { source: true, esm: true, lines: options.lines },
+    inlineRefs: options.inlineRefs,
     strict: true,
     allErrors: true,
     discriminator: true,

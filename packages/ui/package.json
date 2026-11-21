@@ -1,0 +1,26 @@
+{
+  "name": "@dreame/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens.css": "./src/theme/tokens.css",
+    "./components.css": "./src/theme/components.css"
+  },
+  "dependencies": {
+    "@dreame/node-types": "workspace:*",
+    "@dreame/runtime": "workspace:*",
+    "@dreame/schema": "workspace:*",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.12",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "axe-core": "^4.14.1"
+  }
+}

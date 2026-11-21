@@ -27,7 +27,7 @@ function rel(file: string): string {
   return relative(ROOT, file).split(sep).join('/');
 }
 
-/** Lists `.ts` and `.js` files under `dir`, skipping `node_modules` and `generated` folders. */
+/** Lists `.ts`, `.tsx`, `.js` and `.jsx` files under `dir`, skipping `node_modules` and `generated` folders. */
 function listSourceFiles(dir: string): string[] {
   if (!existsSync(dir)) return [];
   const out: string[] = [];
@@ -35,7 +35,7 @@ function listSourceFiles(dir: string): string[] {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
       if (!SKIPPED_DIRS.has(entry.name)) out.push(...listSourceFiles(full));
-    } else if (entry.isFile() && /\.(ts|js)$/.test(entry.name)) {
+    } else if (entry.isFile() && /\.(ts|tsx|js|jsx)$/.test(entry.name)) {
       out.push(full);
     }
   }
@@ -93,9 +93,11 @@ describe('source scan', () => {
     expect(FORBIDDEN.some(({ re }) => re.test(safe))).toBe(false);
   });
 
-  it('(a) no .ts or .js file under packages/ or tools/ calls the forbidden APIs (Req 14.7)', () => {
+  it('(a) no .ts, .tsx, .js or .jsx file under packages/ or tools/ calls the forbidden APIs (Req 14.7)', () => {
     const files = [...listSourceFiles(join(ROOT, 'packages')), ...listSourceFiles(join(ROOT, 'tools'))];
     expect(files.length).toBeGreaterThan(0);
+    // The scan must reach the React components, or the check below would skip them.
+    expect(files.map(rel).some((f) => f.startsWith('packages/ui/src/') && f.endsWith('.tsx'))).toBe(true);
     const hits: string[] = [];
     for (const file of files) {
       const lines = readFileSync(file, 'utf8').split('\n');
