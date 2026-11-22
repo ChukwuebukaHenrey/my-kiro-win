@@ -503,7 +503,7 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm exec vitest run tools/validate/test/extending-doc.test.ts tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 3.5, 3.9, 4.5, 13.2, 14.6, 17.7, 17.8, 19.5, 19.8, 20.6_
 
-- [-] 21. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
+- [x] 21. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
   - Ensure all tests pass, ask the user if questions arise.
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask: whether to commit; whether the work goes in one commit or several; which of the listed files to include
   - On approval, stage each approved file by explicit path with `git add -- <path> ...`. `package.json`, `apps/shop-challenge/package.json`, `tools/validate/package.json` and `pnpm-lock.yaml` go in the same commit (Requirement 3.9). The D53 change of task 12.0 goes in with the rest: `.kiro/hooks/post-task-check.json`, `tools/validate/test/kiro-hooks.test.ts`, and the ui-renderer spec edits of task 12.0 (`.kiro/specs/ui-renderer/design.md`, `.kiro/specs/ui-renderer/requirements.md`). Never stage `packages/*/generated/`, `apps/*/generated/`, `apps/shop-challenge/dist/`, `design-refs/` or the five untracked files named in the conventions
@@ -514,8 +514,8 @@ Conventions for every task (Requirement 20):
   - Verify: `git ls-files packages/*/generated apps/*/generated design-refs`; pass on no output
   - _Requirements: 2.2, 2.3, 2.5, 2.6, 2.7, 3.9_
 
-- [ ] 22. Deploy URL #1 (manual steps with the user)
-  - [ ] 22.1 Give the user the Vercel deploy steps
+- [x] 22. Deploy URL #1 (manual steps with the user)
+  - [x] 22.1 Give the user the Vercel deploy steps
     - Design: C14 "Deploy steps for the user", D52 (accepted 2026-11-20: no environment variable)
     - Give the user the five steps of design C14 and state that the user performs them with the user's own Vercel account (Requirement 16.1). Write no Vercel token, project ID, organisation ID or other account data to any file (Requirement 16.2)
     - Ask the user to send the pnpm version line of the first build log and the Deploy_URL
@@ -523,27 +523,27 @@ Conventions for every task (Requirement 20):
     - Verify: `git rev-list --count origin/main..HEAD; $LASTEXITCODE`; pass when it prints `0` (the deployed commit is on GitHub)
     - Verify: `git ls-files .vercel apps/shop-challenge/.vercel; git check-ignore apps/shop-challenge/.vercel; $LASTEXITCODE`; pass when `ls-files` lists nothing and `check-ignore` prints the path with exit code 0
     - _Requirements: 15.5, 15.6, 16.1, 16.2_
-  - [ ] 22.2 Check the deployed routes and headers
+  - [x] 22.2 Check the deployed routes and headers
     - Design: C14 "Deploy checks"
     - For `/` and `/play/demo/shop-gift-bundle` at the Deploy_URL, run the PowerShell 5.1 `Invoke-WebRequest` command of design C14 and report each status code and whether each of the four headers equals the design C14 value (Requirement 16.3)
     - **Stop condition:** if a status is not 200 or a header differs, report the URL, the status and the differing header, and change no Vercel setting (Requirement 16.4)
     - Verify: both requests print status `200` and the four expected header values
     - _Requirements: 16.3, 16.4_
-  - [ ] 22.3 Record the Deploy_URL in the app README
+  - [x] 22.3 Record the Deploy_URL in the app README
     - Design: C14
     - Edit `apps/shop-challenge/README.md`: add the Deploy_URL and the note "No login needed" (Requirement 16.5)
     - Verify: `Select-String -Path apps/shop-challenge/README.md -SimpleMatch -Pattern 'No login needed'`; pass when it prints one line
     - Verify: `pnpm exec vitest run tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 16.5_
-  - [ ] 22.4 Ask the user for the Android check (manual step)
+  - [x] 22.4 Ask the user for the Android check (manual step)
     - Design: C14, "Manual steps for the user"
     - Ask the user to open the Deploy_URL on an Android phone, play the Demo_Manifest to its result and open the confirm step of each Contact_Link (WhatsApp and Telegram), and record the reported result in the task report (Requirement 16.6)
     - Also ask the user for a keyboard and screen-reader pass and to check the license in the GitHub About panel (D42); record each answer, or that the user deferred it
     - Verify: `try { (Invoke-WebRequest -Uri "<Deploy_URL>/" -UseBasicParsing -MaximumRedirection 0).StatusCode } catch { $_.Exception.Response.StatusCode.value__ }`; pass when it prints `200`
     - _Requirements: 16.6_
 
-- [ ] 23. Boundary rules and lint check (`tools/lint`)
-  - [ ] 23.1 Create `tools/lint` and install the lint tools
+- [x] 23. Boundary rules and lint check (`tools/lint`)
+  - [x] 23.1 Create `tools/lint` and install the lint tools
     - Design: C15 "Package", "Dependencies", D38, D50, D51 (accepted 2026-11-20: ESLint 9.39.5, and `typescript` 6.0.3 in `tools/lint` for the linters only)
     - Create `tools/lint/package.json` with the exact content of design C15 and `tools/lint/tsconfig.json` (extends `../../tsconfig.base.json`, `"strict": true`, `"types": ["node"]`, includes `src/**/*.ts` and `test/**/*.ts`)
     - Edit `pnpm-workspace.yaml`: add the `packageExtensions` entry of design C15; change nothing else
@@ -555,41 +555,41 @@ Conventions for every task (Requirement 20):
     - Verify (D51): `pnpm --filter @dreame/lint exec depcruise --info; $LASTEXITCODE`; pass when it lists `typescript` as available at 6.0.3. **Stop condition:** if it does not, report the output and stop; without it `.ts` files are not parsed and the Boundary_Rules would pass without checking
     - Verify: `pnpm exec tsc --version; $LASTEXITCODE`; pass when the root `tsc` still prints 7.0.2
     - _Requirements: 3.7, 3.8, 3.9, 18.1_
-  - [ ] 23.2 Write the Boundary_Rules and the `depcruise` script
+  - [x] 23.2 Write the Boundary_Rules and the `depcruise` script
     - Design: C15 "Boundary_Rules", "depcruise CLI"
     - Create `tools/lint/src/depcruise-rules.ts` (`BOUNDARY_RULES` with the four rules of the design C15 table, all `severity: 'error'`, and `cruiseOptions(root)`) and `tools/lint/src/depcruise-cli.ts`
     - Edit the root `package.json`: add the script `depcruise` of design C15; do not change `check` yet
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - Verify: `pnpm -s depcruise; $LASTEXITCODE`; pass on exit code 0. If it reports violations, record each file and rule in the task report and continue with task 23.3
     - _Requirements: 18.3, 18.4, 18.5_
-  - [ ] 23.3 Fix any boundary violations in existing files
+  - [x] 23.3 Fix any boundary violations in existing files
     - Design: C15, design "Notes for the tasks run" item 18
     - When task 23.2 reported no violation, record "no violations" and change no file
     - Otherwise report each violation to the user, then fix one named file at a time, re-running `pnpm -s depcruise; $LASTEXITCODE` after each fix. **Stop condition:** if a fix needs a change to a rule, to more than one file, or to a file in `packages/runtime` that alters behaviour, stop and ask the user
     - Verify: `pnpm -s depcruise; $LASTEXITCODE`
     - _Requirements: 18.3, 18.4, 18.5_
-  - [ ] 23.4 Write the ESLint config and the `lint` script
+  - [x] 23.4 Write the ESLint config and the `lint` script
     - Design: C15 "ESLint config", "ESLint CLI"
     - Create `tools/lint/src/eslint-config.ts` (`LINT_IGNORES`, `eslintConfig()` and `asErrors` as in design C15), `tools/lint/src/eslint-cli.ts` and `tools/lint/src/untyped-modules.d.ts` (declares `eslint-plugin-jsx-a11y`, and `eslint-plugin-react` only if `tsc` reports it has no types; no `@types/*` package)
     - Edit the root `package.json`: add the script `lint` of design C15; do not change `check` yet
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - Verify: `pnpm -s lint; $LASTEXITCODE`; pass on exit code 0. If it reports findings, record each file and rule in the task report and continue with task 23.5
     - _Requirements: 18.6, 18.7_
-  - [ ] 23.5 Fix any lint findings in existing files
+  - [x] 23.5 Fix any lint findings in existing files
     - Design: C15, design "Notes for the tasks run" item 18
     - When task 23.4 reported no finding, record "no findings" and change no file
     - Otherwise report each finding to the user, then fix one named file at a time, re-running `pnpm -s lint; $LASTEXITCODE` and that file's tests after each fix. **Stop condition:** if a fix needs a rule to be turned off or lowered, an inline disable comment, or a change to more than one file, stop and ask the user
     - Verify: `pnpm -s lint; $LASTEXITCODE`
     - Verify: `pnpm exec vitest run packages/ui/ apps/shop-challenge/test/a11y.test.tsx; $LASTEXITCODE`
     - _Requirements: 18.6, 18.7_
-  - [ ] 23.6 Write the lint and boundary rule test
+  - [x] 23.6 Write the lint and boundary rule test
     - Design: C15 "Rule test"
     - Create `tools/lint/test/lint-rules.test.ts` (node): ESLint `lintText` on an in-memory sample built from string fragments that uses the React raw-HTML prop reports `react/no-danger` at severity 2; `<img src="x.png" />` reports `jsx-a11y/alt-text`; a clean sample reports nothing; dependency-cruiser on `packages/runtime/src/sample.ts` with an import of `react`, written into a `mkdtempSync(join(tmpdir(), 'dreame-depcruise-'))` folder and removed with `rmSync` in `afterAll`, reports one `runtime-no-ui-or-apps` violation. No violating file is written under `apps/`, `packages/` or `tools/`
     - Check that the root `vitest.config.ts` `node` project already includes `tools/*/test/**/*.test.ts`
     - Verify: `pnpm exec vitest run tools/lint/test/lint-rules.test.ts; $LASTEXITCODE`
     - Verify: `git status --porcelain --untracked-files=all -- apps packages tools | Select-String -SimpleMatch -Pattern 'sample'`; pass on no output
     - _Requirements: 18.9_
-  - [ ] 23.7 Run the Boundary_Rules and the Lint_Check in `pnpm check`
+  - [x] 23.7 Run the Boundary_Rules and the Lint_Check in `pnpm check`
     - Design: C15 "Root scripts"
     - Edit the root `package.json`: `check` becomes the exact string of design C15 ("`pnpm codegen && tsc -p tsconfig.json && pnpm -s depcruise && pnpm -s lint && vitest run && node --experimental-strip-types tools/validate/src/cli.ts activities/*.json`")
     - Verify: `Select-String -Path package.json -SimpleMatch -Pattern 'pnpm -s depcruise && pnpm -s lint && vitest run'`; pass when it prints one line
@@ -597,23 +597,23 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm -s lint; $LASTEXITCODE`
     - _Requirements: 18.8_
 
-- [ ] 24. CI build step
-  - [ ] 24.1 Add the app build step to `ci.yml`
+- [x] 24. CI build step
+  - [x] 24.1 Add the app build step to `ci.yml`
     - Design: C2 "Root changes", D39
     - Edit `.github/workflows/ci.yml`: add one line `      - run: pnpm --filter @dreame/shop-challenge build` after `      - run: pnpm check`; change nothing else and keep `node-version: 22`
     - Verify: `git diff --numstat -- .github/workflows/ci.yml; $LASTEXITCODE`; pass when it prints `1` added and `0` deleted lines for the file
     - Verify: `Select-String -Path .github/workflows/ci.yml -SimpleMatch -Pattern 'node-version: 22', 'run: pnpm check', 'run: pnpm --filter @dreame/shop-challenge build'`; pass when it prints three lines, in that order
     - _Requirements: 18.10_
 
-- [ ] 25. Timing and full-pipeline checks after the lint work
-  - [ ] 25.1 Measure `pnpm -s check` against 240 s with the lint tools in `check`
+- [x] 25. Timing and full-pipeline checks after the lint work
+  - [x] 25.1 Measure `pnpm -s check` against 240 s with the lint tools in `check`
     - Design: C15 "Timing", D53 (accepted 2026-11-20)
     - Ask the user to close other heavy processes first (HANDOFF §4)
     - Run `$sw = [Diagnostics.Stopwatch]::StartNew(); pnpm -s check; $LASTEXITCODE; $sw.Elapsed.TotalSeconds` and record the exit code and wall time in the task report, next to the task 20.1 time (Requirement 18.11)
     - **Stop condition (D53):** if the time exceeds 480 s (80% of the 600 s Post_Task_Hook timeout set in task 12.0), report it to the user and ask; change neither the timeout nor `check` without the user's answer (Requirement 18.12)
     - Verify: the measured run prints exit code 0
     - _Requirements: 18.11, 18.12_
-  - [ ] 25.2 Run the full pipeline checks after the lint work
+  - [x] 25.2 Run the full pipeline checks after the lint work
     - Verify: `pnpm codegen; $LASTEXITCODE`; pass when both printed module sizes are within their limits (core: 180,000 and 14,000; shop: the design C3 table)
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - Verify: `pnpm validate activities/*.json; $LASTEXITCODE` (expect 0, two PASS lines); `pnpm validate activities/fixtures/broken-dangling-edge.json; $LASTEXITCODE` (expect 1); `pnpm validate activities/fixtures/broken-shop-over-budget.json; $LASTEXITCODE` (expect 1); `pnpm validate; $LASTEXITCODE` (expect 2)
@@ -626,7 +626,7 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm exec vitest run tools/validate/test/extending-doc.test.ts tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 3.5, 3.9, 4.5, 13.2, 14.6, 17.7, 17.8, 18.8, 19.5, 19.8, 20.6_
 
-- [ ] 26. Final checkpoint - Ensure all tests pass, then ask before committing
+- [-] 26. Final checkpoint - Ensure all tests pass, then ask before committing
   - Ensure all tests pass, ask the user if questions arise.
   - Verify: `pnpm check; $LASTEXITCODE` (600,000 ms limit)
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask whether to commit the lint work (task 23), the `ci.yml` step (task 24), the README change (task 22.3), any approved D53 change not yet committed, and the task status files, and which paths to include

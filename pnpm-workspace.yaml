@@ -9,3 +9,7 @@ minimumReleaseAgeExclude:
   - "@vitest/spy@5.1.1"
   - fast-check@4.10.3
   - vitest@5.1.1
+packageExtensions:
+  dependency-cruiser@18:
+    peerDependencies:
+      typescript: "*"
