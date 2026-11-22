@@ -3,7 +3,8 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-// Package boundary and purity scans for Requirements 12.6, 14.3, 14.4, 14.5 and 15.11.
+// Package boundary and purity scans for Requirements 12.6, 14.3, 14.4, 14.5 and 15.11 (runtime-core, ui-renderer),
+// and shop-challenge Requirement 3.4. Kept next to the dependency-cruiser Boundary_Rules (shop-challenge Requirement 18.2).
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const RUNTIME_DIR = join(ROOT, 'packages', 'runtime');
@@ -18,7 +19,10 @@ const NO_UI_DIRS = [
   join(ROOT, 'packages', 'node-types', 'src'),
   join(ROOT, 'packages', 'node-types', 'scripts'),
   join(ROOT, 'packages', 'schema', 'src'),
+  join(ROOT, 'apps', 'shop-challenge', 'src', 'node-types'),
 ];
+// Node loads the Shop_Profile in the Validate_CLI and the Shop_Codegen, so it must stay free of UI code (Req 3.4).
+const SHOP_PROFILE_FILE = join(ROOT, 'apps', 'shop-challenge', 'src', 'profile.ts');
 const IMPURE: readonly { label: string; re: RegExp }[] = [
   { label: 'Da' + 'te.now', re: new RegExp('\\bDa' + 'te\\s*\\.\\s*now\\b') },
   { label: 'new Da' + 'te(', re: new RegExp('\\bnew\\s+Da' + 'te\\s*\\(') },
@@ -73,6 +77,11 @@ function isUiSpecifier(spec: string): boolean {
   return [REACT, REACT + '-dom', UI_PKG].some((pkg) => isPackageOrSubpath(spec, pkg));
 }
 
+/** Flags the UI packages of `isUiSpecifier` and any module path ending in `.tsx`, such as a view file (Req 3.4). */
+function isUiOrTsxSpecifier(spec: string): boolean {
+  return isUiSpecifier(spec) || spec.endsWith('.tsx');
+}
+
 function isForbiddenSpecifier(spec: string): boolean {
   return isUiSpecifier(spec) || spec.includes(APPS);
 }
@@ -122,14 +131,28 @@ describe('runtime package boundaries', () => {
   });
 });
 
-describe('node-types and schema stay free of UI code', () => {
+describe('node types, schema and the shop profile stay free of UI code', () => {
+  it('the UI-or-.tsx check flags UI packages and .tsx paths and allows .ts and .js paths', () => {
+    for (const bad of [REACT, UI_PKG, './views/CollectionSelectNodeView.tsx', '../views/registry.tsx']) {
+      expect(isUiOrTsxSpecifier(bad), bad).toBe(true);
+    }
+    for (const ok of ['./collectionSelect.ts', '../generated/shop-challenge.validators.js', '@dreame/runtime', './tsx-notes.ts']) {
+      expect(isUiOrTsxSpecifier(ok), ok).toBe(false);
+    }
+  });
+
   for (const dir of NO_UI_DIRS) {
-    it(`no file under ${rel(dir)} imports react, react-dom or @dreame/ui (Req 12.6, 14.4)`, () => {
+    it(`no file under ${rel(dir)} imports react, react-dom, @dreame/ui or a .tsx module (Req 12.6, 14.4, 3.4)`, () => {
       const files = listSourceFiles(dir);
       expect(files.length).toBeGreaterThan(0);
-      expect(findImports(files, isUiSpecifier)).toEqual([]);
+      expect(findImports(files, isUiOrTsxSpecifier)).toEqual([]);
     });
   }
+
+  it(`${rel(SHOP_PROFILE_FILE)} imports no react, react-dom, @dreame/ui or .tsx module (Req 3.4)`, () => {
+    expect(existsSync(SHOP_PROFILE_FILE)).toBe(true);
+    expect(findImports([SHOP_PROFILE_FILE], isUiOrTsxSpecifier)).toEqual([]);
+  });
 });
 
 describe('runtime purity', () => {

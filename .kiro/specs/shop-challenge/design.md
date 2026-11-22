@@ -1039,7 +1039,7 @@ The Shop_App stores nothing on the device in this spec; `packages/storage` stays
 - With Root Directory `apps/shop-challenge`, `pnpm install --frozen-lockfile` finds `pnpm-workspace.yaml` in the repository root and installs the workspace; `pnpm run build` runs the app script, which runs the root `codegen` through `pnpm -w` (Requirement 15.3). The build reads `packages/`, `activities/` and the lockfile outside the Root Directory, so the Vercel setting "Include files outside the root directory in the Build Step" stays on (its default).
 - No environment variable, token or secret is needed (Requirement 15.5); D52 covers the pnpm version Vercel uses.
 
-`apps/shop-challenge/test/vercel-config.test.ts` (node) parses the file and checks the header list, the rewrite, the three commands and that no `env`, `build` or `buildEnv` key exists (Requirement 15.4). Property 12 compares the headers with Architecture Spec §A3 read at run time, so the spec text and the file cannot drift apart.
+`apps/shop-challenge/test/vercel-config.test.ts` (node) parses the file and checks the header list, the rewrite, the three commands and that no `env`, `build` or `buildEnv` key exists (Requirement 15.4). Property 11 compares the headers with Architecture Spec §A3 read at run time, so the spec text and the file cannot drift apart.
 
 **Deploy steps for the user** (Requirement 16.1). The agent gives these steps and states that the user performs them with the user's own Vercel account:
 

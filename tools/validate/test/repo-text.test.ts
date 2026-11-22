@@ -3,7 +3,8 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-// Repository text scan for Requirements 1.14 and 18.7. The phrases are read from
+// Repository text scan for Requirements 1.14 and 18.7 (ui-renderer) and 14.7
+// (shop-challenge). The phrases are read from
 // `.kiro/steering/product.md` at run time, so this file never spells them out.
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
@@ -100,5 +101,31 @@ describe('repository text (Requirements 1.14, 18.7)', () => {
 
   it('.kiro/hooks/*.json has no banned phrase when the files exist', () => {
     expect(scanFiles(listFilesWithSuffix(join(ROOT, '.kiro', 'hooks'), '.json'), phrases)).toEqual([]);
+  });
+});
+
+describe('shop-challenge repository text (Requirement 14.7)', () => {
+  it('.kiro/specs/shop-challenge/*.md has no banned phrase', () => {
+    const files = listFilesWithSuffix(join(ROOT, '.kiro', 'specs', 'shop-challenge'), '.md');
+    expect(files.length).toBeGreaterThan(0);
+    expect(scanFiles(files, phrases)).toEqual([]);
+  });
+
+  it('apps/shop-challenge/src has no banned phrase', () => {
+    const files = listFilesRecursive(join(ROOT, 'apps', 'shop-challenge', 'src'));
+    expect(files.length).toBeGreaterThan(0);
+    expect(scanFiles(files, phrases)).toEqual([]);
+  });
+
+  it('apps/shop-challenge/index.html has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'apps', 'shop-challenge', 'index.html')], phrases)).toEqual([]);
+  });
+
+  it('apps/shop-challenge/README.md has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'apps', 'shop-challenge', 'README.md')], phrases)).toEqual([]);
+  });
+
+  it('PRIVACY.md has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'PRIVACY.md')], phrases)).toEqual([]);
   });
 });

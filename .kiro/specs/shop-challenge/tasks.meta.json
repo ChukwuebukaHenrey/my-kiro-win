@@ -51,6 +51,10 @@
     "14.5 Write the property test for text rendering": {
       "status": "passed",
       "lastRunTimestamp": 1795285462245
+    },
+    "19.2 Write the property test for the hosting headers": {
+      "status": "passed",
+      "lastRunTimestamp": 1795319669658
     }
   },
   "executionHistory": {
@@ -973,6 +977,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235165415
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795289254010
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795289381866
       }
     ],
     "16.4 Write the routes test": [
@@ -980,6 +994,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235165685
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795289759648
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290033046
       }
     ],
     "16.5 Write the app axe test": [
@@ -987,6 +1011,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235165965
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290256253
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290437857
       }
     ],
     "17.1 Extend the source scan to `apps/`": [
@@ -994,6 +1028,26 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235166390
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290642334
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290926216
+      },
+      {
+        "executionId": "e65ee761-ba6c-4a40-8e8c-04508edc320e",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795295948667
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795316981340
       }
     ],
     "17.2 Extend the boundary test to the app node types and profile": [
@@ -1001,6 +1055,26 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235166679
+      },
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290929261
+      },
+      {
+        "executionId": "e65ee761-ba6c-4a40-8e8c-04508edc320e",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795295947562
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795317893197
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795317900427
       }
     ],
     "17.3 Write the app privacy scan": [
@@ -1008,6 +1082,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235166971
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795316983120
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795317467243
       }
     ],
     "17.4 Write `PRIVACY.md` and extend the repository text scan": [
@@ -1015,6 +1099,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235167231
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318229404
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318338209
       }
     ],
     "17.5 Write the built output check": [
@@ -1022,6 +1116,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235167496
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318575289
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318667660
       }
     ],
     "18. Checkpoint - Ensure all tests pass and the app builds": [
@@ -1029,6 +1133,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235167769
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318867219
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319139175
       }
     ],
     "19.1 Write `vercel.json` and its example test": [
@@ -1036,6 +1150,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235168050
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319310904
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319402272
       }
     ],
     "19.2 Write the property test for the hosting headers": [
@@ -1043,6 +1167,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235168432
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319571477
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319698483
       }
     ],
     "20.1 Measure `pnpm -s check` against 240 s before the deploy": [
@@ -1050,6 +1184,21 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235168756
+      },
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795320309281
+      },
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795358602772
+      },
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795359899316
       }
     ],
     "20.2 Run the full pipeline checks before the deploy": [
@@ -1057,6 +1206,16 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235169032
+      },
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795360076263
+      },
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795360395126
       }
     ],
     "21. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)": [
@@ -1064,6 +1223,11 @@
         "executionId": "6bcb2c90-8a6e-466d-afa2-77920bd4ead8",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795235169295
+      },
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795360535532
       }
     ],
     "22.1 Give the user the Vercel deploy steps": [
@@ -1279,6 +1443,34 @@
         "executionId": "19ce4f59-1329-4927-a283-4e053941190b",
         "chatSessionId": "sess_53cc7c63-f49a-4eff-bf46-fdac844fa7ff",
         "timestamp": 1795286700757
+      }
+    ],
+    "16. App shell, routes and views": [
+      {
+        "executionId": "a56e76d8-d633-45e2-b825-d524c66d04b3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795290438618
+      }
+    ],
+    "17. Scans, `PRIVACY.md` and the built output check": [
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795318668164
+      }
+    ],
+    "19. Static hosting configuration": [
+      {
+        "executionId": "0c4fea02-fbbb-428a-ad0d-7412c6ba001a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795319699445
+      }
+    ],
+    "20. Timing and full-pipeline checks before the deploy": [
+      {
+        "executionId": "52ed2e17-9832-49e1-a06b-d8b2683cd638",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795360396479
       }
     ]
   }

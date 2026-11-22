@@ -3,12 +3,15 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-// Source scans for security.md and Requirements 4.1, 4.8, 6.5, 14.6 and 14.7.
+// Source scans for security.md and runtime-core Requirements 4.1, 4.8, 6.5, 14.6 and 14.7,
+// extended to apps/ by shop-challenge Requirements 4.6 and 14.3.
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const SCHEMA_INDEX = join(ROOT, 'packages', 'schema', 'src', 'index.ts');
 const CODEGEN_DIR = join(ROOT, 'packages', 'schema', 'src', 'codegen');
-const SKIPPED_DIRS = new Set(['node_modules', 'generated']);
+// `dist` holds build output, such as a Vite bundle of an app, which is not source.
+const SKIPPED_DIRS = new Set(['node_modules', 'dist', 'generated']);
+const SCANNED_TOPS = ['apps', 'packages', 'tools'] as const;
 
 // Forbidden tokens are built from fragments so that this file does not match its own scan.
 const EV = 'ev' + 'al';
@@ -27,7 +30,7 @@ function rel(file: string): string {
   return relative(ROOT, file).split(sep).join('/');
 }
 
-/** Lists `.ts`, `.tsx`, `.js` and `.jsx` files under `dir`, skipping `node_modules` and `generated` folders. */
+/** Lists `.ts`, `.tsx`, `.js` and `.jsx` files under `dir`, skipping `node_modules`, `dist` and `generated` folders. */
 function listSourceFiles(dir: string): string[] {
   if (!existsSync(dir)) return [];
   const out: string[] = [];
@@ -42,10 +45,10 @@ function listSourceFiles(dir: string): string[] {
   return out;
 }
 
-/** Lists the `src` folders of every workspace folder directly under `packages/` and `tools/`. */
+/** Lists the `src` folders of every workspace folder directly under `apps/`, `packages/` and `tools/`. */
 function listSrcDirs(): string[] {
   const dirs: string[] = [];
-  for (const top of ['packages', 'tools']) {
+  for (const top of SCANNED_TOPS) {
     const base = join(ROOT, top);
     if (!existsSync(base)) continue;
     for (const entry of readdirSync(base, { withFileTypes: true })) {
@@ -93,11 +96,13 @@ describe('source scan', () => {
     expect(FORBIDDEN.some(({ re }) => re.test(safe))).toBe(false);
   });
 
-  it('(a) no .ts, .tsx, .js or .jsx file under packages/ or tools/ calls the forbidden APIs (Req 14.7)', () => {
-    const files = [...listSourceFiles(join(ROOT, 'packages')), ...listSourceFiles(join(ROOT, 'tools'))];
+  it('(a) no .ts, .tsx, .js or .jsx file under apps/, packages/ or tools/ calls the forbidden APIs (Req 14.7; shop-challenge Req 14.3)', () => {
+    const files = SCANNED_TOPS.flatMap((top) => listSourceFiles(join(ROOT, top)));
     expect(files.length).toBeGreaterThan(0);
     // The scan must reach the React components, or the check below would skip them.
-    expect(files.map(rel).some((f) => f.startsWith('packages/ui/src/') && f.endsWith('.tsx'))).toBe(true);
+    const relFiles = files.map(rel);
+    expect(relFiles.some((f) => f.startsWith('packages/ui/src/') && f.endsWith('.tsx'))).toBe(true);
+    expect(relFiles.some((f) => f.startsWith('apps/shop-challenge/src/') && f.endsWith('.tsx'))).toBe(true);
     const hits: string[] = [];
     for (const file of files) {
       const lines = readFileSync(file, 'utf8').split('\n');
@@ -138,8 +143,11 @@ describe('source scan', () => {
     expect(reached.some((f) => f.startsWith('packages/schema/src/codegen/'))).toBe(false);
   });
 
-  it('(c) among packages/*/src and tools/*/src, only packages/schema/src/codegen/ imports ajv (Req 4.1, 4.8)', () => {
-    const files = listSrcDirs().flatMap(listSourceFiles);
+  it('(c) among apps/*/src, packages/*/src and tools/*/src, only packages/schema/src/codegen/ imports ajv (Req 4.1, 4.8; shop-challenge Req 4.6)', () => {
+    const srcDirs = listSrcDirs();
+    // The scan must reach the app sources, or the check below would skip them.
+    expect(srcDirs.map(rel)).toContain('apps/shop-challenge/src');
+    const files = srcDirs.flatMap(listSourceFiles);
     const importers = files.filter(importsAjv);
     const outside = importers.filter((f) => !f.startsWith(CODEGEN_DIR + sep));
     expect(outside.map(rel)).toEqual([]);

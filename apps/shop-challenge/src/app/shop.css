@@ -1,0 +1,65 @@
+/*
+ * Layout rules of the Shop Challenge app (design C12, Architecture Spec §B3).
+ * Every value comes from the @dreame/ui tokens.css custom properties.
+ * Components use these class names and no inline style (Requirement 14.5).
+ */
+
+.shop-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--dr-font-family);
+  font-size: var(--dr-font-size-base);
+  color: var(--dr-color-text);
+  background-color: var(--dr-color-bg);
+}
+
+.shop-main {
+  flex: 1 0 auto;
+  padding: var(--dr-space-4);
+}
+
+.shop-products {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Sticky running total at the bottom of the screen (§B3 BundleBar). */
+.shop-bundle-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin-top: var(--dr-space-4);
+  padding: var(--dr-space-3) var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border);
+  background-color: var(--dr-color-surface);
+}
+
+.shop-bundle-bar p {
+  margin: 0;
+}
+
+.shop-hint {
+  margin: 0;
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}
+
+.shop-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-4);
+}
+
+.shop-footer {
+  padding: var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border);
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}

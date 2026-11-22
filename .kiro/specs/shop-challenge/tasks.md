@@ -402,7 +402,7 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm codegen; pnpm exec vitest run tools/validate/test/run.test.ts; $LASTEXITCODE`
     - _Requirements: 17.7, 17.8_
 
-- [ ] 16. App shell, routes and views
+- [x] 16. App shell, routes and views
   - [x] 16.1 Write the offer date helpers and the small views
     - Design: C12 "`src/offer.ts`" and the view table
     - Create `apps/shop-challenge/src/offer.ts` (`localDateString`, `isOfferEnded`), `apps/shop-challenge/src/app/NotFoundView.tsx`, `apps/shop-challenge/src/app/OfferEndedView.tsx` and `apps/shop-challenge/src/app/Footer.tsx` with the exact texts and links of the design C12 view table; footer anchors have `target="_blank"`, `rel="noopener noreferrer"` and the visible text "(opens in a new tab)"
@@ -415,7 +415,7 @@ Conventions for every task (Requirement 20):
     - The only toolkit statement on the landing page is the Brief §0 sentence quoted in design C12 (Requirement 13.10)
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - _Requirements: 13.3, 13.4, 13.5, 13.6, 13.7, 13.8, 13.10_
-  - [ ] 16.3 Write the entry files and the `index.html` test
+  - [x] 16.3 Write the entry files and the `index.html` test
     - Design: C12 "`apps/shop-challenge/index.html`", "`src/app/main.tsx`", "`src/app/shop.css`"
     - Create `apps/shop-challenge/index.html` with the exact content of design C12, `apps/shop-challenge/src/app/main.tsx` (imports `@dreame/ui/tokens.css`, `@dreame/ui/components.css` and `./shop.css`; throws an `Error` when `#root` is missing; renders `<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>`) and `apps/shop-challenge/src/app/shop.css` (layout rules that use only `var(--dr-*)` tokens; the bundle bar is `position: sticky; bottom: 0`)
     - `@dreame/ui` already exports `./tokens.css` and `./components.css`. If `tsc` reports the three stylesheet imports as unresolved side-effect imports, add `apps/shop-challenge/src/app/css.d.ts` with `declare module '*.css';` and record that in the task report; change no compiler option
@@ -423,75 +423,75 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm exec vitest run apps/shop-challenge/test/index-html.test.ts; $LASTEXITCODE`
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - _Requirements: 13.1, 13.11, 13.12, 14.5_
-  - [ ] 16.4 Write the routes test
+  - [x] 16.4 Write the routes test
     - Design: C12, Testing Strategy "Example tests"
     - Create `apps/shop-challenge/test/routes.test.tsx` (jsdom) with `MemoryRouter`: `/` shows the app name, the audience sentence, a link to `/play/demo/shop-gift-bundle` and the trust text; `/play/demo/shop-gift-bundle` shows the player at `intro`; `/play/demo/nope` and `/x` show "Page not found" with a link to `/`; an invalid manifest through the `demos` prop shows `InvalidActivityView` with "Back to home"; a demo with a past `validUntil` shows "This offer has ended"; `isOfferEnded` with a past, the same and a future date; the footer on every route
     - Verify: `pnpm codegen; pnpm exec vitest run apps/shop-challenge/test/routes.test.tsx; $LASTEXITCODE`
     - _Requirements: 13.3, 13.4, 13.5, 13.6, 13.7, 13.8, 13.9_
-  - [ ] 16.5 Write the app axe test
+  - [x] 16.5 Write the app axe test
     - Design: Testing Strategy "Example tests", ui-renderer D17
     - Create `apps/shop-challenge/test/a11y.test.tsx` (jsdom): `axe.run` from `axe-core` with the WCAG 2.x A and AA tags and `color-contrast` disabled, as `packages/ui/test/a11y.test.tsx` does, on the landing, not-found and offer-ended views, both shop views, and the player on each node of the Demo_Manifest; `expect(result.violations).toEqual([])`
     - **Stop condition:** fix violations in the components; disable no rule other than `color-contrast` without asking the user
     - Verify: `pnpm codegen; pnpm exec vitest run apps/shop-challenge/test/a11y.test.tsx; $LASTEXITCODE`
     - _Requirements: 13.13_
 
-- [ ] 17. Scans, `PRIVACY.md` and the built output check
-  - [ ] 17.1 Extend the source scan to `apps/`
+- [x] 17. Scans, `PRIVACY.md` and the built output check
+  - [x] 17.1 Extend the source scan to `apps/`
     - Design: C13 table, row `source-scan.test.ts`
     - Edit `packages/schema/test/source-scan.test.ts`: test (a) scans `apps/` as well as `packages/` and `tools/` and asserts that the file list holds a `.tsx` file under `apps/shop-challenge/src/`; test (c) `listSrcDirs` also reads `apps/`. Write the file in one save (Regression_Hook)
     - Verify: `pnpm exec vitest run packages/schema/test/source-scan.test.ts; $LASTEXITCODE`
     - _Requirements: 4.6, 14.3_
-  - [ ] 17.2 Extend the boundary test to the app node types and profile
+  - [x] 17.2 Extend the boundary test to the app node types and profile
     - Design: C13 table, row `boundaries.test.ts`
     - Edit `packages/runtime/test/boundaries.test.ts`: `NO_UI_DIRS` adds `apps/shop-challenge/src/node-types`, and a new case scans the single file `apps/shop-challenge/src/profile.ts`; also flag `.tsx` specifiers in both. Write the file in one save (Regression_Hook)
     - Verify: `pnpm exec vitest run packages/runtime/test/boundaries.test.ts; $LASTEXITCODE`
     - _Requirements: 3.4, 18.2_
-  - [ ] 17.3 Write the app privacy scan
+  - [x] 17.3 Write the app privacy scan
     - Design: C13 table, row `privacy-scan.test.ts`
     - Create `apps/shop-challenge/test/privacy-scan.test.ts` (node) over every file in `apps/shop-challenge/src`: no network or storage API of design C13; no `<input` whose `type` is not `checkbox`, no `<textarea` or `<select`; no JSX `style=`; every `<a` tag has an `href` starting with `https://`, `target="_blank"` and `rel="noopener noreferrer"`. Build the tokens from fragments, as in `packages/ui/test/privacy-scan.test.ts`, and add a sample-code case that checks each pattern matches
     - Verify: `pnpm exec vitest run apps/shop-challenge/test/privacy-scan.test.ts; $LASTEXITCODE`
     - _Requirements: 14.1, 14.2, 14.4, 14.5, 14.8_
-  - [ ] 17.4 Write `PRIVACY.md` and extend the repository text scan
+  - [x] 17.4 Write `PRIVACY.md` and extend the repository text scan
     - Design: C13 "`PRIVACY.md`", D43
     - Create `PRIVACY.md` at the Workspace root with the exact content of design C13
     - Edit `tools/validate/test/repo-text.test.ts`: add cases for `.kiro/specs/shop-challenge/*.md`, every file under `apps/shop-challenge/src`, `apps/shop-challenge/index.html`, `apps/shop-challenge/README.md` and `PRIVACY.md`
     - Verify: `pnpm exec vitest run tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 13.10, 14.7, 14.8_
-  - [ ] 17.5 Write the built output check
+  - [x] 17.5 Write the built output check
     - Design: C13 table, row `check-dist.ts`, D44
     - Create `apps/shop-challenge/scripts/check-dist.ts`: reads `dist/index.html` and exits 1 on a `<script` tag without `src=`, a `<style` tag or a `style=` attribute; sums the `gzipSync` sizes of `dist/assets/*.js` and exits 1 above 153,600 bytes; prints both results. It imports only `node:*` modules
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - Verify: `Test-Path apps/shop-challenge/dist; node --experimental-strip-types apps/shop-challenge/scripts/check-dist.ts; $LASTEXITCODE`; pass when, with no `dist` folder, it prints `False`, a plain error naming the missing `dist/index.html`, and exit code 1 (task 18 runs it on a real build)
     - _Requirements: 14.6_
 
-- [ ] 18. Checkpoint - Ensure all tests pass and the app builds
+- [x] 18. Checkpoint - Ensure all tests pass and the app builds
   - Verify: `pnpm --filter @dreame/shop-challenge build; $LASTEXITCODE`; pass when `check-dist.ts` reports no inline script or style and a JS total under 153,600 gzip bytes, and the exit code is 0
   - Verify: `git status --porcelain --untracked-files=all -- apps/shop-challenge/dist apps/shop-challenge/generated; $LASTEXITCODE`; pass when it prints no file
   - Verify: `pnpm check; $LASTEXITCODE` (600,000 ms limit)
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 19. Static hosting configuration
-  - [ ] 19.1 Write `vercel.json` and its example test
+- [x] 19. Static hosting configuration
+  - [x] 19.1 Write `vercel.json` and its example test
     - Design: C14, D52
     - Create `apps/shop-challenge/vercel.json` with the exact content of design C14
     - Create `apps/shop-challenge/test/vercel-config.test.ts` (node): parses the file; the install command, build command and output directory equal design C14; the rewrite is `/(.*)` → `/index.html`; no `env`, `build` or `buildEnv` key exists
     - Verify: `pnpm exec vitest run apps/shop-challenge/test/vercel-config.test.ts; $LASTEXITCODE`
     - _Requirements: 15.3, 15.4, 15.5_
-  - [ ] 19.2 Write the property test for the hosting headers
+  - [x] 19.2 Write the property test for the hosting headers
     - **Property 11: The hosting headers and rewrite apply to every path**
     - Create `apps/shop-challenge/test/vercel-config.property.test.ts` (node): generated request paths starting with `/` (routes, assets, deep paths, encoded characters); the header rule `source` and the rewrite `source`, read as `/(.*)`, match each path; the header rule sets exactly the four headers of Architecture Spec §A3, each byte-equal to the value parsed from `docs/Architecture_and_UI_Spec.md` at run time; the rewrite destination is `/index.html`
     - Verify: `pnpm exec vitest run apps/shop-challenge/test/vercel-config.property.test.ts; $LASTEXITCODE`
     - _Requirements: 15.1, 15.2_
 
-- [ ] 20. Timing and full-pipeline checks before the deploy
-  - [ ] 20.1 Measure `pnpm -s check` against 240 s before the deploy
+- [x] 20. Timing and full-pipeline checks before the deploy
+  - [x] 20.1 Measure `pnpm -s check` against 240 s before the deploy
     - Design: C15 "Timing", D53 (accepted 2026-11-20); "Notes for the tasks run" → "Post_Task_Hook time"
     - Ask the user to close other heavy processes first (HANDOFF §4)
     - Run `$sw = [Diagnostics.Stopwatch]::StartNew(); pnpm -s check; $LASTEXITCODE; $sw.Elapsed.TotalSeconds` and record the exit code and wall time in the task report. The Boundary_Rules and the Lint_Check are not in `check` yet; task 25.1 measures again after they join
     - **Stop condition (D53):** if the time exceeds 480 s (80% of the 600 s Post_Task_Hook timeout set in task 12.0), report it to the user and ask; change neither the timeout nor `check` without the user's answer
     - Verify: the measured run prints exit code 0
     - _Requirements: 20.3, 20.12_
-  - [ ] 20.2 Run the full pipeline checks before the deploy
+  - [x] 20.2 Run the full pipeline checks before the deploy
     - Verify: `pnpm codegen; $LASTEXITCODE`; pass when both printed module sizes are within their limits (core: 180,000 and 14,000; shop: the design C3 table)
     - Verify: `pnpm typecheck; $LASTEXITCODE`
     - Verify: `pnpm validate activities/*.json; $LASTEXITCODE` (expect 0, two PASS lines); `pnpm validate activities/fixtures/broken-dangling-edge.json; $LASTEXITCODE` (expect 1); `pnpm validate activities/fixtures/broken-shop-over-budget.json; $LASTEXITCODE` (expect 1); `pnpm validate; $LASTEXITCODE` (expect 2)
@@ -503,7 +503,7 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm exec vitest run tools/validate/test/extending-doc.test.ts tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 3.5, 3.9, 4.5, 13.2, 14.6, 17.7, 17.8, 19.5, 19.8, 20.6_
 
-- [ ] 21. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
+- [-] 21. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
   - Ensure all tests pass, ask the user if questions arise.
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask: whether to commit; whether the work goes in one commit or several; which of the listed files to include
   - On approval, stage each approved file by explicit path with `git add -- <path> ...`. `package.json`, `apps/shop-challenge/package.json`, `tools/validate/package.json` and `pnpm-lock.yaml` go in the same commit (Requirement 3.9). The D53 change of task 12.0 goes in with the rest: `.kiro/hooks/post-task-check.json`, `tools/validate/test/kiro-hooks.test.ts`, and the ui-renderer spec edits of task 12.0 (`.kiro/specs/ui-renderer/design.md`, `.kiro/specs/ui-renderer/requirements.md`). Never stage `packages/*/generated/`, `apps/*/generated/`, `apps/shop-challenge/dist/`, `design-refs/` or the five untracked files named in the conventions
