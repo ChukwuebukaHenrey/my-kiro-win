@@ -626,7 +626,7 @@ Conventions for every task (Requirement 20):
     - Verify: `pnpm exec vitest run tools/validate/test/extending-doc.test.ts tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 3.5, 3.9, 4.5, 13.2, 14.6, 17.7, 17.8, 18.8, 19.5, 19.8, 20.6_
 
-- [-] 26. Final checkpoint - Ensure all tests pass, then ask before committing
+- [x] 26. Final checkpoint - Ensure all tests pass, then ask before committing
   - Ensure all tests pass, ask the user if questions arise.
   - Verify: `pnpm check; $LASTEXITCODE` (600,000 ms limit)
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask whether to commit the lint work (task 23), the `ci.yml` step (task 24), the README change (task 22.3), any approved D53 change not yet committed, and the task status files, and which paths to include

@@ -155,3 +155,43 @@ Kiro did: Left focus after a rejected response, and dependency-cruiser and ESLin
 Caught by: Design questions answered by the user on 2026-11-20, recorded in "User answers (2026-11-20)" of `.kiro/specs/ui-renderer/design.md`.
 Fix: Both moved to the shop-challenge spec: Requirement 12 covers rejection handling and Requirement 18 covers CI enforcement of the boundary and DOM rules.
 Kiro features: Spec workflow.
+
+## 2026-11-22 — shop-challenge spec done
+
+Spec: `shop-challenge`
+Kiro did: Built `@dreame/shop-challenge` with the `collectionSelect` and `recommendOutcome` node types, the WhatsApp and Telegram contact channel modules and `tools/lint`, and put the app live at https://my-kiro-win-shop-challenge.vercel.app/; 104 of 104 shop-challenge tasks are marked done in `.kiro/specs/shop-challenge/tasks.md`; decisions D24–D54 are in `.kiro/specs/shop-challenge/design.md`.
+Caught by: Final checks of tasks 25.1 and 25.2: `pnpm check` exit 0 with 81 test files and 820 tests in 139.8 s; `pnpm --filter @dreame/shop-challenge build` exit 0 with 131,892 gzip bytes of JS against a limit of 153,600; `pnpm -s depcruise` exit 0 with 194 modules, 732 dependencies and 0 violations; `pnpm -s lint` exit 0 with 167 files and 0 problems; `pnpm validate activities/*.json` exit 0 with two PASS lines; `pnpm validate activities/fixtures/broken-shop-over-budget.json` exit 1 with one `select-unsatisfiable` diagnostic, as intended; the live `/` and `/play/demo/shop-gift-bundle` returned status 200 with all four hosting headers; the user's Android, keyboard, screen-reader and GitHub MIT-license checks passed.
+Fix: None needed.
+Kiro features: Spec workflow and tasks, steering, agent hooks, sub-agent task runs, fast-check property tests.
+
+## 2026-11-22 — Post-task check timeout raised
+
+Spec: `shop-challenge / task 12.0`
+Kiro did: Measured `pnpm check` at 224.6 s at checkpoint 11 against the 300 s Post_Task_Hook timeout.
+Caught by: The timing step of decision D53 in `.kiro/specs/shop-challenge/design.md`; the measurement was under the 240 s trigger, and D53 was applied early.
+Fix: The user approved a 600 s timeout on 2026-11-21 and task 12.0 raised the Post_Task_Hook timeout from 300 s to 600 s.
+Kiro features: Agent hooks.
+
+## 2026-11-22 — Second TypeScript copy for the lint tools
+
+Spec: `shop-challenge / tools/lint`
+Kiro did: Added ESLint and dependency-cruiser in `tools/lint`.
+Caught by: `typescript-eslint` 8.73.0 supports `typescript` below 6.1.0, and TypeScript 7.0.2 exposes no classic compiler API (decision D51 in `.kiro/specs/shop-challenge/design.md`); `depcruise --info` lists typescript@6.0.3.
+Fix: `typescript` 6.0.3 in `tools/lint` only, approved by the user on 2026-11-20; the root stays on 7.0.2.
+Kiro features: Spec workflow.
+
+## 2026-11-22 — Wiring hook replies
+
+Spec: `shop-challenge / node type and view files`
+Kiro did: Wrote the Shop Challenge node type and view files with the wiring hook enabled.
+Caught by: On a new node type file the hook wired the app's `index.ts` and `profile.ts`, added the `EXTENDING.md` entry, added tests and ran `pnpm -s test:shared`; on a new view file it wired `registry.ts`; it fired twice per new file and replied "already wired" the second time; one test the hook wrote had a type error.
+Fix: None needed for the "already wired" replies; the fix for the type error is not recorded.
+Kiro features: Agent hooks.
+
+## 2026-11-22 — Checkpoint tasks missing from the task graph
+
+Spec: `shop-challenge / checkpoint tasks`
+Kiro did: Ran spec tasks in order from the task list.
+Caught by: Checkpoint tasks were not in the task dependency graph, so the task list with status ready skipped them.
+Fix: Each checkpoint is run by hand after reading it with `task_get`; the practice-path `tasks.md` records this in Requirement 24.16.
+Kiro features: Spec tasks.

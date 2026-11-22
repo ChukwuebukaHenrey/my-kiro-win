@@ -1,0 +1,24 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Write the Day 6–7 entries in `KIRO_LOG.md`": [
+      {
+        "executionId": "22cce5ff-29ab-4784-bce0-0b8b9d08cd59",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795386717997
+      },
+      {
+        "executionId": "22cce5ff-29ab-4784-bce0-0b8b9d08cd59",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795387320668
+      }
+    ],
+    "1.2 Ask the user, then commit the log, the leftover status files and this spec": [
+      {
+        "executionId": "22cce5ff-29ab-4784-bce0-0b8b9d08cd59",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795387650379
+      }
+    ]
+  }
+}
