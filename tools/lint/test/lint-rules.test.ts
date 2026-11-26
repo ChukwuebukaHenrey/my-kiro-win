@@ -83,4 +83,59 @@ describe('dependency-cruiser Boundary_Rules', () => {
     },
     TIMEOUT,
   );
+
+  // practice-path Requirements 11.1, 11.2, 19.8 (design C16, D66). Each case uses its own root
+  // inside the temp folder so that the samples of one case do not reach another.
+  it(
+    'reports react-free-no-ui and storage-no-imports for packages/storage importing react',
+    async () => {
+      const root = join(tmpRoot, 'storage-case');
+      const srcDir = join(root, 'packages', 'storage', 'src');
+      mkdirSync(srcDir, { recursive: true });
+      writeFileSync(join(srcDir, 'sample.ts'), "import { useState } from 'react';\nexport const x = useState;\n", 'utf8');
+
+      const result = await cruise(['packages'], cruiseOptions(root));
+      const output = result.output;
+      if (typeof output === 'string') throw new Error('expected a cruise result object');
+
+      expect(output.summary.totalCruised).toBeGreaterThan(0);
+      const violations = output.summary.violations
+        .map((v) => ({ from: v.from, rule: v.rule.name }))
+        .sort((a, b) => a.rule.localeCompare(b.rule));
+      expect(violations).toEqual([
+        { from: 'packages/storage/src/sample.ts', rule: 'react-free-no-ui' },
+        { from: 'packages/storage/src/sample.ts', rule: 'storage-no-imports' },
+      ]);
+    },
+    TIMEOUT,
+  );
+
+  // practice-path Requirement 3.5 (design C16, D66).
+  it(
+    'reports apps-no-sibling-apps for apps/practice-path importing apps/shop-challenge',
+    async () => {
+      const root = join(tmpRoot, 'apps-case');
+      const practiceDir = join(root, 'apps', 'practice-path', 'src');
+      const shopDir = join(root, 'apps', 'shop-challenge', 'src');
+      mkdirSync(practiceDir, { recursive: true });
+      mkdirSync(shopDir, { recursive: true });
+      writeFileSync(join(shopDir, 'format.ts'), 'export const format = (n: number): string => String(n);\n', 'utf8');
+      writeFileSync(
+        join(practiceDir, 'sample.ts'),
+        "import { format } from '../../shop-challenge/src/format.ts';\nexport const x = format;\n",
+        'utf8',
+      );
+
+      const result = await cruise(['apps'], cruiseOptions(root));
+      const output = result.output;
+      if (typeof output === 'string') throw new Error('expected a cruise result object');
+
+      expect(output.summary.totalCruised).toBeGreaterThan(0);
+      const violations = output.summary.violations.map((v) => ({ from: v.from, to: v.to, rule: v.rule.name }));
+      expect(violations).toEqual([
+        { from: 'apps/practice-path/src/sample.ts', to: 'apps/shop-challenge/src/format.ts', rule: 'apps-no-sibling-apps' },
+      ]);
+    },
+    TIMEOUT,
+  );
 });

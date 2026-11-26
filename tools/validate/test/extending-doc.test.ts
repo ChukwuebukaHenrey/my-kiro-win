@@ -4,16 +4,27 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { coreNodeTypes } from '@dreame/node-types';
 import { shopNodeTypes } from '@dreame/shop-challenge/node-types';
+import { practiceNodeTypes } from '@dreame/practice-path/node-types';
 
-// Structure check of `EXTENDING.md` (Requirements 15.8, 16.1-16.4; shop-challenge 19.4, 19.5).
+// Structure check of `EXTENDING.md` (Requirements 15.8, 16.1-16.4; shop-challenge 19.4, 19.5;
+// practice-path 23.4, 23.5).
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const lines = readFileSync(join(ROOT, 'EXTENDING.md'), 'utf8').split(/\r?\n/);
 const ENTRY_LABELS = ['Node type', 'View', 'Tests'] as const;
 
 const coreTypes = coreNodeTypes.map((t) => t.type);
-/** The shop-challenge node types that are not core types, in `shopNodeTypes` order. */
-const appTypes = shopNodeTypes.map((t) => t.type).filter((type) => !coreTypes.includes(type));
+
+/** The node types of `nodeTypes` that are not core types, in profile order. */
+function nonCoreTypes(nodeTypes: readonly { type: string }[]): string[] {
+  return nodeTypes.map((t) => t.type).filter((type) => !coreTypes.includes(type));
+}
+
+/** Each app with its non-core node types, in the order its sections appear in `EXTENDING.md`. */
+const APPS: readonly { app: string; types: readonly string[] }[] = [
+  { app: 'shop-challenge', types: nonCoreTypes(shopNodeTypes) },
+  { app: 'practice-path', types: nonCoreTypes(practiceNodeTypes) },
+];
 
 /** The lines from `### <type>` up to the next heading. */
 function sectionLines(type: string): string[] {
@@ -43,12 +54,12 @@ function expectPathsExist(type: string, label: string, line: string): void {
   for (const path of paths) expect(existsSync(join(ROOT, path)), path).toBe(true);
 }
 
-/** `collectionSelect` -> `apps/shop-challenge/src/views/CollectionSelectNodeView.tsx`. */
-function appViewPath(type: string): string {
-  return `apps/shop-challenge/src/views/${type.charAt(0).toUpperCase()}${type.slice(1)}NodeView.tsx`;
+/** (`shop-challenge`, `collectionSelect`) -> `apps/shop-challenge/src/views/CollectionSelectNodeView.tsx`. */
+function appViewPath(app: string, type: string): string {
+  return `apps/${app}/src/views/${type.charAt(0).toUpperCase()}${type.slice(1)}NodeView.tsx`;
 }
 
-describe('EXTENDING.md (Requirements 15.8, 16.1-16.4, 19.4, 19.5)', () => {
+describe('EXTENDING.md (Requirements 15.8, 16.1-16.4, 19.4, 19.5, 23.4, 23.5)', () => {
   it('starts with the title', () => {
     expect(lines[0]).toBe('# Extending DREAME');
   });
@@ -57,9 +68,10 @@ describe('EXTENDING.md (Requirements 15.8, 16.1-16.4, 19.4, 19.5)', () => {
     expect(lines.filter((line) => line.startsWith('## '))).toEqual(['## Node types']);
   });
 
-  it('has one ### section per core node type, then per shop-challenge app node type', () => {
+  it('has one ### section per core node type, then per shop-challenge and practice-path app node type', () => {
     const headings = lines.filter((line) => line.startsWith('### '));
-    expect(headings).toEqual([...coreTypes, ...appTypes].map((type) => `### ${type}`));
+    const expected = [...coreTypes, ...APPS.flatMap(({ types }) => types)];
+    expect(headings).toEqual(expected.map((type) => `### ${type}`));
   });
 
   for (const type of coreTypes) {
@@ -68,17 +80,19 @@ describe('EXTENDING.md (Requirements 15.8, 16.1-16.4, 19.4, 19.5)', () => {
     });
   }
 
-  for (const type of appTypes) {
-    it(`### ${type} has Node type and Tests lines whose paths exist, and a View line matching the view file`, () => {
-      expectPathsExist(type, 'Node type', entryLine(type, 'Node type'));
-      expectPathsExist(type, 'Tests', entryLine(type, 'Tests'));
-      const view = entryLine(type, 'View');
-      const viewPath = appViewPath(type);
-      if (existsSync(join(ROOT, viewPath))) {
-        expect(pathsIn(view), `${type}: View`).toEqual([viewPath]);
-      } else {
-        expect(view, `${type}: View`).toBe('- View: not written yet');
-      }
-    });
+  for (const { app, types } of APPS) {
+    for (const type of types) {
+      it(`### ${type} (${app}) has Node type and Tests lines whose paths exist, and a View line matching the view file`, () => {
+        expectPathsExist(type, 'Node type', entryLine(type, 'Node type'));
+        expectPathsExist(type, 'Tests', entryLine(type, 'Tests'));
+        const view = entryLine(type, 'View');
+        const viewPath = appViewPath(app, type);
+        if (existsSync(join(ROOT, viewPath))) {
+          expect(pathsIn(view), `${type}: View`).toEqual([viewPath]);
+        } else {
+          expect(view, `${type}: View`).toBe('- View: not written yet');
+        }
+      });
+    }
   }
 });

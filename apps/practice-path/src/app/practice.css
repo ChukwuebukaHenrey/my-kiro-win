@@ -1,0 +1,83 @@
+/*
+ * Layout rules of the Practice Path app (design C15, Requirement 18.19).
+ * Every value comes from the @dreame/ui tokens.css custom properties.
+ * Components use these class names and no inline style (Requirement 19.6).
+ */
+
+.pp-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--dr-font-family);
+  font-size: var(--dr-font-size-base);
+  color: var(--dr-color-text);
+  background-color: var(--dr-color-bg);
+}
+
+.pp-main {
+  flex: 1 0 auto;
+  padding: var(--dr-space-4);
+}
+
+.pp-demos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pp-trust {
+  margin: 0;
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}
+
+.pp-recall,
+.pp-review,
+.pp-summary {
+  gap: var(--dr-space-3);
+}
+
+.pp-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  padding: var(--dr-space-3);
+  border: 1px solid var(--dr-color-border);
+  background-color: var(--dr-color-surface);
+}
+
+.pp-feedback p {
+  margin: 0;
+}
+
+.pp-save-status {
+  margin: var(--dr-space-2) 0;
+}
+
+.pp-controls,
+.pp-progress-controls,
+.pp-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dr-space-2);
+}
+
+.pp-progress-message {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.pp-confirm p {
+  margin: 0;
+}
+
+.pp-footer {
+  padding: var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border);
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}

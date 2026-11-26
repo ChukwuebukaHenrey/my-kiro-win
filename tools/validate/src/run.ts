@@ -17,6 +17,7 @@ import {
 } from '@dreame/schema';
 import { coreProfile } from '@dreame/node-types';
 import { shopProfile } from '@dreame/shop-challenge/profile';
+import { practiceProfile } from '@dreame/practice-path/profile';
 import { expandArgs } from './expand.ts';
 import { escapeControl, formatDiagnostic } from './format.ts';
 
@@ -32,6 +33,7 @@ export interface CliIo {
 export const PROFILES: Readonly<Record<string, ProfileDescriptor>> = Object.freeze({
   core: coreProfile,
   'shop-challenge': shopProfile,
+  'practice-path': practiceProfile,
 });
 
 const USAGE = 'usage: pnpm validate <file-or-pattern>...  (wildcards * and ? are allowed in the last path segment only)';

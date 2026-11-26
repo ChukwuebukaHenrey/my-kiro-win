@@ -401,7 +401,7 @@ Source: Brief §9 ("saved on this device — export to keep"), C2, C3; Architect
 6. WHEN a picked file passes the Progress_File check, THE Progress_Model SHALL merge its Item_Records into the Progress_Store, keeping for each Progress_Key the record with the later `lastSeenAt` and the current record on equal times, and THE Practice_App SHALL save the result.
 7. WHEN the learner activates the clear control and confirms, THE Practice_App SHALL remove the Progress_Key_Name from the Storage_Backend and empty the in-memory Progress_Store.
 8. FOR ALL generated Progress_Stores, building the Progress_File, parsing it, and merging it into an empty Progress_Store SHALL give a Progress_Store deep-equal to the original (round-trip property).
-9. FOR ALL generated Progress_Stores `a` and `b`, merging `a` into itself SHALL give `a`, and merging `b` into the merge of `b` into `a` SHALL give the merge of `b` into `a` (idempotence property).
+9. FOR ALL generated Progress_Stores `a` and `b` within the caps, merging `a` into itself SHALL give `a`, and WHEN the untrimmed union of `a` and `b` holds at most 1,000 records and its Progress_File text is at most 65,536 characters, merging `b` into the merge of `b` into `a` SHALL give the merge of `b` into `a` (idempotence property).
 
 ### Requirement 14: Attempt end callback in the activity player
 

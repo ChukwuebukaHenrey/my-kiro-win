@@ -1,7 +1,7 @@
 // Plays one validated manifest (design C10, Requirements 13.1–13.5).
 import { useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react';
 import { createAttempt, createRuntime } from '@dreame/runtime';
-import type { JsonValue, Profile, Runtime } from '@dreame/runtime';
+import type { AttemptState, JsonValue, Profile, Runtime } from '@dreame/runtime';
 import type { ValidManifest } from '@dreame/schema';
 import type { RenderRegistry } from '../render.ts';
 import { playerReducer, type PlayerEvent, type PlayerState } from '../player-state.ts';
@@ -15,6 +15,8 @@ export interface ActivityPlayerProps {
   readonly views: RenderRegistry;
   /** Time source for the runtime `Clock`; defaults to `Date.now`. */
   readonly now?: () => number;
+  /** Called once per mount when the attempt status leaves `playing`, with the attempt state at that point. */
+  readonly onFinish?: (attempt: AttemptState) => void;
 }
 
 /** Player state plus whether the latest response was rejected, so the message clears on the next accepted step. */
@@ -34,7 +36,7 @@ function step(rt: Runtime, view: PlayerView, event: PlayerEvent): PlayerView {
  * Focus moves to the new node's first `h2`, or to the container, only when the node changes after
  * the first render, so an embedded player does not take focus on load.
  */
-export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now }: ActivityPlayerProps): ReactNode {
+export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now, onFinish }: ActivityPlayerProps): ReactNode {
   const rt = useMemo(() => createRuntime(profile, manifest), [profile, manifest]);
   const [view, dispatch] = useReducer(
     (current: PlayerView, event: PlayerEvent): PlayerView => step(rt, current, event),
@@ -51,6 +53,18 @@ export function ActivityPlayer({ profile, manifest, seed, views, now = Date.now 
   // The node shown when focus was last handled; equal on the first render (and on a StrictMode
   // effect re-run), so focus stays where it is until the node changes.
   const focusedNodeId = useRef(currentNodeId);
+  const onFinishRef = useRef(onFinish);
+  const finishReported = useRef(false);
+
+  useEffect(() => {
+    onFinishRef.current = onFinish;
+  });
+
+  useEffect(() => {
+    if (attempt.status === 'playing' || finishReported.current) return;
+    finishReported.current = true;
+    onFinishRef.current?.(attempt);
+  }, [attempt]);
 
   useEffect(() => {
     if (focusedNodeId.current === currentNodeId) return;

@@ -31,3 +31,21 @@
 - Node type: `apps/shop-challenge/src/node-types/recommendOutcome.ts` (`recommendOutcomeNodeType`, profile `shop-challenge`)
 - View: `apps/shop-challenge/src/views/RecommendOutcomeNodeView.tsx`
 - Tests: `apps/shop-challenge/test/recommendOutcome.test.ts`, `apps/shop-challenge/test/recommendOutcome.property.test.ts`
+
+### recall
+
+- Node type: `apps/practice-path/src/node-types/recall.ts` (`recallNodeType`, profile `practice-path`)
+- View: `apps/practice-path/src/views/RecallNodeView.tsx`
+- Tests: `apps/practice-path/test/recall.test.ts`, `apps/practice-path/test/recall.property.test.ts`
+
+### reviewQueue
+
+- Node type: `apps/practice-path/src/node-types/reviewQueue.ts` (`reviewQueueNodeType`, profile `practice-path`)
+- View: `apps/practice-path/src/views/ReviewQueueNodeView.tsx`
+- Tests: `apps/practice-path/test/reviewQueue.test.ts`, `apps/practice-path/test/reviewQueue.property.test.ts`
+
+### masterySummary
+
+- Node type: `apps/practice-path/src/node-types/masterySummary.ts` (`masterySummaryNodeType`, profile `practice-path`)
+- View: `apps/practice-path/src/views/MasterySummaryNodeView.tsx`
+- Tests: `apps/practice-path/test/masterySummary.test.ts`, `apps/practice-path/test/masterySummary.property.test.ts`

@@ -5,7 +5,7 @@
   "packageManager": "pnpm@12.21.0",
   "engines": { "node": ">=22" },
   "scripts": {
-    "codegen": "pnpm --filter @dreame/node-types run codegen && pnpm --filter @dreame/shop-challenge run codegen",
+    "codegen": "pnpm --filter @dreame/node-types run codegen && pnpm --filter @dreame/shop-challenge run codegen && pnpm --filter @dreame/practice-path run codegen",
     "typecheck": "pnpm codegen && tsc -p tsconfig.json",
     "test:shared": "pnpm codegen && vitest run",
     "validate": "pnpm codegen && node --experimental-strip-types tools/validate/src/cli.ts",

@@ -4,11 +4,19 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 // Package boundary and purity scans for Requirements 12.6, 14.3, 14.4, 14.5 and 15.11 (runtime-core, ui-renderer),
-// and shop-challenge Requirement 3.4. Kept next to the dependency-cruiser Boundary_Rules (shop-challenge Requirement 18.2).
+// shop-challenge Requirement 3.4 and practice-path Requirements 3.4, 12.7 and 19.8.
+// Kept next to the dependency-cruiser Boundary_Rules (shop-challenge Requirement 18.2).
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const RUNTIME_DIR = join(ROOT, 'packages', 'runtime');
-const PURITY_DIRS = [join(RUNTIME_DIR, 'src'), join(ROOT, 'packages', 'node-types', 'src')];
+const PRACTICE_SRC = join(ROOT, 'apps', 'practice-path', 'src');
+const PURITY_DIRS = [
+  join(RUNTIME_DIR, 'src'),
+  join(ROOT, 'packages', 'node-types', 'src'),
+  join(PRACTICE_SRC, 'node-types'),
+];
+// The Practice_App progress and share helpers must not read the wall clock or unseeded randomness (practice-path Req 12.7).
+const PURITY_FILES = [join(PRACTICE_SRC, 'progress.ts'), join(PRACTICE_SRC, 'share.ts')];
 
 // Forbidden tokens are built from fragments so that this file does not match its own scan.
 const REACT = 're' + 'act';
@@ -20,9 +28,17 @@ const NO_UI_DIRS = [
   join(ROOT, 'packages', 'node-types', 'scripts'),
   join(ROOT, 'packages', 'schema', 'src'),
   join(ROOT, 'apps', 'shop-challenge', 'src', 'node-types'),
+  join(PRACTICE_SRC, 'node-types'),
+  join(ROOT, 'packages', 'storage', 'src'),
 ];
-// Node loads the Shop_Profile in the Validate_CLI and the Shop_Codegen, so it must stay free of UI code (Req 3.4).
-const SHOP_PROFILE_FILE = join(ROOT, 'apps', 'shop-challenge', 'src', 'profile.ts');
+// Node loads the app profiles in the Validate_CLI and the codegen scripts, so they must stay free of UI code
+// (shop-challenge Req 3.4; practice-path Req 3.4, 19.8). The practice progress and share helpers stay React-free too.
+const NO_UI_FILES = [
+  join(ROOT, 'apps', 'shop-challenge', 'src', 'profile.ts'),
+  join(PRACTICE_SRC, 'profile.ts'),
+  join(PRACTICE_SRC, 'progress.ts'),
+  join(PRACTICE_SRC, 'share.ts'),
+];
 const IMPURE: readonly { label: string; re: RegExp }[] = [
   { label: 'Da' + 'te.now', re: new RegExp('\\bDa' + 'te\\s*\\.\\s*now\\b') },
   { label: 'new Da' + 'te(', re: new RegExp('\\bnew\\s+Da' + 'te\\s*\\(') },
@@ -131,7 +147,7 @@ describe('runtime package boundaries', () => {
   });
 });
 
-describe('node types, schema and the shop profile stay free of UI code', () => {
+describe('node types, schema, storage and the app profiles stay free of UI code', () => {
   it('the UI-or-.tsx check flags UI packages and .tsx paths and allows .ts and .js paths', () => {
     for (const bad of [REACT, UI_PKG, './views/CollectionSelectNodeView.tsx', '../views/registry.tsx']) {
       expect(isUiOrTsxSpecifier(bad), bad).toBe(true);
@@ -142,17 +158,19 @@ describe('node types, schema and the shop profile stay free of UI code', () => {
   });
 
   for (const dir of NO_UI_DIRS) {
-    it(`no file under ${rel(dir)} imports react, react-dom, @dreame/ui or a .tsx module (Req 12.6, 14.4, 3.4)`, () => {
+    it(`no file under ${rel(dir)} imports react, react-dom, @dreame/ui or a .tsx module (Req 12.6, 14.4, 3.4, 19.8)`, () => {
       const files = listSourceFiles(dir);
       expect(files.length).toBeGreaterThan(0);
       expect(findImports(files, isUiOrTsxSpecifier)).toEqual([]);
     });
   }
 
-  it(`${rel(SHOP_PROFILE_FILE)} imports no react, react-dom, @dreame/ui or .tsx module (Req 3.4)`, () => {
-    expect(existsSync(SHOP_PROFILE_FILE)).toBe(true);
-    expect(findImports([SHOP_PROFILE_FILE], isUiOrTsxSpecifier)).toEqual([]);
-  });
+  for (const file of NO_UI_FILES) {
+    it(`${rel(file)} imports no react, react-dom, @dreame/ui or .tsx module (Req 3.4, 19.8)`, () => {
+      expect(existsSync(file)).toBe(true);
+      expect(findImports([file], isUiOrTsxSpecifier)).toEqual([]);
+    });
+  }
 });
 
 describe('runtime purity', () => {
@@ -162,9 +180,10 @@ describe('runtime purity', () => {
     expect(IMPURE.some(({ re }) => re.test('const t = clock.now; rng.next(); Math.floor(x);'))).toBe(false);
   });
 
-  it('no file under packages/runtime/src or packages/node-types/src reads the wall clock or unseeded randomness (Req 15.11)', () => {
-    const files = PURITY_DIRS.flatMap(listSourceFiles);
-    expect(files.length).toBeGreaterThan(0);
+  it('no file under the runtime, node-types and practice node-types sources, nor the practice progress and share helpers, reads the wall clock or unseeded randomness (Req 15.11; practice-path Req 12.7)', () => {
+    for (const file of PURITY_FILES) expect(existsSync(file), rel(file)).toBe(true);
+    const files = [...PURITY_DIRS.flatMap(listSourceFiles), ...PURITY_FILES];
+    expect(files.length).toBeGreaterThan(PURITY_FILES.length);
     const hits: string[] = [];
     for (const file of files) {
       readFileSync(file, 'utf8')

@@ -1,3 +1,5 @@
 # packages/storage
 
 Safe localStorage wrapper.
+
+`browserStorage()` returns the browser storage object, or `null` when the global is missing or reading it throws. `readJson(backend, key, version, check)`, `writeJson(backend, key, version, value)` and `removeKey(backend, key)` take that backend (or an in-memory double in tests) as a parameter, catch every exception, and return a result object: `{ ok: true, value }` or `{ ok: false, error }`. Values are stored as the JSON text `{"v":<version>,"data":<value>}`, and `readJson` returns `{ ok: true, value: null }` when nothing is stored under the key. The error is one of five Storage_Errors: `unavailable` (no backend, or the backend threw), `quota` (the browser reported a full store), `too-large` (the stored text is longer than the Value_Cap of 65,536 UTF-16 code units, `VALUE_CAP`; a read checks this before parsing, and a write over the cap stores nothing), `corrupt` (the text is not a valid envelope, the value cannot be serialized, or `check` rejects the data) and `version` (the stored `v` differs from the requested version).

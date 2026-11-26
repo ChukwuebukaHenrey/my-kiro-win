@@ -129,3 +129,29 @@ describe('shop-challenge repository text (Requirement 14.7)', () => {
     expect(scanFiles([join(ROOT, 'PRIVACY.md')], phrases)).toEqual([]);
   });
 });
+
+describe('practice-path repository text (Requirement 19.10)', () => {
+  it('.kiro/specs/practice-path/*.md has no banned phrase', () => {
+    const files = listFilesWithSuffix(join(ROOT, '.kiro', 'specs', 'practice-path'), '.md');
+    expect(files.length).toBeGreaterThan(0);
+    expect(scanFiles(files, phrases)).toEqual([]);
+  });
+
+  it('apps/practice-path/src has no banned phrase', () => {
+    const files = listFilesRecursive(join(ROOT, 'apps', 'practice-path', 'src'));
+    expect(files.length).toBeGreaterThan(0);
+    expect(scanFiles(files, phrases)).toEqual([]);
+  });
+
+  it('apps/practice-path/index.html has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'apps', 'practice-path', 'index.html')], phrases)).toEqual([]);
+  });
+
+  it('apps/practice-path/README.md has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'apps', 'practice-path', 'README.md')], phrases)).toEqual([]);
+  });
+
+  it('packages/storage/README.md has no banned phrase', () => {
+    expect(scanFiles([join(ROOT, 'packages', 'storage', 'README.md')], phrases)).toEqual([]);
+  });
+});

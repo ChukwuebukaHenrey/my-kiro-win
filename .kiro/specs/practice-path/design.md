@@ -321,7 +321,7 @@ console.log(`codegen: wrote ${jsPath} and ${dtsPath} (${jsBytes.length} bytes JS
 
 | Module | Measured raw | Measured gzip | Raw limit | Gzip limit |
 |---|---|---|---|---|
-| `apps/practice-path/generated/practice-path.validators.js` | to be measured | to be measured | to be set | to be set |
+| `apps/practice-path/generated/practice-path.validators.js` | 217,056 | 15,781 | 239,000 | 17,500 |
 | `apps/shop-challenge/generated/shop-challenge.validators.js` (reference) | 231,675 | 17,231 | 255,000 | 19,000 |
 
 The Source_Scan ajv check (c) asserts that `apps/practice-path/src` and `packages/storage/src` are among the scanned folders (Requirement 4.7, C16).
@@ -835,7 +835,7 @@ export function parseProgressFile(text: string): ProgressStore | null;
 - **`answeredItems`.** For each node of type `recall` in manifest order, the First_Try_Result is `s.answers[node.id]` (own property) when it is `correct` or `incorrect`; nodes without one are skipped. The Review_Result is the `results` entry with the node's `itemId` in the first `reviewQueue` node, in manifest order, whose stored state has one (Item_IDs are unique per manifest, Requirement 5.8). The result is `itemResult(firstTry, review)`, so a Queue Item without a Review_Result is `missed` (Requirement 12.4).
 - **`updateProgress`.** For each item, the key's record becomes `{ seen: old.seen + 1 (or 1), firstTryMisses: old + (incorrect ? 1 : 0), last: result, lastSeenAt: now }`; other records are copied unchanged (Requirement 12.5). Then `trim(store, keep)` runs with `keep` = the keys of this attempt.
 - **`trim(store, keep)`** (Requirement 12.6, D63). While the store holds more than `RECORD_CAP` records, or `buildProgressFile(store).length` exceeds `PROGRESS_FILE_MAX` (D63, accepted 2026-11-21), it removes the record not in `keep` that is first in the order (`lastSeenAt` ascending, then key ascending by code unit). The order is total, so equal inputs give equal outputs.
-- **`mergeProgress`** builds the union with the 13.6 rule, then runs `trim` with an empty `keep`. For stores within the caps, `merge(a, a)` equals `a` and `merge(merge(a, b), b)` equals `merge(a, b)`: the records that `trim` drops come first in the total order, so they are dropped again (Requirement 13.9).
+- **`mergeProgress`** builds the union with the 13.6 rule, then runs `trim` with an empty `keep`. For stores within the caps, `merge(a, a)` equals `a`, since the union is `a` and `trim` drops nothing. `merge(merge(a, b), b)` equals `merge(a, b)` only when the untrimmed union fits both caps, so `trim` drops nothing; when the union exceeds the file limit, `trim` can leave free space and the second merge keeps a record the first dropped (task 13.5, fast-check seed -408745390, path "44") (Requirement 13.9).
 - **Key order.** Every function builds its result with keys sorted by code unit, so `buildProgressFile` of equal stores gives equal text.
 - **Text size.** Keys and values are ASCII, so the Progress_File text length in characters equals its UTF-8 byte count. The Envelope text `{"v":1,"data":<store>}` is shorter than the Progress_File text `{"format":"dreame-practice-progress","version":1,"items":<store>}` for the same store, so a store that passes `trim` fits the Value_Cap, and its export passes the 65,536-byte import cap (Requirement 13.4).
 
@@ -1488,7 +1488,7 @@ The property tests give evidence for the properties tested; they do not prove co
 
 ### Property 16: Merging keeps the later record and is idempotent
 
-*For any* generated Progress_Stores `a` and `b` within the caps, `mergeProgress(a, b)` holds for each key the record with the later `lastSeenAt` and the record of `a` on equal times (before trimming), `mergeProgress(a, a)` equals `a`, and `mergeProgress(mergeProgress(a, b), b)` equals `mergeProgress(a, b)`.
+*For any* generated Progress_Stores `a` and `b` within the caps, `mergeProgress(a, b)` holds for each key the record with the later `lastSeenAt` and the record of `a` on equal times (before trimming), `mergeProgress(a, a)` equals `a`, and, when the untrimmed union of `a` and `b` holds at most `RECORD_CAP` records and its Progress_File text is at most `PROGRESS_FILE_MAX` characters, `mergeProgress(mergeProgress(a, b), b)` equals `mergeProgress(a, b)`.
 
 **Validates: Requirements 13.6, 13.9**
 

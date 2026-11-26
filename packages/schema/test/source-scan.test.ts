@@ -103,6 +103,9 @@ describe('source scan', () => {
     const relFiles = files.map(rel);
     expect(relFiles.some((f) => f.startsWith('packages/ui/src/') && f.endsWith('.tsx'))).toBe(true);
     expect(relFiles.some((f) => f.startsWith('apps/shop-challenge/src/') && f.endsWith('.tsx'))).toBe(true);
+    // practice-path Requirement 19.4: the scan also reaches the Practice_App views and the storage package.
+    expect(relFiles.some((f) => f.startsWith('apps/practice-path/src/') && f.endsWith('.tsx'))).toBe(true);
+    expect(relFiles.some((f) => f.startsWith('packages/storage/src/') && f.endsWith('.ts'))).toBe(true);
     const hits: string[] = [];
     for (const file of files) {
       const lines = readFileSync(file, 'utf8').split('\n');
@@ -147,6 +150,9 @@ describe('source scan', () => {
     const srcDirs = listSrcDirs();
     // The scan must reach the app sources, or the check below would skip them.
     expect(srcDirs.map(rel)).toContain('apps/shop-challenge/src');
+    // practice-path Requirement 4.7: the Practice_App and the storage package are scanned too.
+    expect(srcDirs.map(rel)).toContain('apps/practice-path/src');
+    expect(srcDirs.map(rel)).toContain('packages/storage/src');
     const files = srcDirs.flatMap(listSourceFiles);
     const importers = files.filter(importsAjv);
     const outside = importers.filter((f) => !f.startsWith(CODEGEN_DIR + sep));

@@ -88,6 +88,13 @@ describe('run (validate CLI core)', () => {
     expect(io.stderr).toEqual([]);
   });
 
+  it('prints PASS and exits 0 for a valid manifest with profile practice-path (Requirement 22.7)', () => {
+    const io = fakeIo({ 'pp.json': json({ ...validManifest(), profile: 'practice-path' }) });
+    expect(run(['pp.json'], io)).toBe(0);
+    expect(io.stdout).toEqual(['PASS pp.json']);
+    expect(io.stderr).toEqual([]);
+  });
+
   it('prints PASS with an indented requires-unused warning and exits 0', () => {
     // `requires` still lists `choice`, but the choice node is removed.
     const m = validManifest();
@@ -247,6 +254,7 @@ describe('run (validate CLI core)', () => {
       const statusLines = io.stdout.filter((l) => /^(PASS|FAIL) /.test(l));
       expect(statusLines).toEqual([
         `PASS ${ROOT}activities/core-demo-study-break.json`,
+        `PASS ${ROOT}activities/practice-fractions.json`,
         `PASS ${ROOT}activities/shop-gift-bundle.json`,
       ]);
       expect(io.stdout.join('\n')).not.toContain('fixtures');
@@ -273,6 +281,21 @@ describe('run (validate CLI core)', () => {
       const diagnostics = io.stdout.slice(1);
       expect(diagnostics).toHaveLength(1);
       expect(diagnostics[0]).toMatch(/^ {2}error conditions\/select-unsatisfiable at /);
+    });
+
+    it('passes the practice-path demo and fails the Practice_Fixture with one dangling-ref (Requirements 22.7, 22.8)', () => {
+      const demo = `${ROOT}activities/practice-fractions.json`;
+      const demoIo = fsIo();
+      expect(run([demo], demoIo)).toBe(0);
+      expect(demoIo.stdout).toEqual([`PASS ${demo}`]);
+
+      const fixture = `${ROOT}activities/fixtures/broken-practice-answer-key.json`;
+      const io = fsIo();
+      expect(run([fixture], io)).toBe(1);
+      expect(io.stdout[0]).toBe(`FAIL ${fixture}`);
+      const diagnostics = io.stdout.slice(1);
+      expect(diagnostics).toHaveLength(1);
+      expect(diagnostics[0]).toMatch(/^ {2}error conditions\/dangling-ref at \/nodes\/2\/config\/correctOptionId\b/);
     });
   });
 });

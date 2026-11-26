@@ -24,12 +24,29 @@ export const BOUNDARY_RULES: IForbiddenRuleType[] = [
   },
   {
     name: 'react-free-no-ui',
-    comment: 'React-free modules must not import react, react-dom or @dreame/ui (Requirement 18.4).',
+    comment: 'React-free modules must not import react, react-dom or @dreame/ui (shop Requirement 18.4; practice-path Requirement 19.8).',
     severity: 'error',
     from: {
-      path: '^(packages/node-types/(src|scripts)/|packages/schema/src/|apps/shop-challenge/src/node-types/|apps/shop-challenge/src/profile\\.ts$)',
+      path:
+        '^(packages/node-types/(src|scripts)/|packages/schema/src/|packages/storage/src/' +
+        '|apps/shop-challenge/src/node-types/|apps/shop-challenge/src/profile\\.ts$' +
+        '|apps/practice-path/src/node-types/|apps/practice-path/src/(profile|progress|share)\\.ts$)',
     },
     to: { path: [REACT, UI] },
+  },
+  {
+    name: 'storage-no-imports',
+    comment: 'packages/storage/src imports only its own files: no runtime dependency, no React, no apps/ (practice-path Requirements 11.1, 11.2).',
+    severity: 'error',
+    from: { path: '^packages/storage/src/' },
+    to: { pathNot: '^packages/storage/src/' },
+  },
+  {
+    name: 'apps-no-sibling-apps',
+    comment: 'An app must not import another app (Brief D2; practice-path Requirement 3.5).',
+    severity: 'error',
+    from: { path: '^apps/([^/]+)/' },
+    to: { path: '^apps/', pathNot: '^apps/$1/' },
   },
   {
     name: 'packages-no-apps',

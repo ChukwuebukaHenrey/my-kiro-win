@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "profile": "practice-path",
+  "activityId": "broken-practice-answer-key",
+  "version": 1,
+  "requires": { "content": 1, "recall": 1, "reviewQueue": 1, "masterySummary": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "result",
+  "limits": { "maxNodes": 12, "maxTransitions": 12 },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": {
+        "title": "Fractions and percentages",
+        "body": "Answer six short questions. If you miss one, you can try it once more and then see why the answer is right. Any question you missed comes back once in a review round at the end. This is for practice, not a graded test.",
+        "continueLabel": "Start"
+      },
+      "edges": [{ "to": "q1" }]
+    },
+    {
+      "id": "q1",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-1",
+        "prompt": "Which fraction is equal to 1/2?",
+        "options": [
+          { "id": "a", "label": "3/6" },
+          { "id": "b", "label": "2/3" },
+          { "id": "c", "label": "1/3" },
+          { "id": "d", "label": "2/5" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "3/6 simplifies to 1/2: divide top and bottom by 3.",
+        "maxRetries": 1,
+        "topic": "Fractions",
+        "shuffle": true
+      },
+      "edges": [{ "to": "q2" }]
+    },
+    {
+      "id": "q2",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-2",
+        "prompt": "What is 1/4 + 1/4?",
+        "options": [
+          { "id": "a", "label": "1/2" },
+          { "id": "b", "label": "2/8" },
+          { "id": "c", "label": "1/8" },
+          { "id": "d", "label": "1/16" }
+        ],
+        "correctOptionId": "zz",
+        "explanation": "1/4 + 1/4 = 2/4, which simplifies to 1/2.",
+        "maxRetries": 1,
+        "topic": "Fractions",
+        "shuffle": true
+      },
+      "edges": [{ "to": "q3" }]
+    },
+    {
+      "id": "q3",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-3",
+        "prompt": "What is 3/4 as a decimal?",
+        "options": [
+          { "id": "a", "label": "0.75" },
+          { "id": "b", "label": "0.34" },
+          { "id": "c", "label": "0.7" },
+          { "id": "d", "label": "3.4" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "3 ÷ 4 = 0.75.",
+        "maxRetries": 1,
+        "topic": "Decimals",
+        "shuffle": true
+      },
+      "edges": [{ "to": "q4" }]
+    },
+    {
+      "id": "q4",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-4",
+        "prompt": "What is 25% of 80?",
+        "options": [
+          { "id": "a", "label": "20" },
+          { "id": "b", "label": "25" },
+          { "id": "c", "label": "40" },
+          { "id": "d", "label": "8" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "25% is one quarter, and 80 ÷ 4 = 20.",
+        "maxRetries": 1,
+        "topic": "Percentages",
+        "shuffle": true
+      },
+      "edges": [{ "to": "q5" }]
+    },
+    {
+      "id": "q5",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-5",
+        "prompt": "Which is the same as 0.6?",
+        "options": [
+          { "id": "a", "label": "60%" },
+          { "id": "b", "label": "6%" },
+          { "id": "c", "label": "0.6%" },
+          { "id": "d", "label": "600%" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Multiply a decimal by 100 to get a percentage: 0.6 × 100 = 60%.",
+        "maxRetries": 1,
+        "topic": "Percentages",
+        "shuffle": true
+      },
+      "edges": [{ "to": "q6" }]
+    },
+    {
+      "id": "q6",
+      "type": "recall",
+      "config": {
+        "itemId": "fractions-6",
+        "prompt": "Which fraction is the largest?",
+        "options": [
+          { "id": "a", "label": "5/6" },
+          { "id": "b", "label": "2/3" },
+          { "id": "c", "label": "3/4" },
+          { "id": "d", "label": "7/12" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "With denominator 12: 10/12, 8/12, 9/12 and 7/12, so 5/6 is the largest.",
+        "maxRetries": 1,
+        "topic": "Fractions",
+        "shuffle": true
+      },
+      "edges": [{ "to": "review" }]
+    },
+    {
+      "id": "review",
+      "type": "reviewQueue",
+      "config": {
+        "title": "Review round",
+        "from": ["q1", "q2", "q3", "q4", "q5", "q6"],
+        "intro": "Here are the questions you missed. Try each one once more."
+      },
+      "edges": [{ "to": "result" }]
+    },
+    {
+      "id": "result",
+      "type": "masterySummary",
+      "config": {
+        "title": "Fractions and percentages: your results",
+        "body": "Here is how you did. You can send this result to your tutor.",
+        "from": "review",
+        "tutorShare": { "label": "Send result to tutor", "url": "https://wa.me/12125550142" }
+      },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}
