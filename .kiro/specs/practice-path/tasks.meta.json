@@ -1264,6 +1264,80 @@
         "executionId": "5c85b8f0-98c1-4c7a-a0bf-989f865752b0",
         "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
         "timestamp": 1795725229493
+      },
+      {
+        "executionId": "ac3709be-5733-4501-ab28-3afcf9a44620",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795725735274
+      }
+    ],
+    "26.1 Give the user the Vercel deploy steps": [
+      {
+        "executionId": "ac3709be-5733-4501-ab28-3afcf9a44620",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795725739171
+      },
+      {
+        "executionId": "9c735743-274e-43d5-9291-b84c89f13800",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795728430216
+      }
+    ],
+    "26.2 Check the deployed routes and headers": [
+      {
+        "executionId": "9c735743-274e-43d5-9291-b84c89f13800",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795728433894
+      }
+    ],
+    "26.3 Record Deploy_URL_2 in the app README": [
+      {
+        "executionId": "9c735743-274e-43d5-9291-b84c89f13800",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795728884889
+      },
+      {
+        "executionId": "9c735743-274e-43d5-9291-b84c89f13800",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795728937023
+      }
+    ],
+    "26.4 Ask the user for the Android, keyboard and screen-reader checks (manual step)": [
+      {
+        "executionId": "9c735743-274e-43d5-9291-b84c89f13800",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795728941450
+      },
+      {
+        "executionId": "e64aafae-d17b-440c-9b56-629aee7417d3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795775393257
+      }
+    ],
+    "26.5 Add the Practice Path link to the Shop Challenge footer": [
+      {
+        "executionId": "e64aafae-d17b-440c-9b56-629aee7417d3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795775764576
+      },
+      {
+        "executionId": "e64aafae-d17b-440c-9b56-629aee7417d3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795776012260
+      }
+    ],
+    "26. Deploy URL #2 (manual steps with the user)": [
+      {
+        "executionId": "e64aafae-d17b-440c-9b56-629aee7417d3",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795776014392
+      }
+    ],
+    "27. Final checkpoint - Ensure all tests pass, then ask before committing": [
+      {
+        "executionId": "b200e234-8dd3-4f3c-82b3-d8556057a1df",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795777015179
       }
     ]
   }

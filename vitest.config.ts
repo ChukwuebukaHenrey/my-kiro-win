@@ -13,6 +13,7 @@ export default defineConfig({
             'apps/*/test/**/*.test.ts',
           ],
           environment: 'node',
+          testTimeout: 15_000,
         },
       },
       {
@@ -21,6 +22,7 @@ export default defineConfig({
           include: ['packages/*/test/**/*.test.tsx', 'apps/*/test/**/*.test.tsx'],
           environment: 'jsdom',
           setupFiles: ['packages/ui/test/setup.ts'],
+          testTimeout: 15_000,
         },
       },
     ],

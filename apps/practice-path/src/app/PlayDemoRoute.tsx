@@ -1,7 +1,7 @@
 // Plays a bundled Demo_Lesson at `/play/demo/:id` (design C15 "PlayDemoRoute",
 // Requirements 18.4–18.8, 18.11). The manifest is validated in the browser before playback.
 import { useMemo, useState, type ReactNode } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import type { AttemptState } from '@dreame/runtime';
 import { validateManifest } from '@dreame/schema';
 import { ActivityPlayer, InvalidActivityView } from '@dreame/ui';
@@ -76,6 +76,9 @@ function DemoPlay({ demo }: DemoPlayProps): ReactNode {
   return (
     <>
       <h1 className="dr-heading">{demo.title}</h1>
+      <p>
+        <Link to="/">Back to home</Link>
+      </p>
       <ActivityPlayer
         key={`${demo.id}#${run}`}
         profile={practiceProfile}
@@ -86,9 +89,14 @@ function DemoPlay({ demo }: DemoPlayProps): ReactNode {
       />
       {finished || progress.status.kind === 'read-failed' ? <SaveStatus /> : null}
       {finished ? (
-        <button type="button" className="dr-button" onClick={practiceAgain}>
-          Practice again
-        </button>
+        <>
+          <button type="button" className="dr-button" onClick={practiceAgain}>
+            Practice again
+          </button>
+          <p>
+            <Link to="/">Back to home</Link>
+          </p>
+        </>
       ) : null}
     </>
   );

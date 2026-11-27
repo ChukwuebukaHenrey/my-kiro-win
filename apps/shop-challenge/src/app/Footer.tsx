@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 
 const LICENSE_URL = 'https://github.com/ChukwuebukaHenrey/my-kiro-win/blob/main/LICENSE';
 const REPO_URL = 'https://github.com/ChukwuebukaHenrey/my-kiro-win';
+const PRACTICE_PATH_URL = 'https://my-kiro-win-practice-path.vercel.app/';
 
 export function Footer(): ReactNode {
   return (
@@ -18,6 +19,11 @@ export function Footer(): ReactNode {
         <li>
           <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
             Source on GitHub <span className="dr-note">(opens in a new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a href={PRACTICE_PATH_URL} target="_blank" rel="noopener noreferrer">
+            Practice Path, the sister app <span className="dr-note">(opens in a new tab)</span>
           </a>
         </li>
       </ul>

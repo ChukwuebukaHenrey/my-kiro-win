@@ -629,7 +629,7 @@ These conventions apply to every task (Requirement 24).
     - Verify: `pnpm exec vitest run tools/validate/test/extending-doc.test.ts tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 3.6, 3.10, 4.5, 18.2, 19.6, 19.7, 22.7, 22.8, 23.5, 23.8, 24.6_
 
-- [-] 25. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
+- [x] 25. Checkpoint - Ensure all tests pass, then ask before committing the app (before the deploy)
   - Ensure all tests pass, ask the user if questions arise.
   - Show the user `git status --porcelain --untracked-files=all; git diff --stat` and ask: whether to commit; whether the work goes in one commit or several; which of the listed files to include
   - On approval, stage each approved file by explicit path with `git add -- <path> ...`. The root `package.json`, `apps/practice-path/package.json`, `packages/storage/package.json`, `tools/validate/package.json` and `pnpm-lock.yaml` go in the same commit (Requirement 3.10). The design.md C3 table edit of task 9.1 goes in with the rest when the user approves it. Never stage `packages/*/generated/`, `apps/*/generated/`, `apps/*/dist/`, `design-refs/`, `.vercel` or the five untracked files named in the conventions
@@ -640,8 +640,8 @@ These conventions apply to every task (Requirement 24).
   - Verify: `git ls-files packages/*/generated apps/*/generated apps/*/dist design-refs .vercel`; pass on no output
   - _Requirements: 2.2, 2.3, 2.5, 2.6, 2.7, 3.10, 21.3, 24.17_
 
-- [ ] 26. Deploy URL #2 (manual steps with the user)
-  - [ ] 26.1 Give the user the Vercel deploy steps
+- [x] 26. Deploy URL #2 (manual steps with the user)
+  - [x] 26.1 Give the user the Vercel deploy steps
     - Design: C17 "Deploy steps for the user", shop D52
     - Give the user these steps and state that the user performs them with the user's own Vercel account (Requirement 21.1): (1) confirm that the task 25 commit is on GitHub; (2) in Vercel, "Add New… → Project" and import `ChukwuebukaHenrey/my-kiro-win` again, which creates a second project next to the Shop Challenge project; (3) set Root Directory to `apps/practice-path`, Framework Preset to Vite and Node.js Version to 22.x, and keep "Include files outside the root directory in the Build Step" on, because the build reads `packages/`, `activities/` and the lockfile; (4) add no environment variable; (5) deploy, then send the pnpm version line of the first build log and the Deploy_URL_2
     - Write no Vercel token, project ID, organisation ID or other account data to any file (Requirement 21.2)
@@ -649,25 +649,25 @@ These conventions apply to every task (Requirement 24).
     - Verify: `git rev-list --count origin/main..HEAD; $LASTEXITCODE`; pass when it prints `0` (the deployed commit is on GitHub)
     - Verify: `git ls-files .vercel apps/practice-path/.vercel; git check-ignore apps/practice-path/.vercel; $LASTEXITCODE`; pass when `ls-files` lists nothing and `check-ignore` prints the path with exit code 0
     - _Requirements: 20.6, 21.1, 21.2_
-  - [ ] 26.2 Check the deployed routes and headers
+  - [x] 26.2 Check the deployed routes and headers
     - Design: C17 "Deploy checks"
     - For `/` and `/play/demo/practice-fractions` at the Deploy_URL_2, run the PowerShell 5.1 `Invoke-WebRequest` command of design C17 and report each status code and whether each of the four headers equals the Vercel_Config value (Requirement 21.4)
     - **Stop condition:** if a status is not 200 or a header differs, report the URL, the status and the differing header to the user, and change no Vercel setting (Requirement 21.5)
     - Verify: both requests print status `200` and the four expected header values
     - _Requirements: 21.4, 21.5_
-  - [ ] 26.3 Record Deploy_URL_2 in the app README
+  - [x] 26.3 Record Deploy_URL_2 in the app README
     - Design: C17
     - Edit `apps/practice-path/README.md`: add the Deploy_URL_2 and the note "No login needed" (Requirement 21.6)
     - Verify: `Select-String -Path apps/practice-path/README.md -SimpleMatch -Pattern 'No login needed'`; pass when it prints one line
     - Verify: `pnpm exec vitest run tools/validate/test/repo-text.test.ts; $LASTEXITCODE`
     - _Requirements: 21.6_
-  - [ ] 26.4 Ask the user for the Android, keyboard and screen-reader checks (manual step)
+  - [x] 26.4 Ask the user for the Android, keyboard and screen-reader checks (manual step)
     - Design: C17, "Manual steps for the user"
     - Ask the user to open the Deploy_URL_2 on an Android phone, play the Demo_Lesson with at least one wrong first answer, confirm that the missed question returns in the Review_Round, return to the landing view to see the Due_For_Review count, export the Progress_File, and open the confirm step of the Tutor_Share_Link; record the reported result in the task report (Requirement 21.8)
     - Also ask the user for a keyboard pass and a screen-reader pass of the same flow; record each answer, or that the user deferred it
     - Verify: `try { (Invoke-WebRequest -Uri "<Deploy_URL_2>/" -UseBasicParsing -MaximumRedirection 0).StatusCode } catch { $_.Exception.Response.StatusCode.value__ }`; pass when it prints `200`
     - _Requirements: 21.8_
-  - [ ] 26.5 Add the Practice Path link to the Shop Challenge footer
+  - [x] 26.5 Add the Practice Path link to the Shop Challenge footer
     - Design: C17; Resolved question 12
     - Edit `apps/shop-challenge/src/app/Footer.tsx`: add a third anchor "Practice Path, the sister app" with the https Deploy_URL_2 as `href`, `target="_blank"`, `rel="noopener noreferrer"` and the visible text "(opens in a new tab)"
     - Edit `apps/shop-challenge/test/routes.test.tsx` (the new link and its `href`) and `apps/shop-challenge/test/privacy-scan.test.ts` (3 footer anchors). These three files are the only change to `apps/shop-challenge` in this spec (Requirement 21.7)
@@ -676,7 +676,7 @@ These conventions apply to every task (Requirement 24).
     - Verify: `git diff --name-only -- apps/shop-challenge; $LASTEXITCODE`; pass when it lists exactly the three files above
     - _Requirements: 21.7_
 
-- [ ] 27. Final checkpoint - Ensure all tests pass, then ask before committing
+- [-] 27. Final checkpoint - Ensure all tests pass, then ask before committing
   - Ensure all tests pass, ask the user if questions arise.
   - Verify: `pnpm check; $LASTEXITCODE` (600,000 ms limit)
   - Verify: `pnpm --filter @dreame/shop-challenge build; $LASTEXITCODE`; `pnpm --filter @dreame/practice-path build; $LASTEXITCODE`

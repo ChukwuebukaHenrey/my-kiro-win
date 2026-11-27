@@ -15,6 +15,7 @@ import giftBundle from '../../../activities/shop-gift-bundle.json';
 
 const LICENSE_URL = 'https://github.com/ChukwuebukaHenrey/my-kiro-win/blob/main/LICENSE';
 const REPO_URL = 'https://github.com/ChukwuebukaHenrey/my-kiro-win';
+const PRACTICE_PATH_URL = 'https://my-kiro-win-practice-path.vercel.app/';
 const AUDIENCE =
   "A bundle-builder game for small online sellers, such as Instagram and WhatsApp shops: players pick products within a budget and end at the seller's link.";
 
@@ -46,9 +47,11 @@ function expectFooter(): void {
   ).toBeTruthy();
   const license = within(footer).getByRole('link', { name: /MIT License/ });
   const repo = within(footer).getByRole('link', { name: /Source on GitHub/ });
+  const sister = within(footer).getByRole('link', { name: /Practice Path, the sister app/ });
   expect(license.getAttribute('href')).toBe(LICENSE_URL);
   expect(repo.getAttribute('href')).toBe(REPO_URL);
-  for (const link of [license, repo]) {
+  expect(sister.getAttribute('href')).toBe(PRACTICE_PATH_URL);
+  for (const link of [license, repo, sister]) {
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
     expect(link.textContent).toContain('(opens in a new tab)');

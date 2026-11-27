@@ -162,7 +162,7 @@ describe('app privacy scan (Req 14.1, 14.2, 14.4, 14.5, 14.8)', () => {
     const collectionView = readFileSync(join(APP_SRC, 'views', 'CollectionSelectNodeView.tsx'), 'utf8');
     expect([...collectionView.matchAll(INPUT_TAG)].length).toBeGreaterThan(0);
     const footer = readFileSync(join(APP_SRC, 'app', 'Footer.tsx'), 'utf8');
-    expect([...footer.matchAll(ANCHOR_TAG)].length).toBe(2);
+    expect([...footer.matchAll(ANCHOR_TAG)].length).toBe(3);
     const hits = files.flatMap((file) => scan(readFileSync(file, 'utf8')).map((hit) => `${rel(file)}:${hit}`));
     expect(hits).toEqual([]);
   });

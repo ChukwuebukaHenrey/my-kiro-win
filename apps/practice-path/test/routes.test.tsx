@@ -127,6 +127,16 @@ describe('routes (Requirement 18.3)', () => {
     expectFooter();
   });
 
+  it('the lesson page has a "Back to home" link to / that shows the landing view with the progress controls', async () => {
+    const user = userEvent.setup();
+    renderApp('/play/demo/practice-fractions');
+    const link = screen.getByRole('link', { name: 'Back to home' });
+    expect(link.getAttribute('href')).toBe('/');
+    await user.click(link);
+    expect(screen.getByRole('heading', { level: 1, name: 'Practice Path' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Export progress' })).toBeTruthy();
+  });
+
   it('/play/demo/nope shows "Page not found" with a link to / (Requirement 18.6)', () => {
     const { container } = renderApp('/play/demo/nope');
     expectNotFound();
