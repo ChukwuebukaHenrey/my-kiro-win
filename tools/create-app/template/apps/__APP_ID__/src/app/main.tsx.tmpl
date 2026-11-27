@@ -1,0 +1,22 @@
+// Browser entry of the __APP_TITLE__ app. Loads the shared @dreame/ui theme stylesheets and the
+// app layout rules, then mounts the routes in declarative mode with BrowserRouter.
+import '@dreame/ui/tokens.css';
+import '@dreame/ui/components.css';
+import './app.css';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
+import { App } from './App.tsx';
+
+const rootElement = document.getElementById('root');
+if (rootElement === null) {
+  throw new Error('__APP_TITLE__: the #root element is missing from index.html.');
+}
+
+createRoot(rootElement).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
+);

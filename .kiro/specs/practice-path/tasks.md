@@ -676,7 +676,7 @@ These conventions apply to every task (Requirement 24).
     - Verify: `git diff --name-only -- apps/shop-challenge; $LASTEXITCODE`; pass when it lists exactly the three files above
     - _Requirements: 21.7_
 
-- [-] 27. Final checkpoint - Ensure all tests pass, then ask before committing
+- [x] 27. Final checkpoint - Ensure all tests pass, then ask before committing
   - Ensure all tests pass, ask the user if questions arise.
   - Verify: `pnpm check; $LASTEXITCODE` (600,000 ms limit)
   - Verify: `pnpm --filter @dreame/shop-challenge build; $LASTEXITCODE`; `pnpm --filter @dreame/practice-path build; $LASTEXITCODE`

@@ -1,0 +1,25 @@
+// The landing page at `/`. The only toolkit statement is the Brief §0 sentence quoted in
+// `.kiro/steering/product.md`.
+import type { ReactNode } from 'react';
+import { Link } from 'react-router';
+import { DEMOS } from '../demos.ts';
+
+export function LandingView(): ReactNode {
+  return (
+    <section className="dr-node">
+      <h1 className="dr-heading">__APP_TITLE__</h1>
+      <p className="dr-body">
+        The toolkit checks activity definitions against documented structural and supported semantic rules before
+        playback.
+      </p>
+      <ul className="__APP_CLASS__-demos">
+        {DEMOS.map((demo) => (
+          <li key={demo.id}>
+            <Link to={`/play/demo/${demo.id}`}>{demo.title}</Link>
+          </li>
+        ))}
+      </ul>
+      <p className="__APP_CLASS__-trust">No sign-up · No tracking · Open source</p>
+    </section>
+  );
+}

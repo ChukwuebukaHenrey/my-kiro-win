@@ -1,0 +1,74 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create `tools/create-app/package.json` (name `@dreame/create-app`, `bin.create-app` -> `src/cli.ts`) and `src/name.ts` with `RESERVED_NAMES`, `isValidName` (regex `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`, length 2..31, not reserved) and `derive`": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781600863
+      },
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781703261
+      }
+    ],
+    "1.2 Write `test/name.test.ts` for valid names, bad patterns, length bounds and each reserved name": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781974066
+      },
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781974739
+      }
+    ],
+    "1. Name rules and placeholders": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781974998
+      }
+    ],
+    "2.1 Add the `.tmpl` template tree under `tools/create-app/template/` (app files, routes, profile, registry, codegen, check-dist, vercel.json with §A3 headers, README, one test, and `activities/__APP_ID__-sample.json.tmpl`), deriving the minimal app from `apps/practice-path`, using only its listed dependencies, core node types only, and placeholders from D3": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795781976565
+      },
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795782603878
+      }
+    ],
+    "2.2 Verify the template is inert and complete": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795782604265
+      },
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795782906075
+      }
+    ],
+    "2. Template files": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795782906387
+      }
+    ],
+    "3.1 Write `src/plan.ts` (`planFiles`, `PlannedFile`, `PlanResult`): list the template, map `__APP_ID__` paths, render placeholders, assert no `__APP_` remains, reject invalid names": [
+      {
+        "executionId": "a6effaa1-8ec8-4c54-b7f9-9fc05dcd108a",
+        "chatSessionId": "sess_b4e18017-a7fc-4e71-a2d4-b85c7da667ff",
+        "timestamp": 1795782907401
+      }
+    ]
+  }
+}

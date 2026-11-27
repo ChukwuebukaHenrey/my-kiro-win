@@ -1,0 +1,42 @@
+/*
+ * Layout rules of the __APP_TITLE__ app.
+ * Every value comes from the @dreame/ui tokens.css custom properties.
+ * Components use these class names and no inline style.
+ */
+
+.__APP_CLASS__-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--dr-font-family);
+  font-size: var(--dr-font-size-base);
+  color: var(--dr-color-text);
+  background-color: var(--dr-color-bg);
+}
+
+.__APP_CLASS__-main {
+  flex: 1 0 auto;
+  padding: var(--dr-space-4);
+}
+
+.__APP_CLASS__-demos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.__APP_CLASS__-trust {
+  margin: 0;
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}
+
+.__APP_CLASS__-footer {
+  padding: var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border);
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}

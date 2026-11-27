@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "profile": "__APP_ID__",
+  "activityId": "__APP_ID__-sample",
+  "version": 1,
+  "requires": { "content": 1, "choice": 1, "outcome": 1 },
+  "entryNodeId": "intro",
+  "fallbackOutcomeId": "done",
+  "limits": { "maxNodes": 10, "maxTransitions": 10 },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "intro",
+      "type": "content",
+      "config": {
+        "title": "Welcome to __APP_TITLE__",
+        "body": "This sample activity has one question and one result. Edit it to make your own.",
+        "continueLabel": "Start"
+      },
+      "edges": [{ "to": "pick" }]
+    },
+    {
+      "id": "pick",
+      "type": "choice",
+      "config": {
+        "prompt": "Which colour do you like best?",
+        "options": [
+          { "id": "blue", "label": "Blue" },
+          { "id": "green", "label": "Green" }
+        ]
+      },
+      "edges": [{ "to": "done" }]
+    },
+    {
+      "id": "done",
+      "type": "outcome",
+      "config": {
+        "title": "All done",
+        "body": "You finished the __APP_TITLE__ sample activity."
+      },
+      "edges": []
+    }
+  ],
+  "theme": "default"
+}

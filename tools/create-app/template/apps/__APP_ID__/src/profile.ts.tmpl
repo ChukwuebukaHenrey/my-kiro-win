@@ -1,0 +1,22 @@
+// The __APP_ID__ profile: the node types bound to their precompiled validators.
+import { defineProfile, type Profile } from '@dreame/runtime';
+import { appNodeTypes } from './node-types/index.ts';
+import {
+  response_choice,
+  response_content,
+  response_outcome,
+  validateManifest,
+} from '../generated/__APP_ID__.validators.js';
+
+export const APP_PROFILE_ID = '__APP_ID__';
+
+export const appProfile: Profile = defineProfile({
+  id: APP_PROFILE_ID,
+  nodeTypes: appNodeTypes,
+  validateSchema: validateManifest,
+  responseValidators: {
+    content: response_content,
+    choice: response_choice,
+    outcome: response_outcome,
+  },
+});

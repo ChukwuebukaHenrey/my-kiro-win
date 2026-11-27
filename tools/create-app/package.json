@@ -1,0 +1,9 @@
+{
+  "name": "@dreame/create-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "create-app": "src/cli.ts"
+  }
+}

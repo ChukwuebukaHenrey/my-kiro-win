@@ -1,0 +1,8 @@
+// Views of the __APP_ID__ profile, in profile order: the shared core views only.
+import { ChoiceNodeView, ContentNodeView, createRenderRegistry, OutcomeNodeView, type RenderRegistry } from '@dreame/ui';
+
+export const appViews: RenderRegistry = createRenderRegistry([
+  { type: 'content', Render: ContentNodeView },
+  { type: 'choice', Render: ChoiceNodeView },
+  { type: 'outcome', Render: OutcomeNodeView },
+]);

@@ -1,0 +1,30 @@
+// The __APP_ID__ profile uses the shared core node types, and its bundled demo passes validation.
+// These checks are evidence for the properties tested, not a proof of correctness.
+import { describe, expect, it } from 'vitest';
+import { coreNodeTypes } from '@dreame/node-types';
+import { validateManifest } from '@dreame/schema';
+import { DEMOS } from '../src/demos.ts';
+import { appProfile } from '../src/profile.ts';
+
+describe('appProfile', () => {
+  it('has the id __APP_ID__', () => {
+    expect(appProfile.id).toBe('__APP_ID__');
+  });
+
+  it('lists exactly the shared core node type objects, in order', () => {
+    expect(appProfile.nodeTypes.length).toBe(coreNodeTypes.length);
+    appProfile.nodeTypes.forEach((nodeType, index) => {
+      expect(nodeType).toBe(coreNodeTypes[index]);
+    });
+  });
+});
+
+describe('bundled demos', () => {
+  it('each demo passes validation under the __APP_ID__ profile', () => {
+    expect(DEMOS.length).toBeGreaterThan(0);
+    for (const demo of DEMOS) {
+      const result = validateManifest(demo.json, appProfile);
+      expect(result.ok, demo.id).toBe(true);
+    }
+  });
+});
