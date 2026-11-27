@@ -37,14 +37,14 @@ describe('contrast helpers', () => {
 describe('theme tokens (Requirement 6)', () => {
   it('writes every colour token as 6-digit hex', () => {
     expect(colorTokenNames).toContain('--dr-focus-ring-color');
-    expect(colorTokenNames.length).toBe(11);
+    expect(colorTokenNames.length).toBe(19);
     for (const name of colorTokenNames) {
       expect(isHexColor(themeTokens[name]), `${name}: ${themeTokens[name]}`).toBe(true);
     }
   });
 
   it('gives every text and background pair a contrast ratio of at least 4.5', () => {
-    expect(CONTRAST_PAIRS.length).toBe(8);
+    expect(CONTRAST_PAIRS.length).toBe(21);
     for (const { text, background } of CONTRAST_PAIRS) {
       const ratio = contrastRatio(themeTokens[text], themeTokens[background]);
       expect(ratio, `${text} on ${background}`).toBeGreaterThanOrEqual(4.5);
@@ -52,7 +52,7 @@ describe('theme tokens (Requirement 6)', () => {
   });
 
   it('gives the focus ring a contrast ratio of at least 3 against every background token', () => {
-    expect(BACKGROUND_TOKENS.length).toBe(3);
+    expect(BACKGROUND_TOKENS.length).toBe(7);
     for (const background of BACKGROUND_TOKENS) {
       const ratio = contrastRatio(themeTokens['--dr-focus-ring-color'], themeTokens[background]);
       expect(ratio, `focus ring on ${background}`).toBeGreaterThanOrEqual(3);

@@ -10,33 +10,137 @@
   min-height: 100vh;
   font-family: var(--dr-font-family);
   font-size: var(--dr-font-size-base);
+  line-height: var(--dr-line-height);
   color: var(--dr-color-text);
+  background-color: var(--dr-color-page);
+}
+
+.__APP_CLASS__-header {
+  display: flex;
+  align-items: center;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-bottom: 1px solid var(--dr-color-border-soft);
   background-color: var(--dr-color-bg);
 }
 
+.__APP_CLASS__-brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--dr-touch-target-min);
+  font-weight: var(--dr-font-weight-bold);
+  color: var(--dr-color-text);
+  text-decoration: none;
+}
+
 .__APP_CLASS__-main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-4);
   flex: 1 0 auto;
-  padding: var(--dr-space-4);
+  width: 100%;
+  max-width: var(--dr-content-max-width);
+  margin: 0 auto;
+  padding: var(--dr-space-8) var(--dr-space-4);
+}
+
+.__APP_CLASS__-main > p {
+  margin: 0;
+}
+
+.__APP_CLASS__-main > .dr-button {
+  align-self: flex-start;
+}
+
+.__APP_CLASS__-landing {
+  gap: var(--dr-space-6);
+}
+
+.__APP_CLASS__-landing > .dr-heading {
+  font-size: var(--dr-font-size-2xl);
 }
 
 .__APP_CLASS__-demos {
   display: flex;
   flex-direction: column;
-  gap: var(--dr-space-2);
+  gap: var(--dr-space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* The demo link is a big card with a chevron drawn by borders (no text, so its name stays the title). */
+.__APP_CLASS__-demo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dr-space-4);
+  min-height: var(--dr-touch-target-min);
+  padding: var(--dr-space-4) var(--dr-space-6);
+  border: 2px solid var(--dr-color-accent);
+  border-radius: var(--dr-radius-lg);
+  background-color: var(--dr-color-bg);
+  box-shadow: var(--dr-shadow-card);
+  color: var(--dr-color-accent-strong);
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  text-decoration: none;
+}
+
+.__APP_CLASS__-demo-card::after {
+  content: '';
+  flex-shrink: 0;
+  width: var(--dr-space-2);
+  height: var(--dr-space-2);
+  border-top: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.__APP_CLASS__-demo-card:hover {
+  background-color: var(--dr-color-accent-soft);
+}
+
 .__APP_CLASS__-trust {
+  align-self: flex-start;
   margin: 0;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-bg);
   font-size: var(--dr-font-size-sm);
   color: var(--dr-color-text-muted);
 }
 
 .__APP_CLASS__-footer {
-  padding: var(--dr-space-4);
-  border-top: 1px solid var(--dr-color-border);
+  padding: var(--dr-space-6) var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border-soft);
+  background-color: var(--dr-color-bg);
   font-size: var(--dr-font-size-sm);
   color: var(--dr-color-text-muted);
+  text-align: center;
+}
+
+.__APP_CLASS__-footer p {
+  margin: var(--dr-space-1) 0;
+}
+
+.__APP_CLASS__-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--dr-space-2) var(--dr-space-6);
+  margin: var(--dr-space-2) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.__APP_CLASS__-footer a {
+  color: var(--dr-color-accent);
+}
+
+/* Small phones: less page padding. */
+@media (max-width: 30rem) {
+  .__APP_CLASS__-main {
+    padding: var(--dr-space-4) var(--dr-space-3);
+  }
 }

@@ -1,6 +1,6 @@
 // App routes and the footer shown on every route.
 import type { ReactNode } from 'react';
-import { Route, Routes } from 'react-router';
+import { Link, Route, Routes } from 'react-router';
 import { Footer } from './Footer.tsx';
 import { LandingView } from './LandingView.tsx';
 import { NotFoundView } from './NotFoundView.tsx';
@@ -9,6 +9,11 @@ import { PlayDemoRoute } from './PlayDemoRoute.tsx';
 export function App(): ReactNode {
   return (
     <div className="__APP_CLASS__-app">
+      <header className="__APP_CLASS__-header">
+        <Link to="/" className="__APP_CLASS__-brand">
+          __APP_TITLE__
+        </Link>
+      </header>
       <main className="__APP_CLASS__-main">
         <Routes>
           <Route path="/" element={<LandingView />} />

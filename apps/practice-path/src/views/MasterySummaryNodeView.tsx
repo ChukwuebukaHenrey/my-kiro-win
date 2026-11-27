@@ -38,7 +38,7 @@ export function MasterySummaryNodeView({
 
   if (result === null) {
     return (
-      <div className="dr-node pp-summary">
+      <div className="dr-node dr-outcome pp-summary">
         <h2 className="dr-heading" tabIndex={-1}>
           {cfg.title}
         </h2>
@@ -57,23 +57,26 @@ export function MasterySummaryNodeView({
   });
 
   return (
-    <div className="dr-node pp-summary">
+    <div className="dr-node dr-outcome pp-summary">
       <h2 className="dr-heading" tabIndex={-1}>
         {cfg.title}
       </h2>
       <p className="dr-body">{cfg.body}</p>
-      <p>
-        First try: {counts.firstTry} of {n}
-      </p>
-      <p>
-        After review: {counts.firstTry + counts.reviewed} of {n}
-      </p>
+      <div className="pp-stats">
+        <p className="pp-stat">
+          First try: {counts.firstTry} of {n}
+        </p>
+        <p className="pp-stat">
+          After review: {counts.firstTry + counts.reviewed} of {n}
+        </p>
+      </div>
       <section aria-labelledby={itemsId}>
         <h3 id={itemsId}>Your answers</h3>
-        <ul>
+        <ul className="pp-results">
           {result.items.map((item, i) => (
             <li key={i}>
-              <span>{item.prompt}</span> <span>{RESULT_TEXT[item.result]}</span>
+              <span>{item.prompt}</span>{' '}
+              <span className={`pp-result pp-result-${item.result}`}>{RESULT_TEXT[item.result]}</span>
             </li>
           ))}
         </ul>

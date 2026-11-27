@@ -25,7 +25,7 @@ function readResult(nodeState: JsonValue | undefined): BundleResultState | null 
 
 function LineRows({ lines, currency }: { readonly lines: readonly BundleLine[]; readonly currency: string }): ReactNode {
   return (
-    <ul>
+    <ul className="shop-lines">
       {lines.map((line, i) => (
         <li key={`${i}-${line.id}`}>
           {line.emoji !== undefined && (
@@ -61,7 +61,7 @@ export function RecommendOutcomeNodeView({
   const contacts = cfg.contacts ?? [];
 
   return (
-    <div className="dr-node shop-result">
+    <div className="dr-node dr-outcome shop-result">
       <h2 className="dr-heading" tabIndex={-1}>
         {cfg.title}
       </h2>

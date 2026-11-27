@@ -10,47 +10,198 @@
   min-height: 100vh;
   font-family: var(--dr-font-family);
   font-size: var(--dr-font-size-base);
+  line-height: var(--dr-line-height);
   color: var(--dr-color-text);
+  background-color: var(--dr-color-page);
+}
+
+/* Brand bar: a home link on every page. */
+.pp-header {
+  display: flex;
+  align-items: center;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-bottom: 1px solid var(--dr-color-border-soft);
   background-color: var(--dr-color-bg);
 }
 
+.pp-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dr-space-2);
+  min-height: var(--dr-touch-target-min);
+  font-weight: var(--dr-font-weight-bold);
+  color: var(--dr-color-text);
+  text-decoration: none;
+}
+
+.pp-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dr-space-8);
+  height: var(--dr-space-8);
+  border-radius: var(--dr-radius-sm);
+  background-color: var(--dr-color-success-bg);
+}
+
 .pp-main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-4);
   flex: 1 0 auto;
-  padding: var(--dr-space-4);
+  width: 100%;
+  max-width: var(--dr-content-max-width);
+  margin: 0 auto;
+  padding: var(--dr-space-8) var(--dr-space-4);
+}
+
+.pp-main > p {
+  margin: 0;
+}
+
+.pp-main > .dr-button {
+  align-self: flex-start;
+}
+
+/* Landing page. */
+.pp-landing {
+  gap: var(--dr-space-6);
+}
+
+.pp-eyebrow {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--dr-space-1) var(--dr-space-3);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-success-bg);
+  color: var(--dr-color-success);
+  font-size: var(--dr-font-size-sm);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-landing > .dr-heading {
+  font-size: var(--dr-font-size-2xl);
+}
+
+.pp-lead {
+  font-size: var(--dr-font-size-lg);
 }
 
 .pp-demos {
   display: flex;
   flex-direction: column;
-  gap: var(--dr-space-2);
+  gap: var(--dr-space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.pp-trust {
-  margin: 0;
-  font-size: var(--dr-font-size-sm);
-  color: var(--dr-color-text-muted);
-}
-
-.pp-recall,
-.pp-review,
-.pp-summary {
-  gap: var(--dr-space-3);
-}
-
-.pp-feedback {
+.pp-demos li {
   display: flex;
   flex-direction: column;
-  gap: var(--dr-space-2);
-  padding: var(--dr-space-3);
-  border: 1px solid var(--dr-color-border);
-  background-color: var(--dr-color-surface);
+  gap: var(--dr-space-1);
 }
 
-.pp-feedback p {
+/* The demo link is a big card with a chevron drawn by borders (no text, so its name stays the title). */
+.pp-demo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dr-space-4);
+  min-height: var(--dr-touch-target-min);
+  padding: var(--dr-space-4) var(--dr-space-6);
+  border: 2px solid var(--dr-color-accent);
+  border-radius: var(--dr-radius-lg);
+  background-color: var(--dr-color-bg);
+  box-shadow: var(--dr-shadow-card);
+  color: var(--dr-color-accent-strong);
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  text-decoration: none;
+  transition: background-color var(--dr-motion-duration-fast) ease-in-out;
+}
+
+.pp-demo-card::after {
+  content: '';
+  flex-shrink: 0;
+  width: var(--dr-space-2);
+  height: var(--dr-space-2);
+  border-top: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.pp-demo-card:hover {
+  background-color: var(--dr-color-accent-soft);
+}
+
+.pp-demos .dr-note {
+  padding-left: var(--dr-space-6);
+}
+
+.pp-section-title {
   margin: 0;
+  font-size: var(--dr-font-size-lg);
+}
+
+.pp-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--dr-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: pp-step;
+}
+
+.pp-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-1);
+  padding: var(--dr-space-4);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-bg);
+  counter-increment: pp-step;
+}
+
+.pp-steps li::before {
+  content: counter(pp-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dr-space-8);
+  height: var(--dr-space-8);
+  margin-bottom: var(--dr-space-2);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-success);
+  color: var(--dr-color-on-accent);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-step-title {
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-trust {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-bg);
+  color: var(--dr-color-text-muted);
+  font-size: var(--dr-font-size-sm);
+}
+
+/* "Your progress" card: notes, save status and export, import and clear. */
+.pp-progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-3);
+  padding: var(--dr-space-6);
+  border: 1px solid var(--dr-color-border-soft);
+  border-radius: var(--dr-radius-lg);
+  background-color: var(--dr-color-bg);
 }
 
 .pp-save-status {
@@ -66,6 +217,30 @@
   gap: var(--dr-space-2);
 }
 
+.pp-import-label {
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-progress-controls input[type='file'] {
+  max-width: 100%;
+  font-family: inherit;
+  font-size: var(--dr-font-size-sm);
+  color: var(--dr-color-text-muted);
+}
+
+.pp-progress-controls input[type='file']::file-selector-button {
+  min-height: var(--dr-touch-target-min);
+  margin-right: var(--dr-space-3);
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border: 2px solid var(--dr-color-border-soft);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-bg);
+  color: var(--dr-color-text);
+  font-family: inherit;
+  font-weight: var(--dr-font-weight-bold);
+  cursor: pointer;
+}
+
 .pp-progress-message {
   flex-basis: 100%;
   margin: 0;
@@ -75,9 +250,200 @@
   margin: 0;
 }
 
-.pp-footer {
+/* Lesson screens. */
+.pp-recall,
+.pp-review,
+.pp-summary {
+  gap: var(--dr-space-3);
+}
+
+.pp-review > p {
+  margin: 0;
+}
+
+/* The review question's form sits inside the node, so it gets the node's spacing too. */
+.pp-review form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-3);
+}
+
+.pp-review form > .dr-button-primary {
+  align-self: stretch;
+}
+
+.pp-review-count {
+  margin: 0;
+  color: var(--dr-color-text-muted);
+  font-size: var(--dr-font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pp-progress {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: var(--dr-space-2);
+  border: 0;
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-page);
+}
+
+.pp-progress::-webkit-progress-bar {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-page);
+}
+
+.pp-progress::-webkit-progress-value {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-success);
+  transition: width var(--dr-motion-duration-base) ease-out;
+}
+
+.pp-progress::-moz-progress-bar {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-success);
+}
+
+/* Answer feedback: green when right, red when not, amber while a try is left (§B4 FeedbackSheet). */
+.pp-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
   padding: var(--dr-space-4);
-  border-top: 1px solid var(--dr-color-border);
+  border-left: var(--dr-space-1) solid var(--dr-color-border);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-surface);
+  animation: dr-enter var(--dr-motion-duration-slow) ease-out;
+}
+
+.pp-feedback p {
+  margin: 0;
+}
+
+.pp-feedback > p:first-child {
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-feedback-correct {
+  border-left-color: var(--dr-color-success);
+  background-color: var(--dr-color-success-bg);
+}
+
+.pp-feedback-correct > p:first-child {
+  color: var(--dr-color-success);
+}
+
+.pp-feedback-out {
+  border-left-color: var(--dr-color-danger);
+  background-color: var(--dr-color-danger-bg);
+}
+
+.pp-feedback-out > p:first-child {
+  color: var(--dr-color-danger);
+}
+
+.pp-feedback-retry {
+  border-left-color: var(--dr-color-notice-text);
+  background-color: var(--dr-color-notice-bg);
+  color: var(--dr-color-notice-text);
+}
+
+/* Mastery summary (§B4 MasterySummary). */
+.pp-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--dr-space-3);
+}
+
+.pp-stat {
+  margin: 0;
+  padding: var(--dr-space-4);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-accent-soft);
+  color: var(--dr-color-accent-strong);
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  text-align: center;
+}
+
+.pp-summary section {
+  padding: var(--dr-space-4);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-page);
+}
+
+.pp-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pp-results li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dr-space-2);
+}
+
+.pp-result {
+  padding: var(--dr-space-1) var(--dr-space-3);
+  border-radius: var(--dr-radius-pill);
+  font-size: var(--dr-font-size-sm);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.pp-result-firstTry {
+  background-color: var(--dr-color-success-bg);
+  color: var(--dr-color-success);
+}
+
+.pp-result-reviewed {
+  background-color: var(--dr-color-accent-soft);
+  color: var(--dr-color-accent-strong);
+}
+
+.pp-result-missed {
+  background-color: var(--dr-color-danger-bg);
+  color: var(--dr-color-danger);
+}
+
+.pp-footer {
+  padding: var(--dr-space-6) var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border-soft);
+  background-color: var(--dr-color-bg);
   font-size: var(--dr-font-size-sm);
   color: var(--dr-color-text-muted);
+  text-align: center;
+}
+
+.pp-footer p {
+  margin: var(--dr-space-1) 0;
+}
+
+.pp-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--dr-space-2) var(--dr-space-6);
+  margin: var(--dr-space-2) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pp-footer a {
+  color: var(--dr-color-accent);
+}
+
+/* Small phones: less page padding. */
+@media (max-width: 30rem) {
+  .pp-main {
+    padding: var(--dr-space-4) var(--dr-space-3);
+  }
 }

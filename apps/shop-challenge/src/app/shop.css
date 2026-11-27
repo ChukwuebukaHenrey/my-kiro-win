@@ -10,16 +10,335 @@
   min-height: 100vh;
   font-family: var(--dr-font-family);
   font-size: var(--dr-font-size-base);
+  line-height: var(--dr-line-height);
   color: var(--dr-color-text);
+  background-color: var(--dr-color-page);
+}
+
+/* Brand bar: a home link on every page. */
+.shop-header {
+  display: flex;
+  align-items: center;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-bottom: 1px solid var(--dr-color-border-soft);
   background-color: var(--dr-color-bg);
 }
 
-.shop-main {
-  flex: 1 0 auto;
-  padding: var(--dr-space-4);
+.shop-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dr-space-2);
+  min-height: var(--dr-touch-target-min);
+  font-weight: var(--dr-font-weight-bold);
+  color: var(--dr-color-text);
+  text-decoration: none;
 }
 
+.shop-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dr-space-8);
+  height: var(--dr-space-8);
+  border-radius: var(--dr-radius-sm);
+  background-color: var(--dr-color-accent-soft);
+}
+
+.shop-main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-4);
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: var(--dr-content-max-width);
+  margin: 0 auto;
+  padding: var(--dr-space-8) var(--dr-space-4);
+}
+
+.shop-main > p {
+  margin: 0;
+}
+
+/* Landing page. */
+.shop-landing {
+  gap: var(--dr-space-6);
+}
+
+.shop-eyebrow {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--dr-space-1) var(--dr-space-3);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-accent-soft);
+  color: var(--dr-color-accent-strong);
+  font-size: var(--dr-font-size-sm);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-landing > .dr-heading {
+  font-size: var(--dr-font-size-2xl);
+}
+
+.shop-lead {
+  font-size: var(--dr-font-size-lg);
+}
+
+.shop-demos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The demo link is a big card with a chevron drawn by borders (no text, so its name stays the title). */
+.shop-demo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dr-space-4);
+  min-height: var(--dr-touch-target-min);
+  padding: var(--dr-space-4) var(--dr-space-6);
+  border: 2px solid var(--dr-color-accent);
+  border-radius: var(--dr-radius-lg);
+  background-color: var(--dr-color-bg);
+  box-shadow: var(--dr-shadow-card);
+  color: var(--dr-color-accent-strong);
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  text-decoration: none;
+  transition: background-color var(--dr-motion-duration-fast) ease-in-out;
+}
+
+.shop-demo-card::after {
+  content: '';
+  flex-shrink: 0;
+  width: var(--dr-space-2);
+  height: var(--dr-space-2);
+  border-top: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.shop-demo-card:hover {
+  background-color: var(--dr-color-accent-soft);
+}
+
+.shop-section-title {
+  margin: 0;
+  font-size: var(--dr-font-size-lg);
+}
+
+.shop-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--dr-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: shop-step;
+}
+
+.shop-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-1);
+  padding: var(--dr-space-4);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-bg);
+  counter-increment: shop-step;
+}
+
+.shop-steps li::before {
+  content: counter(shop-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dr-space-8);
+  height: var(--dr-space-8);
+  margin-bottom: var(--dr-space-2);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-accent);
+  color: var(--dr-color-on-accent);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-step-title {
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-trust {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--dr-space-2) var(--dr-space-4);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-bg);
+  color: var(--dr-color-text-muted);
+  font-size: var(--dr-font-size-sm);
+}
+
+/* The product picker's question, styled like the shared choice question. */
+.shop-select fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.shop-select legend {
+  margin-bottom: var(--dr-space-2);
+  padding: 0;
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  line-height: 1.35;
+}
+
+/* Product cards: picture, name, price and tags, with the checkbox in the corner (§B3 ProductCard). */
 .shop-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--dr-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dr-option.shop-product {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'emoji name check'
+    'emoji price check'
+    'emoji tags check';
+  align-items: center;
+  column-gap: var(--dr-space-3);
+  height: 100%;
+}
+
+.shop-product input {
+  grid-area: check;
+  align-self: start;
+}
+
+.shop-product .shop-emoji {
+  grid-area: emoji;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dr-space-12);
+  height: var(--dr-space-12);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-page);
+  font-size: var(--dr-font-size-2xl);
+}
+
+.shop-product .shop-product-name {
+  grid-area: name;
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-product .shop-product-price {
+  grid-area: price;
+  color: var(--dr-color-accent-strong);
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-product .shop-tags {
+  grid-area: tags;
+  color: var(--dr-color-text-muted);
+  font-size: var(--dr-font-size-sm);
+}
+
+/* Sticky running total at the bottom of the screen (§B3 BundleBar). */
+.shop-bundle-bar {
+  position: sticky;
+  bottom: var(--dr-space-2);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-space-2);
+  margin-top: var(--dr-space-2);
+  padding: var(--dr-space-3) var(--dr-space-4);
+  border: 2px solid var(--dr-color-border-soft);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-bg);
+  box-shadow: var(--dr-shadow-card);
+  font-weight: var(--dr-font-weight-bold);
+  transition: border-color var(--dr-motion-duration-base) ease-in-out;
+}
+
+.shop-bundle-bar p {
+  margin: 0;
+}
+
+.shop-bundle-over {
+  border-color: var(--dr-color-danger);
+}
+
+.shop-meter {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: var(--dr-space-3);
+  border: 0;
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-page);
+}
+
+.shop-meter::-webkit-meter-bar {
+  height: var(--dr-space-3);
+  border: 0;
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-page);
+}
+
+.shop-meter::-webkit-meter-optimum-value {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-success);
+}
+
+.shop-meter::-webkit-meter-suboptimum-value {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-warning);
+}
+
+.shop-bundle-over .shop-meter::-webkit-meter-suboptimum-value {
+  background: var(--dr-color-danger);
+}
+
+.shop-meter::-moz-meter-bar {
+  border-radius: var(--dr-radius-pill);
+  background: var(--dr-color-success);
+}
+
+.shop-meter:-moz-meter-sub-optimum::-moz-meter-bar {
+  background: var(--dr-color-warning);
+}
+
+.shop-bundle-over .shop-meter::-moz-meter-bar {
+  background: var(--dr-color-danger);
+}
+
+.shop-hint {
+  margin: 0;
+  font-size: var(--dr-font-size-sm);
+  font-weight: normal;
+  color: var(--dr-color-text-muted);
+}
+
+/* Result page (§B3 BundleResult). */
+.shop-result section {
+  padding: var(--dr-space-4);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-page);
+}
+
+.shop-lines {
   display: flex;
   flex-direction: column;
   gap: var(--dr-space-2);
@@ -28,38 +347,70 @@
   list-style: none;
 }
 
-/* Sticky running total at the bottom of the screen (§B3 BundleBar). */
-.shop-bundle-bar {
-  position: sticky;
-  bottom: 0;
+.shop-lines li {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--dr-space-2);
-  margin-top: var(--dr-space-4);
-  padding: var(--dr-space-3) var(--dr-space-4);
-  border-top: 1px solid var(--dr-color-border);
-  background-color: var(--dr-color-surface);
 }
 
-.shop-bundle-bar p {
+.shop-lines .shop-product-price {
+  margin-left: auto;
+  font-weight: var(--dr-font-weight-bold);
+}
+
+.shop-total {
+  margin: var(--dr-space-3) 0 0;
+  padding-top: var(--dr-space-3);
+  border-top: 1px solid var(--dr-color-border-soft);
+  font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  text-align: right;
+}
+
+.shop-why {
   margin: 0;
+  font-style: italic;
 }
 
-.shop-hint {
-  margin: 0;
-  font-size: var(--dr-font-size-sm);
-  color: var(--dr-color-text-muted);
-}
-
-.shop-result {
+.shop-contacts {
   display: flex;
   flex-direction: column;
   gap: var(--dr-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .shop-footer {
-  padding: var(--dr-space-4);
-  border-top: 1px solid var(--dr-color-border);
+  padding: var(--dr-space-6) var(--dr-space-4);
+  border-top: 1px solid var(--dr-color-border-soft);
+  background-color: var(--dr-color-bg);
   font-size: var(--dr-font-size-sm);
   color: var(--dr-color-text-muted);
+  text-align: center;
+}
+
+.shop-footer p {
+  margin: var(--dr-space-1) 0;
+}
+
+.shop-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--dr-space-2) var(--dr-space-6);
+  margin: var(--dr-space-2) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shop-footer a {
+  color: var(--dr-color-accent);
+}
+
+/* Small phones: less page padding. */
+@media (max-width: 30rem) {
+  .shop-main {
+    padding: var(--dr-space-4) var(--dr-space-3);
+  }
 }

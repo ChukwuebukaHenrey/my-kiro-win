@@ -122,7 +122,7 @@ export function RecallNodeView({
         </button>
       )}
       {feedback !== null && (
-        <div ref={feedbackRef} tabIndex={-1} className="pp-feedback">
+        <div ref={feedbackRef} tabIndex={-1} className={`pp-feedback pp-feedback-${feedback}`}>
           {feedback === 'retry' && (
             <>
               <p>Not quite. Try again.</p>

@@ -128,9 +128,11 @@ export function ReviewQueueNodeView({
 
   return (
     <div className="dr-node pp-review">
-      <h3 ref={headingRef} tabIndex={-1}>
+      <h3 ref={headingRef} tabIndex={-1} className="pp-review-count">
         Question {step + 1} of {n}
       </h3>
+      {/* Visual progress; the heading above already says the same, so screen readers skip it. */}
+      <progress className="pp-progress" aria-hidden="true" value={step + 1} max={n} />
       <form className="dr-choice" noValidate onSubmit={onSubmit}>
         <fieldset role="radiogroup" aria-labelledby={legendId} aria-describedby={showError ? errorId : undefined}>
           <legend id={legendId}>{item.prompt}</legend>
@@ -160,7 +162,11 @@ export function ReviewQueueNodeView({
           </button>
         )}
         {checked && (
-          <div ref={feedbackRef} tabIndex={-1} className="pp-feedback">
+          <div
+            ref={feedbackRef}
+            tabIndex={-1}
+            className={`pp-feedback ${isCorrect ? 'pp-feedback-correct' : 'pp-feedback-out'}`}
+          >
             <p>{isCorrect ? 'Correct' : 'Not this time'}</p>
             <p>The answer is: {correctLabel}</p>
             <p className="dr-body">{item.explanation}</p>

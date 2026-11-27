@@ -1,7 +1,7 @@
 /*
  * Component rules of @dreame/ui (design C5). Every value comes from tokens.css.
- * Every transition duration is a --dr-motion-duration-* token, so reduced motion
- * sets all of them to 0ms (Requirement 14.1). Components use these class names
+ * Every transition and animation duration is a --dr-motion-duration-* token, so reduced
+ * motion sets all of them to 0ms (Requirement 14.1). Components use these class names
  * and no inline style.
  */
 
@@ -11,23 +11,54 @@
   outline-offset: var(--dr-focus-ring-offset);
 }
 
+/* Each new step fades and rises in; under reduced motion the duration is 0ms. */
+@keyframes dr-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--dr-space-2));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dr-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .dr-player {
+  box-sizing: border-box;
   font-family: var(--dr-font-family);
   font-size: var(--dr-font-size-base);
+  line-height: var(--dr-line-height);
   color: var(--dr-color-text);
   background-color: var(--dr-color-bg);
-  padding: var(--dr-space-4);
+  padding: var(--dr-space-6);
+  border: 1px solid var(--dr-color-border-soft);
+  border-radius: var(--dr-radius-lg);
+  box-shadow: var(--dr-shadow-card);
 }
 
 .dr-node {
   display: flex;
   flex-direction: column;
   gap: var(--dr-space-4);
+  animation: dr-enter var(--dr-motion-duration-slow) ease-out;
 }
 
 .dr-heading {
   margin: 0;
   font-size: var(--dr-font-size-xl);
+  font-weight: var(--dr-font-weight-bold);
+  line-height: 1.25;
   color: var(--dr-color-text);
 }
 
@@ -35,7 +66,20 @@
 .dr-body {
   margin: 0;
   white-space: pre-line;
+  line-height: var(--dr-line-height);
   color: var(--dr-color-text);
+}
+
+:where(.dr-node) h3 {
+  margin: 0 0 var(--dr-space-2);
+  font-size: var(--dr-font-size-lg);
+  color: var(--dr-color-text);
+}
+
+/* Zero specificity, so an app's own list class wins. */
+:where(.dr-node) ul {
+  margin: 0;
+  padding-left: var(--dr-space-6);
 }
 
 /* Buttons and links styled as buttons (Requirement 6.5). */
@@ -43,41 +87,67 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--dr-space-2);
   box-sizing: border-box;
   min-height: var(--dr-touch-target-min);
   min-width: var(--dr-touch-target-min);
-  padding: var(--dr-space-2) var(--dr-space-4);
-  border: 1px solid var(--dr-color-border);
-  border-radius: var(--dr-radius-md);
-  background-color: var(--dr-color-surface);
+  padding: var(--dr-space-3) var(--dr-space-6);
+  border: 2px solid var(--dr-color-border-soft);
+  border-radius: var(--dr-radius-pill);
+  background-color: var(--dr-color-bg);
   color: var(--dr-color-text);
   font-family: inherit;
   font-size: var(--dr-font-size-base);
+  font-weight: var(--dr-font-weight-bold);
   text-decoration: none;
   cursor: pointer;
   transition: background-color var(--dr-motion-duration-fast) ease-in-out,
-    border-color var(--dr-motion-duration-fast) ease-in-out;
+    border-color var(--dr-motion-duration-fast) ease-in-out,
+    transform var(--dr-motion-duration-fast) ease-in-out;
+}
+
+.dr-button:hover {
+  border-color: var(--dr-color-accent);
+  background-color: var(--dr-color-accent-soft);
+}
+
+.dr-button:active {
+  transform: translateY(1px);
 }
 
 .dr-button-primary {
   border-color: var(--dr-color-accent);
   background-color: var(--dr-color-accent);
   color: var(--dr-color-on-accent);
+  box-shadow: var(--dr-shadow-raised);
+}
+
+.dr-button-primary:hover {
+  border-color: var(--dr-color-accent-strong);
+  background-color: var(--dr-color-accent-strong);
+}
+
+/* A form's last primary button spans the card on small screens, like a game "go" button. */
+.dr-node > .dr-button-primary {
+  align-self: stretch;
 }
 
 .dr-choice fieldset {
   display: flex;
   flex-direction: column;
-  gap: var(--dr-space-2);
+  gap: var(--dr-space-3);
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
 
 .dr-choice legend {
-  margin-bottom: var(--dr-space-3);
+  margin-bottom: var(--dr-space-4);
   padding: 0;
   font-size: var(--dr-font-size-lg);
+  font-weight: var(--dr-font-weight-bold);
+  line-height: 1.35;
   color: var(--dr-color-text);
 }
 
@@ -89,22 +159,47 @@
   box-sizing: border-box;
   min-height: var(--dr-touch-target-min);
   min-width: var(--dr-touch-target-min);
-  padding: var(--dr-space-2) var(--dr-space-3);
-  border: 1px solid var(--dr-color-border);
+  padding: var(--dr-space-3) var(--dr-space-4);
+  border: 2px solid var(--dr-color-border-soft);
   border-radius: var(--dr-radius-md);
-  background-color: var(--dr-color-surface);
+  background-color: var(--dr-color-bg);
   color: var(--dr-color-text);
   cursor: pointer;
-  transition: border-color var(--dr-motion-duration-base) ease-in-out;
+  transition: border-color var(--dr-motion-duration-base) ease-in-out,
+    background-color var(--dr-motion-duration-base) ease-in-out;
 }
 
+.dr-option:hover {
+  border-color: var(--dr-color-accent);
+}
+
+.dr-option:has(input:disabled) {
+  cursor: default;
+  border-color: var(--dr-color-border-soft);
+  color: var(--dr-color-text-muted);
+}
+
+/* After the disabled rule, so a checked answer stays highlighted once it is locked. */
 .dr-option:has(input:checked) {
   border-color: var(--dr-color-accent);
+  background-color: var(--dr-color-accent-soft);
+}
+
+.dr-option input {
+  flex-shrink: 0;
+  width: var(--dr-control-size);
+  height: var(--dr-control-size);
+  margin: 0;
+  accent-color: var(--dr-color-accent);
 }
 
 .dr-error {
   margin: 0;
+  padding: var(--dr-space-2) var(--dr-space-3);
+  border-radius: var(--dr-radius-sm);
+  background-color: var(--dr-color-danger-bg);
   color: var(--dr-color-danger);
+  font-weight: var(--dr-font-weight-bold);
 }
 
 .dr-note {
@@ -119,4 +214,49 @@
   border-radius: var(--dr-radius-sm);
   background-color: var(--dr-color-notice-bg);
   color: var(--dr-color-notice-text);
+}
+
+/* Endings get a coloured band and a small pop-in, so finishing feels like a reward. */
+.dr-outcome {
+  padding-top: var(--dr-space-4);
+  border-top: var(--dr-space-1) solid var(--dr-color-accent);
+}
+
+.dr-outcome > .dr-heading {
+  font-size: var(--dr-font-size-2xl);
+  animation: dr-pop var(--dr-motion-duration-slow) ease-out;
+}
+
+/* CTA with its destination and confirm step (ExternalLinkButton). */
+.dr-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--dr-space-2);
+}
+
+.dr-link p {
+  margin: 0;
+}
+
+.dr-link [role='group'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dr-space-2);
+  padding: var(--dr-space-3);
+  border-radius: var(--dr-radius-md);
+  background-color: var(--dr-color-surface);
+}
+
+.dr-link [role='group'] p {
+  flex-basis: 100%;
+}
+
+/* Small phones: less padding, so cards keep their width. */
+@media (max-width: 30rem) {
+  .dr-player {
+    padding: var(--dr-space-4);
+    border-radius: var(--dr-radius-md);
+  }
 }

@@ -35,20 +35,19 @@ export function LandingView(): ReactNode {
   );
 
   return (
-    <section className="dr-node">
+    <section className="dr-node pp-landing">
+      <p className="pp-eyebrow">Practice that brings back what you missed</p>
       <h1 className="dr-heading">Practice Path</h1>
-      <p className="dr-body">
+      <p className="dr-body pp-lead">
         Practice lessons for tutors and lesson creators: learners answer a question, read why, and every question
         missed on the first try comes back in a review round.
-      </p>
-      <p className="dr-body">
-        The toolkit checks activity definitions against documented structural and supported semantic rules before
-        playback.
       </p>
       <ul className="pp-demos">
         {links.map((link) => (
           <li key={link.id}>
-            <Link to={`/play/demo/${link.id}`}>{link.title}</Link>
+            <Link className="pp-demo-card" to={`/play/demo/${link.id}`}>
+              {link.title}
+            </Link>
             {link.lesson !== null ? (
               <span className="dr-note">
                 {' '}
@@ -58,14 +57,36 @@ export function LandingView(): ReactNode {
           </li>
         ))}
       </ul>
+      <h2 className="pp-section-title">How it works</h2>
+      <ol className="pp-steps">
+        <li>
+          <span className="pp-step-title">Answer</span>
+          <span className="dr-note">One question at a time, with a second try.</span>
+        </li>
+        <li>
+          <span className="pp-step-title">Read why</span>
+          <span className="dr-note">Each answer comes with a short explanation.</span>
+        </li>
+        <li>
+          <span className="pp-step-title">Review</span>
+          <span className="dr-note">Questions you missed come back at the end.</span>
+        </li>
+      </ol>
+      <p className="dr-body">
+        The toolkit checks activity definitions against documented structural and supported semantic rules before
+        playback.
+      </p>
       <p className="pp-trust">No sign-up · No tracking · Open source</p>
-      <p className="dr-note">Progress is saved on this device only — export to keep it</p>
-      {progress.backendAvailable ? null : (
-        <p className="dr-note">This browser is not saving progress. You can still practise and export your results.</p>
-      )}
-      <p className="dr-note">For practice only. The answers are part of this page, so it is not suited to graded tests.</p>
-      <SaveStatus />
-      <ProgressControls />
+      <div className="pp-progress-card">
+        <h2 className="pp-section-title">Your progress</h2>
+        <p className="dr-note">Progress is saved on this device only — export to keep it</p>
+        {progress.backendAvailable ? null : (
+          <p className="dr-note">This browser is not saving progress. You can still practise and export your results.</p>
+        )}
+        <p className="dr-note">For practice only. The answers are part of this page, so it is not suited to graded tests.</p>
+        <SaveStatus />
+        <ProgressControls />
+      </div>
     </section>
   );
 }

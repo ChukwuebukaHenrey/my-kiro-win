@@ -33,10 +33,12 @@ export function ProgressControls(): ReactNode {
 
   return (
     <div className="pp-progress-controls">
-      <button type="button" onClick={() => progress.exportFile()}>
+      <button type="button" className="dr-button" onClick={() => progress.exportFile()}>
         Export progress
       </button>
-      <label htmlFor={inputId}>Import progress</label>
+      <label htmlFor={inputId} className="pp-import-label">
+        Import progress
+      </label>
       <input id={inputId} type="file" accept="application/json,.json" onChange={(e) => void onImport(e)} />
       <p className="pp-progress-message" role="status">
         {message}
@@ -46,6 +48,7 @@ export function ProgressControls(): ReactNode {
           <p id={questionId}>{CLEAR_QUESTION_TEXT}</p>
           <button
             type="button"
+            className="dr-button"
             onClick={() => {
               progress.clear();
               setConfirming(false);
@@ -53,12 +56,12 @@ export function ProgressControls(): ReactNode {
           >
             Yes, clear
           </button>
-          <button type="button" onClick={() => setConfirming(false)}>
+          <button type="button" className="dr-button" onClick={() => setConfirming(false)}>
             Cancel
           </button>
         </div>
       ) : (
-        <button type="button" onClick={() => setConfirming(true)}>
+        <button type="button" className="dr-button" onClick={() => setConfirming(true)}>
           Clear progress
         </button>
       )}

@@ -61,7 +61,8 @@ export function CollectionSelectNodeView({
   const broken = checkSelection(shown, cfg, itemIds);
   const hint = hintText(broken, cfg.currency);
   const total = selectionTotal(shown, itemIds);
-  const statusText = STATUS_TEXT[budgetStatus(total, cfg.budget)];
+  const status = budgetStatus(total, cfg.budget);
+  const statusText = STATUS_TEXT[status];
   const describedIds: string[] = [];
   if (hint !== null) describedIds.push(hintId);
   if (showError) describedIds.push(errorId);
@@ -119,10 +120,21 @@ export function CollectionSelectNodeView({
           ))}
         </ul>
       </fieldset>
-      <div className="shop-bundle-bar">
+      <div className={`shop-bundle-bar shop-bundle-${status}`}>
         <p aria-live="polite">
           {`${itemIds.length} of ${cfg.max} items · Total ${formatPrice(total, cfg.currency)} of ${formatPrice(cfg.budget, cfg.currency)} · ${statusText}`}
         </p>
+        {/* Visual budget meter; the live text above already says the same, so screen readers skip it. */}
+        <meter
+          className="shop-meter"
+          aria-hidden="true"
+          min={0}
+          max={cfg.budget}
+          low={cfg.budget * 0.8}
+          high={cfg.budget}
+          optimum={0}
+          value={Math.min(total, cfg.budget)}
+        />
         {hint !== null && (
           <p id={hintId} className="shop-hint">
             {hint}

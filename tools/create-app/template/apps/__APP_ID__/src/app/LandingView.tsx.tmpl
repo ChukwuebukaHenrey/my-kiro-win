@@ -6,7 +6,7 @@ import { DEMOS } from '../demos.ts';
 
 export function LandingView(): ReactNode {
   return (
-    <section className="dr-node">
+    <section className="dr-node __APP_CLASS__-landing">
       <h1 className="dr-heading">__APP_TITLE__</h1>
       <p className="dr-body">
         The toolkit checks activity definitions against documented structural and supported semantic rules before
@@ -15,7 +15,9 @@ export function LandingView(): ReactNode {
       <ul className="__APP_CLASS__-demos">
         {DEMOS.map((demo) => (
           <li key={demo.id}>
-            <Link to={`/play/demo/${demo.id}`}>{demo.title}</Link>
+            <Link className="__APP_CLASS__-demo-card" to={`/play/demo/${demo.id}`}>
+              {demo.title}
+            </Link>
           </li>
         ))}
       </ul>
